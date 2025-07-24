@@ -1,0 +1,377 @@
+"use client"
+
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Card, CardContent } from "@/components/ui/card"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Phone, Mail, MapPin, Clock, Menu, X, Calendar, User, MessageSquare } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+
+export default function BookNowPage() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  return (
+    <div className="min-h-screen bg-white">
+      {/* Header */}
+      <header className="bg-white/95 backdrop-blur-sm shadow-lg sticky top-0 z-50 border-b border-teal-100">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <Link href="/">
+                <Image
+                  src="/images/logo.png"
+                  alt="Dr. Kareem's Clinic Logo"
+                  width={150}
+                  height={60}
+                  className="h-12 w-auto cursor-pointer"
+                />
+              </Link>
+            </div>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center space-x-8">
+              <Link
+                href="/"
+                className="text-gray-700 hover:text-teal-600 transition-all duration-300 font-medium relative group"
+              >
+                Home
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-500 to-teal-600 transition-all duration-300 group-hover:w-full rounded-full"></span>
+              </Link>
+
+              <Link
+                href="/about"
+                className="text-gray-700 hover:text-teal-600 transition-all duration-300 font-medium relative group"
+              >
+                About Us
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-500 to-teal-600 transition-all duration-300 group-hover:w-full rounded-full"></span>
+              </Link>
+
+              <Link
+                href="/services"
+                className="text-gray-700 hover:text-teal-600 transition-all duration-300 font-medium relative group"
+              >
+                Price/Service
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-500 to-teal-600 transition-all duration-300 group-hover:w-full rounded-full"></span>
+              </Link>
+
+              <Link
+                href="/why-us"
+                className="text-gray-700 hover:text-teal-600 transition-all duration-300 font-medium relative group"
+              >
+                Why Us
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-500 to-teal-600 transition-all duration-300 group-hover:w-full rounded-full"></span>
+              </Link>
+            </nav>
+
+            <div className="flex items-center space-x-4">
+              <span className="text-teal-600 font-semibold">Book Now</span>
+
+              {/* Mobile Menu Button */}
+              <Button variant="ghost" size="sm" className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              </Button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Booking Section */}
+      <section className="py-24 bg-gradient-to-br from-teal-50 via-white to-cyan-50 relative overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h1 className="text-5xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 bg-clip-text text-transparent mb-6">
+              Book Your Appointment
+            </h1>
+            <p className="text-xl text-gray-600">
+              Schedule your visit today and take the first step towards a healthier smile
+            </p>
+            <div className="w-32 h-1 bg-gradient-to-r from-teal-400 to-teal-500 rounded-full mx-auto mt-6"></div>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-16">
+            {/* Booking Form */}
+            <Card className="bg-white border-0 p-8 rounded-3xl shadow-2xl">
+              <CardContent className="p-0">
+                <div className="flex items-center space-x-3 mb-8">
+                  <div className="w-12 h-12 bg-gradient-to-br from-teal-100 to-teal-200 rounded-full flex items-center justify-center">
+                    <Calendar className="h-6 w-6 text-teal-600" />
+                  </div>
+                  <h3 className="text-3xl font-bold bg-gradient-to-r from-teal-600 to-teal-700 bg-clip-text text-transparent">
+                    Book Online Now
+                  </h3>
+                </div>
+
+                <form className="space-y-6">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="firstName" className="text-gray-700 font-medium">
+                        First name *
+                      </Label>
+                      <div className="relative">
+                        <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                        <Input
+                          id="firstName"
+                          placeholder="Enter your first name"
+                          className="pl-10 rounded-xl border-gray-200 focus:border-teal-500 focus:ring-teal-500 h-12"
+                        />
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="lastName" className="text-gray-700 font-medium">
+                        Last name *
+                      </Label>
+                      <div className="relative">
+                        <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                        <Input
+                          id="lastName"
+                          placeholder="Enter your last name"
+                          className="pl-10 rounded-xl border-gray-200 focus:border-teal-500 focus:ring-teal-500 h-12"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="email" className="text-gray-700 font-medium">
+                      Email *
+                    </Label>
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                      <Input
+                        id="email"
+                        type="email"
+                        placeholder="Enter your email"
+                        className="pl-10 rounded-xl border-gray-200 focus:border-teal-500 focus:ring-teal-500 h-12"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="phone" className="text-gray-700 font-medium">
+                      Phone Number *
+                    </Label>
+                    <div className="relative">
+                      <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                      <Input
+                        id="phone"
+                        type="tel"
+                        placeholder="Enter your phone number"
+                        className="pl-10 rounded-xl border-gray-200 focus:border-teal-500 focus:ring-teal-500 h-12"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="text-gray-700 font-medium">Preferred Date and Time</Label>
+                    <div className="grid grid-cols-2 gap-4">
+                      <Input
+                        type="date"
+                        className="rounded-xl border-gray-200 focus:border-teal-500 focus:ring-teal-500 h-12"
+                      />
+                      <Input
+                        type="time"
+                        className="rounded-xl border-gray-200 focus:border-teal-500 focus:ring-teal-500 h-12"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="services" className="text-gray-700 font-medium">
+                      Service Needed
+                    </Label>
+                    <select
+                      id="services"
+                      className="w-full rounded-xl border-gray-200 focus:border-teal-500 focus:ring-teal-500 h-12 px-3"
+                    >
+                      <option value="">Select a service</option>
+                      <option value="cleaning">Teeth Cleaning & Scaling</option>
+                      <option value="filling">Dental Filling</option>
+                      <option value="whitening">Teeth Whitening</option>
+                      <option value="implant">Dental Implant</option>
+                      <option value="crown">Dental Crown</option>
+                      <option value="extraction">Tooth Extraction</option>
+                      <option value="checkup">General Checkup</option>
+                    </select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="message" className="text-gray-700 font-medium">
+                      Additional Message (Optional)
+                    </Label>
+                    <div className="relative">
+                      <MessageSquare className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                      <textarea
+                        id="message"
+                        placeholder="Any specific concerns or requests..."
+                        rows={4}
+                        className="w-full pl-10 pt-3 rounded-xl border-gray-200 focus:border-teal-500 focus:ring-teal-500 resize-none"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    <Checkbox id="terms" className="border-gray-300" />
+                    <Label htmlFor="terms" className="text-sm text-gray-600">
+                      I agree to the terms and conditions and privacy policy
+                    </Label>
+                  </div>
+
+                  <Button className="w-full bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white py-4 rounded-xl text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                    Book Appointment
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+
+            {/* Map and Contact Info */}
+            <div className="space-y-8">
+              {/* Contact Information */}
+              <Card className="bg-white border-0 p-8 rounded-3xl shadow-lg">
+                <CardContent className="p-0">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-6">Contact Information</h3>
+                  <div className="space-y-4">
+                    <div className="flex items-center space-x-4">
+                      <div className="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center">
+                        <Phone className="h-6 w-6 text-teal-600" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-gray-900">Phone</p>
+                        <p className="text-gray-600">985-1359775</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-4">
+                      <div className="w-12 h-12 bg-cyan-100 rounded-full flex items-center justify-center">
+                        <Mail className="h-6 w-6 text-cyan-600" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-gray-900">Email</p>
+                        <p className="text-gray-600">smilebydrkareen@gmail.com</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-4">
+                      <div className="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center">
+                        <MapPin className="h-6 w-6 text-teal-600" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-gray-900">Address</p>
+                        <p className="text-gray-600">Pulchowk Damkal, Lalitpur, Nepal</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-4">
+                      <div className="w-12 h-12 bg-sky-100 rounded-full flex items-center justify-center">
+                        <Clock className="h-6 w-6 text-sky-600" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-gray-900">Hours</p>
+                        <p className="text-gray-600">Mon-Sun: 9:00 AM - 8:00 PM</p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Google Map */}
+              <div className="bg-gradient-to-br from-gray-200 to-gray-300 rounded-3xl overflow-hidden shadow-2xl">
+                <iframe
+                  src="https://maps.app.goo.gl/36KA8MFBFjAj1gTdA"
+                  width="100%"
+                  height="400"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="w-full h-full min-h-[400px]"
+                ></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gradient-to-br from-gray-900 to-gray-800 text-white py-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-teal-900/20 to-cyan-900/20"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="grid lg:grid-cols-4 gap-12">
+            {/* Logo and Description */}
+            <div className="lg:col-span-2 space-y-6">
+              <div className="flex items-center space-x-2">
+                <Image
+                  src="/images/logo.png"
+                  alt="Dr. Kareem's Clinic Logo"
+                  width={120}
+                  height={60}
+                  className="h-12 w-auto"
+                />
+              </div>
+              <p className="text-gray-300 text-lg leading-relaxed max-w-md">
+                Your trusted dental care partner in Lalitpur. We're committed to providing exceptional dental services
+                with a personal touch.
+              </p>
+            </div>
+
+            {/* Quick Links */}
+            <div className="space-y-6">
+              <h3 className="text-xl font-bold text-white">Quick Links</h3>
+              <nav className="space-y-3">
+                <Link href="/" className="block text-gray-300 hover:text-teal-400 transition-colors">
+                  Home
+                </Link>
+                <Link href="/about" className="block text-gray-300 hover:text-teal-400 transition-colors">
+                  About Us
+                </Link>
+                <Link href="/services" className="block text-gray-300 hover:text-teal-400 transition-colors">
+                  Our Services
+                </Link>
+                <Link href="/why-us" className="block text-gray-300 hover:text-teal-400 transition-colors">
+                  Why Us
+                </Link>
+              </nav>
+            </div>
+
+            {/* Contact Info */}
+            <div className="space-y-6">
+              <h3 className="text-xl font-bold text-white">Contact Info</h3>
+              <div className="space-y-4">
+                <div className="flex items-center space-x-3">
+                  <Mail className="h-5 w-5 text-teal-400" />
+                  <span className="text-gray-300">smilebydrkareen@gmail.com</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <Phone className="h-5 w-5 text-teal-400" />
+                  <span className="text-gray-300">985-1359775</span>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <MapPin className="h-5 w-5 text-teal-400 mt-1" />
+                  <span className="text-gray-300">Pulchowk Damkal, Lalitpur, Nepal</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <Clock className="h-5 w-5 text-teal-400" />
+                  <span className="text-gray-300">Mon-Sun: 9:00 AM - 8:00 PM</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Footer */}
+          <div className="mt-12 pt-8 border-t border-gray-700">
+            <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+              <p className="text-gray-400 text-sm">© 2024 Dr. Kareem's Dental Clinic. All rights reserved.</p>
+              <div className="flex space-x-6 text-sm">
+                <Link href="#" className="text-gray-400 hover:text-teal-400 transition-colors">
+                  Privacy Policy
+                </Link>
+                <Link href="#" className="text-gray-400 hover:text-teal-400 transition-colors">
+                  Terms of Service
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  )
+}
