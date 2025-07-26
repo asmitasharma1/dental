@@ -17,33 +17,52 @@ import { useState } from "react"
 
 const doctors = [
   {
-    name: "Dr. Kareem Rana",
-    position: "Chief Dental Surgeon",
-    degree: "BDS, MDS (Oral & Maxillofacial Surgery)",
-    nmcNumber: "NMC-12345",
-    linkedin: "https://linkedin.com/in/drkareem",
+    name: "Dr. Kareen Rana",
+    position: "Aesthetic and Restorative Dentist",
+    degree: "BDS (TU), Master in Aesthetic and Restorative Dentistry (UK)",
+    nmcNumber: "23759",
+    linkedin: "",
     image: "/images/kareen.avif",
-    specialties: ["Oral Surgery", "Dental Implants", "Cosmetic Dentistry"],
+    specialties: ["Cosmetic Dentistry", "Restorative Dentistry", "Smile Makeover"],
   },
   {
-    name: "Dr. Sarah Johnson",
-    position: "Pediatric Dentist",
-    degree: "BDS, MDS (Pediatric Dentistry)",
-    nmcNumber: "NMC-67890",
-    linkedin: "https://linkedin.com/in/drsarah",
-    image: "/placeholder.svg?height=400&width=300&text=Dr.+Sarah",
-    specialties: ["Children's Dentistry", "Preventive Care", "Orthodontics"],
-  },
-  {
-    name: "Dr. Michael Chen",
+    name: "Dr. Kishor Dutta",
     position: "Orthodontist",
-    degree: "BDS, MDS (Orthodontics)",
-    nmcNumber: "NMC-54321",
-    linkedin: "https://linkedin.com/in/drmichael",
-    image: "/placeholder.svg?height=400&width=300&text=Dr.+Michael",
-    specialties: ["Braces", "Invisalign", "Jaw Alignment"],
+    degree: "BDS (BPKIHS), MDS (IOM)",
+    nmcNumber: "12045",
+    linkedin: "",
+    image: "/images/kishor.avif",
+    specialties: ["Braces", "Aligners", "Jaw Correction"],
+  },
+  {
+    name: "Dr. Bipulesh Goit",
+    position: "Oral and Maxillofacial Surgeon",
+    degree: "BDS (BPKIHS), MDS (TU)",
+    nmcNumber: "14763",
+    linkedin: "",
+    image: "/images/bipulesh.avif",
+    specialties: ["Oral Surgery", "Facial Trauma", "Implants"],
+  },
+  {
+    name: "Dr. Nimisha Adhikari",
+    position: "Endodontist",
+    degree: "BDS (BPKIHS), MDS (TU)",
+    nmcNumber: "17478",
+    linkedin: "",
+    image: "/images/nimisha.avif",
+    specialties: ["Root Canal Treatment", "Restorative Dentistry", "Pain Management"],
+  },
+  {
+    name: "Dr. Gautami Maharjan",
+    position: "General Dentist",
+    degree: "BDS (RMU)",
+    nmcNumber: "37181",
+    linkedin: "",
+    image: "/images/gautami.avif",
+    specialties: ["General Dentistry", "Oral Hygiene", "Preventive Care"],
   },
 ]
+
 
 export default function AboutPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
