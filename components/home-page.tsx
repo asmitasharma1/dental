@@ -67,22 +67,22 @@ const missionValues = [
     title: "Integrity",
     description: "Honest, transparent treatment recommendations and pricing",
     icon: Shield,
-    color: "from-blue-100 to-blue-200",
-    iconColor: "text-blue-600",
+    color: "from-gray-100 to-gray-200",
+    iconColor: "text-gray-600",
   },
   {
     title: "Empathy",
     description: "Understanding and caring for each patient's unique needs",
     icon: Heart,
-    color: "from-purple-100 to-pink-200",
-    iconColor: "text-pink-600",
+    color: "from-teal-200 to-teal-300",
+    iconColor: "text-teal-700",
   },
   {
     title: "Teamwork",
     description: "Collaborative approach ensuring comprehensive patient care",
     icon: Users,
-    color: "from-teal-100 to-blue-200",
-    iconColor: "text-teal-600",
+    color: "from-gray-200 to-gray-300",
+    iconColor: "text-gray-700",
   },
 ]
 
@@ -155,7 +155,7 @@ export default function HomePage() {
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
               <Link
-                href="#hero"
+                href="/#hero"
                 className="text-gray-700 hover:text-teal-600 transition-all duration-300 font-medium relative group"
               >
                 Home
@@ -319,7 +319,7 @@ export default function HomePage() {
       {/* Hero Section */}
       <section
         id="hero"
-        className="bg-gradient-to-br from-teal-50 via-white to-blue-50 py-20 min-h-screen flex items-center relative overflow-hidden"
+        className="bg-gradient-to-br from-teal-50 via-white to-gray-50 py-20 min-h-screen flex items-center relative overflow-hidden"
       >
         {/* Social Media Links - Right Side */}
         <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-40 flex flex-col space-y-4">
@@ -327,9 +327,9 @@ export default function HomePage() {
             href="https://instagram.com/drkareen"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-pink-50 transition-all duration-300 hover:scale-110"
+            className="w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-teal-50 transition-all duration-300 hover:scale-110"
           >
-            <Instagram className="h-6 w-6 text-pink-600" />
+            <Instagram className="h-6 w-6 text-teal-600" />
           </a>
           <a
             href="https://tiktok.com/@drkareen"
@@ -337,7 +337,7 @@ export default function HomePage() {
             rel="noopener noreferrer"
             className="w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-all duration-300 hover:scale-110"
           >
-            <div className="w-6 h-6 bg-black rounded-sm flex items-center justify-center">
+            <div className="w-6 h-6 bg-gray-800 rounded-sm flex items-center justify-center">
               <span className="text-white text-xs font-bold">T</span>
             </div>
           </a>
@@ -345,9 +345,9 @@ export default function HomePage() {
             href="https://wa.me/9851359775"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-green-50 transition-all duration-300 hover:scale-110"
+            className="w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-teal-50 transition-all duration-300 hover:scale-110"
           >
-            <MessageCircle className="h-6 w-6 text-green-600" />
+            <MessageCircle className="h-6 w-6 text-teal-600" />
           </a>
           <a
             href="mailto:smilebydrkareen@gmail.com"
@@ -362,12 +362,12 @@ export default function HomePage() {
         {/* Decorative Elements */}
         <div className="absolute top-10 left-10 w-8 h-10 bg-white/30 rounded-t-full rounded-b-sm transform rotate-12 blur-sm animate-pulse"></div>
         <div className="absolute top-32 right-20 w-6 h-8 bg-teal-200/40 rounded-t-full rounded-b-sm transform -rotate-45 blur-sm animate-pulse delay-1000"></div>
-        <div className="absolute bottom-32 left-1/4 w-10 h-12 bg-blue-200/30 rounded-t-full rounded-b-sm transform rotate-45 blur-sm animate-pulse delay-2000"></div>
+        <div className="absolute bottom-32 left-1/4 w-10 h-12 bg-gray-200/30 rounded-t-full rounded-b-sm transform rotate-45 blur-sm animate-pulse delay-2000"></div>
         <div className="absolute bottom-1/4 right-1/3 animate-spin" style={{ animationDuration: "8s" }}>
           <Sparkles className="h-8 w-8 text-teal-300/40" />
         </div>
         <div className="absolute bottom-1/3 left-16">
-          <Heart className="h-6 w-6 text-pink-300/60 animate-pulse" />
+          <Heart className="h-6 w-6 text-teal-300/60 animate-pulse" />
         </div>
 
         <div className="container mx-auto px-4">
@@ -401,7 +401,7 @@ export default function HomePage() {
               </div>
             </div>
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-teal-200/20 to-blue-200/20 rounded-3xl blur-2xl transform rotate-3 animate-pulse"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-teal-200/20 to-gray-200/20 rounded-3xl blur-2xl transform rotate-3 animate-pulse"></div>
               <Image
                 src="/images/dental-hero.jpeg"
                 alt="Professional dental care"
@@ -430,7 +430,7 @@ export default function HomePage() {
           {/* Service Carousel */}
           <div className="relative max-w-4xl mx-auto">
             <div className="overflow-hidden rounded-3xl shadow-2xl">
-              <div className="relative h-96 bg-gradient-to-br from-teal-50 to-blue-50">
+              <div className="relative h-96 bg-gradient-to-br from-teal-50 to-gray-50">
                 <Image
                   src={topServices[currentService].image || "/placeholder.svg"}
                   alt={topServices[currentService].title}
@@ -517,7 +517,7 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-blue-50 to-purple-100 border-0 p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group">
+            <Card className="bg-gradient-to-br from-gray-50 to-gray-100 border-0 p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group">
               <CardContent className="p-0">
                 <div className="flex items-center justify-between mb-8">
                   <h3 className="text-3xl font-bold text-gray-900">Aesthetic Care</h3>
@@ -527,15 +527,15 @@ export default function HomePage() {
                 </div>
                 <ul className="space-y-4 text-gray-700">
                   <li className="flex items-center space-x-3">
-                    <div className="w-2 h-2 bg-gradient-to-r from-purple-500 to-blue-600 rounded-full"></div>
+                    <div className="w-2 h-2 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full"></div>
                     <span>Premium Porcelain Veneers</span>
                   </li>
                   <li className="flex items-center space-x-3">
-                    <div className="w-2 h-2 bg-gradient-to-r from-purple-500 to-blue-600 rounded-full"></div>
+                    <div className="w-2 h-2 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full"></div>
                     <span>Professional Teeth Whitening</span>
                   </li>
                   <li className="flex items-center space-x-3">
-                    <div className="w-2 h-2 bg-gradient-to-r from-purple-500 to-blue-600 rounded-full"></div>
+                    <div className="w-2 h-2 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full"></div>
                     <span>Invisalign Clear Aligners</span>
                   </li>
                 </ul>
@@ -552,23 +552,23 @@ export default function HomePage() {
                 <p className="text-gray-600">Happy Patients</p>
               </CardContent>
             </Card>
-            <Card className="bg-gradient-to-br from-blue-100 to-blue-200 border-0 p-6 rounded-2xl text-center shadow-lg hover:shadow-xl transition-all duration-300">
+            <Card className="bg-gradient-to-br from-gray-100 to-gray-200 border-0 p-6 rounded-2xl text-center shadow-lg hover:shadow-xl transition-all duration-300">
               <CardContent className="p-0">
-                <Award className="h-8 w-8 text-blue-600 mx-auto mb-3" />
+                <Award className="h-8 w-8 text-gray-600 mx-auto mb-3" />
                 <h3 className="text-2xl font-bold text-gray-900 mb-1">10+</h3>
                 <p className="text-gray-600">Years Experience</p>
               </CardContent>
             </Card>
-            <Card className="bg-gradient-to-br from-purple-100 to-purple-200 border-0 p-6 rounded-2xl text-center shadow-lg hover:shadow-xl transition-all duration-300">
+            <Card className="bg-gradient-to-br from-teal-200 to-teal-300 border-0 p-6 rounded-2xl text-center shadow-lg hover:shadow-xl transition-all duration-300">
               <CardContent className="p-0">
-                <Shield className="h-8 w-8 text-purple-600 mx-auto mb-3" />
+                <Shield className="h-8 w-8 text-teal-700 mx-auto mb-3" />
                 <h3 className="text-2xl font-bold text-gray-900 mb-1">100%</h3>
                 <p className="text-gray-600">Safe Procedures</p>
               </CardContent>
             </Card>
-            <Card className="bg-gradient-to-br from-pink-100 to-pink-200 border-0 p-6 rounded-2xl text-center shadow-lg hover:shadow-xl transition-all duration-300">
+            <Card className="bg-gradient-to-br from-gray-200 to-gray-300 border-0 p-6 rounded-2xl text-center shadow-lg hover:shadow-xl transition-all duration-300">
               <CardContent className="p-0">
-                <Star className="h-8 w-8 text-pink-600 mx-auto mb-3" />
+                <Star className="h-8 w-8 text-gray-700 mx-auto mb-3" />
                 <h3 className="text-2xl font-bold text-gray-900 mb-1">4.9/5</h3>
                 <p className="text-gray-600">Patient Rating</p>
               </CardContent>
@@ -590,7 +590,7 @@ export default function HomePage() {
             <Card className="bg-gradient-to-br from-gray-50 to-white border-0 p-6 rounded-3xl text-center shadow-lg hover:shadow-2xl transition-all duration-500 group">
               <CardContent className="p-0">
                 <div className="mb-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-purple-200 rounded-full mx-auto flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <div className="w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full mx-auto flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                     <Image src="/images/dental-instruments.avif" alt="Pediatric" width={32} height={32} />
                   </div>
                   <h3 className="text-xl font-bold text-gray-900 mb-4">Pediatric Dentistry</h3>
@@ -600,7 +600,7 @@ export default function HomePage() {
             <Card className="bg-gradient-to-br from-gray-50 to-white border-0 p-6 rounded-3xl text-center shadow-lg hover:shadow-2xl transition-all duration-500 group">
               <CardContent className="p-0">
                 <div className="mb-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-purple-100 to-pink-200 rounded-full mx-auto flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <div className="w-16 h-16 bg-gradient-to-br from-teal-200 to-teal-300 rounded-full mx-auto flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                     <Image src="/images/dental-instruments.avif" alt="Implants" width={32} height={32} />
                   </div>
                   <h3 className="text-xl font-bold text-gray-900 mb-4">Dental Implants</h3>
@@ -618,17 +618,17 @@ export default function HomePage() {
             <h2 className="text-5xl lg:text-6xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 bg-clip-text text-transparent mb-6">
               Our Mission
             </h2>
-            <div className="w-32 h-1 bg-gradient-to-r from-teal-400 to-blue-500 rounded-full mx-auto"></div>
+            <div className="w-32 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto"></div>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <Card className="bg-gradient-to-br from-teal-50 to-blue-50 border-0 p-12 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500">
+            <Card className="bg-gradient-to-br from-teal-50 to-gray-50 border-0 p-12 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500">
               <CardContent className="p-0">
                 <div className="space-y-6">
                   <p className="text-teal-600 text-lg font-medium">Our Mission</p>
                   <h3 className="text-4xl font-bold text-gray-900">
                     Help you achieve a{" "}
-                    <span className="bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent">
+                    <span className="bg-gradient-to-r from-teal-600 to-teal-700 bg-clip-text text-transparent">
                       healthy, confident smile
                     </span>{" "}
                     that lasts a lifetime
@@ -674,13 +674,13 @@ export default function HomePage() {
             <div className="w-24 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto"></div>
           </div>
 
-          <Card className="bg-gradient-to-br from-teal-500 to-teal-600 text-white p-8 rounded-3xl shadow-2xl max-w-4xl mx-auto">
+          <Card className="bg-gradient-to-br from-teal-600 to-gray-700 text-white p-8 rounded-3xl shadow-2xl max-w-4xl mx-auto">
             <CardContent className="p-0 text-center">
               <Quote className="h-12 w-12 mx-auto mb-6 opacity-80" />
               <p className="text-xl mb-6 leading-relaxed">{testimonials[currentTestimonial].quote}</p>
               <div className="space-y-2">
                 <p className="font-bold text-lg">{testimonials[currentTestimonial].name}</p>
-                <p className="text-teal-100">{testimonials[currentTestimonial].service}</p>
+                <p className="text-gray-200">{testimonials[currentTestimonial].service}</p>
               </div>
               <div className="flex justify-center space-x-2 mt-6">
                 {testimonials.map((_, index) => (
@@ -700,7 +700,7 @@ export default function HomePage() {
 
       {/* Enhanced Footer */}
       <footer className="bg-gradient-to-br from-gray-900 to-gray-800 text-white py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-teal-900/20 to-blue-900/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-teal-900/20 to-gray-900/20"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid lg:grid-cols-4 gap-12">
             {/* Logo and Description */}

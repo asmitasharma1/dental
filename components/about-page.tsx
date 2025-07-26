@@ -55,12 +55,12 @@ export default function AboutPage() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <Link href="/">
+              <Link href="#hero">
                 <Image
                   src="/images/logo.png"
-                  alt="Dr. Kareem's Clinic Logo"
+                  alt="Smile by Dr. Kareen Logo"
                   width={150}
-                  height={60}
+                  height={80}
                   className="h-12 w-auto cursor-pointer"
                 />
               </Link>
@@ -69,7 +69,7 @@ export default function AboutPage() {
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
               <Link
-                href="/"
+                href="/#hero"
                 className="text-gray-700 hover:text-teal-600 transition-all duration-300 font-medium relative group"
               >
                 Home
@@ -79,30 +79,32 @@ export default function AboutPage() {
               <NavigationMenu>
                 <NavigationMenuList>
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger className="text-teal-600 font-medium">About Us</NavigationMenuTrigger>
+                    <NavigationMenuTrigger className="text-gray-700 hover:text-teal-600 transition-all duration-300 font-medium">
+                      About Us
+                    </NavigationMenuTrigger>
                     <NavigationMenuContent>
                       <div className="grid w-[300px] p-2">
                         <NavigationMenuLink asChild>
-                          <a
-                            href="#clinic"
+                          <Link
+                            href="/about#clinic"
                             className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none"
                           >
                             <div className="text-sm font-medium leading-none group-hover:underline">Our Clinic</div>
                             <div className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                               Learn about our state-of-the-art facility
                             </div>
-                          </a>
+                          </Link>
                         </NavigationMenuLink>
                         <NavigationMenuLink asChild>
-                          <a
-                            href="#doctors"
+                          <Link
+                            href="/about#doctors"
                             className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none"
                           >
                             <div className="text-sm font-medium leading-none group-hover:underline">Our Doctors</div>
                             <div className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                               Meet our experienced dental professionals
                             </div>
-                          </a>
+                          </Link>
                         </NavigationMenuLink>
                       </div>
                     </NavigationMenuContent>
@@ -110,13 +112,70 @@ export default function AboutPage() {
                 </NavigationMenuList>
               </NavigationMenu>
 
-              <Link
-                href="/services"
-                className="text-gray-700 hover:text-teal-600 transition-all duration-300 font-medium relative group"
-              >
-                Price/Service
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-500 to-teal-600 transition-all duration-300 group-hover:w-full rounded-full"></span>
-              </Link>
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger className="text-gray-700 hover:text-teal-600 transition-all duration-300 font-medium">
+                      Price/Service
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <div className="grid w-[400px] p-2">
+                        <NavigationMenuLink asChild>
+                          <Link
+                            href="/services"
+                            className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none"
+                          >
+                            <div className="text-sm font-medium leading-none group-hover:underline">All Services</div>
+                            <div className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                              View our complete range of dental services
+                            </div>
+                          </Link>
+                        </NavigationMenuLink>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            href="/services/general-dentistry"
+                            className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none"
+                          >
+                            <div className="text-sm font-medium leading-none group-hover:underline">
+                              General Dentistry
+                            </div>
+                          </Link>
+                        </NavigationMenuLink>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            href="/services/cosmetic-dentistry"
+                            className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none"
+                          >
+                            <div className="text-sm font-medium leading-none group-hover:underline">
+                              Cosmetic Dentistry
+                            </div>
+                          </Link>
+                        </NavigationMenuLink>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            href="/services/restorative-dentistry"
+                            className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none"
+                          >
+                            <div className="text-sm font-medium leading-none group-hover:underline">
+                              Restorative Dentistry
+                            </div>
+                          </Link>
+                        </NavigationMenuLink>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            href="/services/pediatric-dentistry"
+                            className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none"
+                          >
+                            <div className="text-sm font-medium leading-none group-hover:underline">
+                              Pediatric Dentistry
+                            </div>
+                          </Link>
+                        </NavigationMenuLink>
+                      </div>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
 
               <Link
                 href="/why-us"
@@ -143,6 +202,31 @@ export default function AboutPage() {
               </Button>
             </div>
           </div>
+
+          {/* Mobile Navigation */}
+          {isMenuOpen && (
+            <div className="md:hidden mt-4 pb-4 border-t border-gray-100">
+              <nav className="flex flex-col space-y-4 pt-4">
+                <Link href="#hero" className="text-gray-700 hover:text-teal-600 transition-colors">
+                  Home
+                </Link>
+                <Link href="/about" className="text-gray-700 hover:text-teal-600 transition-colors">
+                  About Us
+                </Link>
+                <Link href="/services" className="text-gray-700 hover:text-teal-600 transition-colors">
+                  Price/Service
+                </Link>
+                <Link href="/why-us" className="text-gray-700 hover:text-teal-600 transition-colors">
+                  Why Us
+                </Link>
+                <Link href="/book-now">
+                  <Button className="w-full bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white">
+                    Book Now
+                  </Button>
+                </Link>
+              </nav>
+            </div>
+          )}
         </div>
       </header>
 
