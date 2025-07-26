@@ -189,9 +189,6 @@ Response: ${JSON.stringify(authData, null, 2)}`)
 
             <div className="mt-6 text-center space-y-2">
               <p className="text-sm text-gray-500">Default credentials: admin / admin123</p>
-              <p className="text-xs text-gray-400">
-                If login fails, run: <code className="bg-gray-100 px-1 rounded">node scripts/create-admin-user.js</code>
-              </p>
             </div>
           </div>
         </CardContent>

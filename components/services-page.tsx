@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import {
@@ -29,53 +29,83 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
 
-const serviceCategories = [
-  {
-    title: "General Dentistry",
-    description: "Comprehensive oral health care including cleanings, fillings, and preventive treatments",
-    icon: Tooth,
-    services: ["Teeth Cleaning", "Dental Fillings", "Root Canal", "Tooth Extraction"],
-    link: "/services/general-dentistry",
-  },
-  {
-    title: "Cosmetic Dentistry",
-    description: "Enhance your smile with veneers, whitening, and aesthetic treatments",
-    icon: Smile,
-    services: ["Teeth Whitening", "Porcelain Veneers", "Dental Bonding", "Smile Makeover"],
-    link: "/services/cosmetic-dentistry",
-  },
-  {
-    title: "Pediatric Dentistry",
-    description: "Specialized dental care for children in a comfortable, friendly environment",
-    icon: Baby,
-    services: ["Children's Cleanings", "Fluoride Treatments", "Sealants", "Early Orthodontics"],
-    link: "/services/pediatric-dentistry",
-  },
-  {
-    title: "Restorative Dentistry",
-    description: "Restore damaged teeth with crowns, bridges, and implant solutions",
-    icon: Wrench,
-    services: ["Dental Crowns", "Bridges", "Dental Implants", "Dentures"],
-    link: "/services/restorative-dentistry",
-  },
-]
+interface Service {
+  id: number
+  title: string
+  description: string
+  category: string
+  price: number
+  duration: string
+  is_active: boolean
+}
+
+interface ServiceCategory {
+  title: string
+  description: string
+  icon: any
+  services: Service[]
+  link: string
+}
+
+const categoryIcons = {
+  "General Dentistry": Tooth,
+  "Cosmetic Dentistry": Smile,
+  "Pediatric Dentistry": Baby,
+  "Restorative Dentistry": Wrench,
+}
+
+const categoryDescriptions = {
+  "General Dentistry": "Comprehensive oral health care including cleanings, fillings, and preventive treatments",
+  "Cosmetic Dentistry": "Enhance your smile with veneers, whitening, and aesthetic treatments",
+  "Pediatric Dentistry": "Specialized dental care for children in a comfortable, friendly environment",
+  "Restorative Dentistry": "Restore damaged teeth with crowns, bridges, and implant solutions",
+}
 
 export default function ServicesPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [services, setServices] = useState<Service[]>([])
+  const [loading, setLoading] = useState(true)
+  const [currentPage, setCurrentPage] = useState(1)
+  const servicesPerPage = 6
+
+  // Calculate pagination
+  const totalPages = Math.ceil(services.length / servicesPerPage)
+  const startIndex = (currentPage - 1) * servicesPerPage
+  const currentServices = services.slice(startIndex, startIndex + servicesPerPage)
 
   const beforeAfterImages = [
     {
-      before: "/images/before-after-1-before.jpg",
-      after: "/images/before-after-1-after.jpg",
+      before: "/placeholder.svg?height=320&width=400",
+      after: "/placeholder.svg?height=320&width=400",
       title: "Complete Smile Transformation",
     },
     {
-      before: "/images/before-after-2-before.jpg",
-      after: "/images/before-after-2-after.jpg",
+      before: "/placeholder.svg?height=320&width=400",
+      after: "/placeholder.svg?height=320&width=400",
       title: "Professional Teeth Whitening",
     },
   ]
+
+  useEffect(() => {
+    fetchServices()
+  }, [])
+
+  const fetchServices = async () => {
+    try {
+      const response = await fetch("/api/services")
+      if (response.ok) {
+        const data = await response.json()
+        setServices(data)
+      } else {
+        console.error("Failed to fetch services")
+      }
+    } catch (error) {
+      console.error("Error fetching services:", error)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % beforeAfterImages.length)
@@ -88,22 +118,20 @@ export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-       <header className="bg-white/95 backdrop-blur-sm shadow-lg sticky top-0 z-50 border-b border-teal-100">
+      <header className="bg-white/95 backdrop-blur-sm shadow-lg sticky top-0 z-50 border-b border-teal-100">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <Link href="#hero">
                 <Image
-                            src="/images/logo.png"
-                            alt="Smile by Dr. Kareen Logo"
-                            width={500}
-                            height={300}
-                            className="cursor-pointer"
-                            style={{ width: '80px', height: '80px' }}
-                          />
+                  src="/images/logo.png"
+                  alt="Smile by Dr. Kareen Logo"
+                  width={80}
+                  height={80}
+                  className="cursor-pointer"
+                />
               </Link>
             </div>
-
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
               <Link
@@ -113,7 +141,6 @@ export default function ServicesPage() {
                 Home
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-500 to-teal-600 transition-all duration-300 group-hover:w-full rounded-full"></span>
               </Link>
-
               <NavigationMenu>
                 <NavigationMenuList>
                   <NavigationMenuItem>
@@ -149,7 +176,6 @@ export default function ServicesPage() {
                   </NavigationMenuItem>
                 </NavigationMenuList>
               </NavigationMenu>
-
               <NavigationMenu>
                 <NavigationMenuList>
                   <NavigationMenuItem>
@@ -169,52 +195,11 @@ export default function ServicesPage() {
                             </div>
                           </Link>
                         </NavigationMenuLink>
-                        <NavigationMenuLink asChild>
-                          <Link
-                            href="/services/general-dentistry"
-                            className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none"
-                          >
-                            <div className="text-sm font-medium leading-none group-hover:underline">
-                              General Dentistry
-                            </div>
-                          </Link>
-                        </NavigationMenuLink>
-                        <NavigationMenuLink asChild>
-                          <Link
-                            href="/services/cosmetic-dentistry"
-                            className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none"
-                          >
-                            <div className="text-sm font-medium leading-none group-hover:underline">
-                              Cosmetic Dentistry
-                            </div>
-                          </Link>
-                        </NavigationMenuLink>
-                        <NavigationMenuLink asChild>
-                          <Link
-                            href="/services/restorative-dentistry"
-                            className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none"
-                          >
-                            <div className="text-sm font-medium leading-none group-hover:underline">
-                              Restorative Dentistry
-                            </div>
-                          </Link>
-                        </NavigationMenuLink>
-                        <NavigationMenuLink asChild>
-                          <Link
-                            href="/services/pediatric-dentistry"
-                            className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none"
-                          >
-                            <div className="text-sm font-medium leading-none group-hover:underline">
-                              Pediatric Dentistry
-                            </div>
-                          </Link>
-                        </NavigationMenuLink>
                       </div>
                     </NavigationMenuContent>
                   </NavigationMenuItem>
                 </NavigationMenuList>
               </NavigationMenu>
-
               <Link
                 href="/why-us"
                 className="text-gray-700 hover:text-teal-600 transition-all duration-300 font-medium relative group"
@@ -223,7 +208,6 @@ export default function ServicesPage() {
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-500 to-teal-600 transition-all duration-300 group-hover:w-full rounded-full"></span>
               </Link>
             </nav>
-
             <div className="flex items-center space-x-4">
               <Link href="/book-now">
                 <Button
@@ -233,14 +217,12 @@ export default function ServicesPage() {
                   Book Now
                 </Button>
               </Link>
-
               {/* Mobile Menu Button */}
               <Button variant="ghost" size="sm" className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                 {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
               </Button>
             </div>
           </div>
-
           {/* Mobile Navigation */}
           {isMenuOpen && (
             <div className="md:hidden mt-4 pb-4 border-t border-gray-100">
@@ -280,7 +262,6 @@ export default function ServicesPage() {
             </p>
             <div className="w-32 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto mt-8"></div>
           </div>
-
           {/* Interactive Before/After Slider */}
           <div className="max-w-4xl mx-auto mb-20">
             <h3 className="text-3xl font-bold text-center mb-8 text-gray-900">See the Transformation</h3>
@@ -309,11 +290,9 @@ export default function ServicesPage() {
                   </div>
                 </div>
               </div>
-
               <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white/90 backdrop-blur-sm rounded-full px-6 py-2">
                 <p className="text-gray-800 font-medium">{beforeAfterImages[currentSlide].title}</p>
               </div>
-
               {/* Navigation Arrows */}
               <button
                 onClick={prevSlide}
@@ -327,15 +306,13 @@ export default function ServicesPage() {
               >
                 <ChevronRight className="h-6 w-6 text-gray-600" />
               </button>
-
               {/* Dots Indicator */}
               <div className="absolute bottom-4 right-4 flex space-x-2">
                 {beforeAfterImages.map((_, index) => (
                   <button
                     key={index}
-                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                      index === currentSlide ? "bg-teal-600" : "bg-gray-300"
-                    }`}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentSlide ? "bg-teal-600" : "bg-gray-300"
+                      }`}
                     onClick={() => setCurrentSlide(index)}
                   />
                 ))}
@@ -345,7 +322,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Service Categories */}
+      {/* Individual Services with Pagination */}
       <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
@@ -355,49 +332,86 @@ export default function ServicesPage() {
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">Comprehensive dental care tailored to your needs</p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {serviceCategories.map((category, index) => {
-              const IconComponent = category.icon
-              return (
-                <Card
-                  key={index}
-                  className="bg-gradient-to-br from-white to-teal-50 border-0 p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group"
-                >
-                  <CardContent className="p-0">
-                    <div className="flex items-start space-x-6">
-                      <div className="w-16 h-16 bg-gradient-to-br from-teal-100 to-teal-200 rounded-full flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                        <Image
-                          src="/images/dental-instruments.avif"
-                          alt={category.title}
-                          width={32}
-                          height={32}
-                          className="h-8 w-8 text-teal-600"
-                        />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-2xl font-bold text-gray-900 mb-3">{category.title}</h3>
-                        <p className="text-gray-600 mb-4 leading-relaxed">{category.description}</p>
-                        <ul className="space-y-2 mb-6">
-                          {category.services.map((service, idx) => (
-                            <li key={idx} className="flex items-center space-x-2 text-gray-700">
-                              <div className="w-2 h-2 bg-teal-600 rounded-full"></div>
-                              <span>{service}</span>
-                            </li>
-                          ))}
-                        </ul>
-                        <Link href={category.link}>
-                          <Button className="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white rounded-full px-6 py-2 group-hover:scale-105 transition-all duration-300">
+          {loading ? (
+            <div className="flex justify-center items-center py-20">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600"></div>
+              <p className="ml-4 text-gray-600">Loading services...</p>
+            </div>
+          ) : (
+            <>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                {currentServices.map((service) => (
+                  <Card
+                    key={service.id}
+                    className="bg-gradient-to-br from-white to-teal-50 border-0 p-6 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group"
+                  >
+                    <CardContent className="p-0">
+                      <div className="text-center">
+                        <div className="w-16 h-16 bg-gradient-to-br from-teal-100 to-teal-200 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                          {(() => {
+                            const IconComponent = categoryIcons[service.category as keyof typeof categoryIcons] || Tooth
+                            return <IconComponent className="h-8 w-8 text-teal-600" />
+                          })()}
+                        </div>
+                        <h3 className="text-xl font-bold text-gray-900 mb-2">{service.title}</h3>
+                        <p className="text-sm text-teal-600 font-medium mb-3">{service.category}</p>
+                        <p className="text-gray-600 mb-4 leading-relaxed text-sm line-clamp-3">{service.description}</p>
+                        <div className="flex items-center justify-center space-x-4 mb-6">
+                          <div className="text-2xl font-bold text-teal-600">NPR {service.price.toLocaleString()}</div>
+                          {/* {service.duration && <div className="text-sm text-gray-500">{service.duration}</div>} */}
+                        </div>
+                        <Link href={`/services/${service.id}`}>
+                          <Button className="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white rounded-full px-6 py-2 group-hover:scale-105 transition-all duration-300 w-full">
                             Learn More
                             <ArrowRight className="ml-2 h-4 w-4" />
                           </Button>
                         </Link>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              )
-            })}
-          </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div className="flex justify-center items-center space-x-4">
+                  <Button
+                    variant="outline"
+                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                    disabled={currentPage === 1}
+                    className="rounded-full"
+                  >
+                    <ChevronLeft className="h-4 w-4 mr-2" />
+                    Previous
+                  </Button>
+
+                  <div className="flex space-x-2">
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                      <Button
+                        key={page}
+                        variant={currentPage === page ? "default" : "outline"}
+                        onClick={() => setCurrentPage(page)}
+                        className={`w-10 h-10 rounded-full ${currentPage === page ? "bg-teal-600 hover:bg-teal-700 text-white" : "hover:bg-teal-50"
+                          }`}
+                      >
+                        {page}
+                      </Button>
+                    ))}
+                  </div>
+
+                  <Button
+                    variant="outline"
+                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                    disabled={currentPage === totalPages}
+                    className="rounded-full"
+                  >
+                    Next
+                    <ChevronRight className="h-4 w-4 ml-2" />
+                  </Button>
+                </div>
+              )}
+            </>
+          )}
         </div>
       </section>
 
@@ -413,7 +427,7 @@ export default function ServicesPage() {
                   src="/images/logo.png"
                   alt="Dr. Kareem's Clinic Logo"
                   width={120}
-                  height={60}
+                  height={48}
                   className="h-12 w-auto"
                 />
               </div>
@@ -422,7 +436,6 @@ export default function ServicesPage() {
                 with a personal touch.
               </p>
             </div>
-
             {/* Quick Links */}
             <div className="space-y-6">
               <h3 className="text-xl font-bold text-white">Quick Links</h3>
@@ -441,7 +454,6 @@ export default function ServicesPage() {
                 </Link>
               </nav>
             </div>
-
             {/* Contact Info */}
             <div className="space-y-6">
               <h3 className="text-xl font-bold text-white">Contact Info</h3>
@@ -465,7 +477,6 @@ export default function ServicesPage() {
               </div>
             </div>
           </div>
-
           {/* Bottom Footer */}
           <div className="mt-12 pt-8 border-t border-gray-700">
             <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
