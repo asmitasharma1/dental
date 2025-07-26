@@ -94,12 +94,13 @@ export default function ServicesPage() {
             <div className="flex items-center space-x-4">
               <Link href="#hero">
                 <Image
-                  src="/images/logo.png"
-                  alt="Smile by Dr. Kareen Logo"
-                  width={150}
-                  height={80}
-                  className="h-12 w-auto cursor-pointer"
-                />
+                            src="/images/logo.png"
+                            alt="Smile by Dr. Kareen Logo"
+                            width={500}
+                            height={300}
+                            className="cursor-pointer"
+                            style={{ width: '80px', height: '80px' }}
+                          />
               </Link>
             </div>
 
