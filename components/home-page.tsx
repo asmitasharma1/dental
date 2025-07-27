@@ -114,11 +114,11 @@ export default function HomePage() {
   useEffect(() => {
     const serviceInterval = setInterval(() => {
       setCurrentService((prev) => (prev + 1) % topServices.length)
-    }, 4000)
+    }, 10000)
 
     const testimonialInterval = setInterval(() => {
       setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
-    }, 4000)
+    }, 10000)
 
     return () => {
       clearInterval(serviceInterval)
@@ -343,7 +343,7 @@ export default function HomePage() {
             <Instagram className="h-6 w-6 text-teal-600" />
           </a>
           <a
-            href="https://tiktok.com/@drkareen"
+            href="https://www.tiktok.com/@smilebydrkareen_dental"
             target="_blank"
             rel="noopener noreferrer"
             className="w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-all duration-300 hover:scale-110"
@@ -425,7 +425,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Top 3 Services Section */}
       <section id="services" className="py-24 bg-white relative">
         <div className="container mx-auto px-4">
           <div className="text-center mb-20">
@@ -438,9 +437,18 @@ export default function HomePage() {
             <div className="w-32 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto mt-8"></div>
           </div>
 
-          {/* Service Carousel */}
-          <div className="relative max-w-4xl mx-auto">
-            <div className="overflow-hidden rounded-3xl shadow-2xl">
+          {/* Wrapper with extra space for arrows */}
+          <div className="relative flex items-center justify-center">
+            {/* Left Arrow */}
+            <button
+              onClick={prevService}
+              className="z-10 absolute -left-10 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-all duration-300"
+            >
+              <ChevronLeft className="h-6 w-6 text-gray-600" />
+            </button>
+
+            {/* Service Carousel */}
+            <div className="w-full max-w-4xl overflow-hidden rounded-3xl shadow-2xl relative">
               <div className="relative h-96 bg-gradient-to-br from-teal-50 to-gray-50">
                 <Image
                   src={topServices[currentService].image || "/placeholder.svg"}
@@ -463,31 +471,24 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Navigation Arrows */}
-            <button
-              onClick={prevService}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-all duration-300"
-            >
-              <ChevronLeft className="h-6 w-6 text-gray-600" />
-            </button>
+            {/* Right Arrow */}
             <button
               onClick={nextService}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-all duration-300"
+              className="z-10 absolute -right-10 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-all duration-300"
             >
               <ChevronRight className="h-6 w-6 text-gray-600" />
             </button>
+          </div>
 
-            {/* Dots Indicator */}
-            <div className="flex justify-center space-x-2 mt-8">
-              {topServices.map((_, index) => (
-                <button
-                  key={index}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentService ? "bg-teal-600" : "bg-gray-300"
-                    }`}
-                  onClick={() => setCurrentService(index)}
-                />
-              ))}
-            </div>
+          {/* Dots Indicator */}
+          <div className="flex justify-center space-x-2 mt-8">
+            {topServices.map((_, index) => (
+              <button
+                key={index}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentService ? "bg-teal-600" : "bg-gray-300"}`}
+                onClick={() => setCurrentService(index)}
+              />
+            ))}
           </div>
 
           {/* More Services Button */}

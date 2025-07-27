@@ -13,59 +13,60 @@ import {
 import { Award, Shield, Heart, Menu, X, Linkedin, MapPin, Phone, Mail, Clock } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
-const doctors = [
-  {
-    name: "Dr. Kareen Rana",
-    position: "Aesthetic and Restorative Dentist",
-    degree: "BDS (TU), Master in Aesthetic and Restorative Dentistry (UK)",
-    nmcNumber: "23759",
-    linkedin: "",
-    image: "/images/kareen.avif",
-    specialties: ["Cosmetic Dentistry", "Restorative Dentistry", "Smile Makeover"],
-  },
-  {
-    name: "Dr. Kishor Dutta",
-    position: "Orthodontist",
-    degree: "BDS (BPKIHS), MDS (IOM)",
-    nmcNumber: "12045",
-    linkedin: "",
-    image: "/images/kishor.avif",
-    specialties: ["Braces", "Aligners", "Jaw Correction"],
-  },
-  {
-    name: "Dr. Bipulesh Goit",
-    position: "Oral and Maxillofacial Surgeon",
-    degree: "BDS (BPKIHS), MDS (TU)",
-    nmcNumber: "14763",
-    linkedin: "",
-    image: "/images/bipulesh.avif",
-    specialties: ["Oral Surgery", "Facial Trauma", "Implants"],
-  },
-  {
-    name: "Dr. Nimisha Adhikari",
-    position: "Endodontist",
-    degree: "BDS (BPKIHS), MDS (TU)",
-    nmcNumber: "17478",
-    linkedin: "",
-    image: "/images/nimisha.avif",
-    specialties: ["Root Canal Treatment", "Restorative Dentistry", "Pain Management"],
-  },
-  {
-    name: "Dr. Gautami Maharjan",
-    position: "General Dentist",
-    degree: "BDS (RMU)",
-    nmcNumber: "37181",
-    linkedin: "",
-    image: "/images/gautami.avif",
-    specialties: ["General Dentistry", "Oral Hygiene", "Preventive Care"],
-  },
-]
-
+interface Doctor {
+  id: number
+  name: string
+  position: string
+  degree: string
+  nmc_number: string
+  linkedin_url: string
+  image_url: string
+  specialties: string[]
+  is_active: number
+  created_at: string
+  updated_at: string
+}
 
 export default function AboutPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [doctors, setDoctors] = useState<Doctor[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchDoctors = async () => {
+      try {
+        const response = await fetch("/api/doctors")
+        if (response.ok) {
+          const data = await response.json()
+          const parsedData = data.map((doctor: any) => {
+            let specialties: string[] = []
+            try {
+              specialties = JSON.parse(doctor.specialties || '[]')
+              if (!Array.isArray(specialties)) {
+                console.warn(`Invalid specialties format for doctor ${doctor.id}:`, doctor.specialties)
+                specialties = [doctor.specialties] // Fallback to single string as array
+              }
+            } catch (error) {
+              console.error(`Error parsing specialties for doctor ${doctor.id}:`, error)
+              specialties = [doctor.specialties || ''] // Fallback to single string or empty array
+            }
+            return {
+              ...doctor,
+              specialties
+            }
+          })
+          setDoctors(parsedData)
+        }
+      } catch (error) {
+        console.error("Error fetching doctors:", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchDoctors()
+  }, [])
 
   return (
     <div className="min-h-screen bg-white">
@@ -77,7 +78,7 @@ export default function AboutPage() {
               <Link href="#hero">
                 <Image
                   src="/images/logo.png"
-                  alt="Smile by Dr. Kareen Logo"
+                  alt="Smile by Dr. Kareem Logo"
                   width={500}
                   height={300}
                   className="cursor-pointer"
@@ -223,14 +224,12 @@ export default function AboutPage() {
                 </Button>
               </Link>
 
-              {/* Mobile Menu Button */}
               <Button variant="ghost" size="sm" className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                 {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
               </Button>
             </div>
           </div>
 
-          {/* Mobile Navigation */}
           {isMenuOpen && (
             <div className="md:hidden mt-4 pb-4 border-t border-gray-100">
               <nav className="flex flex-col space-y-4 pt-4">
@@ -320,11 +319,11 @@ export default function AboutPage() {
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-br from-teal-200/30 to-cyan-200/30 rounded-3xl blur-2xl transform -rotate-6"></div>
               <Image
-                src="/images/dental_clinic_interior.jpg"
+                src="/images/MPS__3.jpg"
                 alt="Dr. Kareem's Clinic Interior"
-                width={500}
-                height={600}
-                className="rounded-3xl shadow-2xl relative z-10 hover:scale-105 transition-transform duration-500"
+                width={700}
+                height={950}
+                className="rounded-1xl shadow-2xl relative z-10 hover:scale-105 transition-transform duration-500"
               />
             </div>
           </div>
@@ -345,65 +344,72 @@ export default function AboutPage() {
             <div className="w-32 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto mt-8"></div>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {doctors.map((doctor, index) => (
-              <Card
-                key={index}
-                className="bg-gradient-to-br from-white to-teal-50 border-0 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group overflow-hidden"
-              >
-                <CardContent className="p-0">
-                  <div className="relative h-80 overflow-hidden">
-                    <Image
-                      src={doctor.image || "/placeholder.svg"}
-                      alt={doctor.name}
-                      fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="flex flex-wrap gap-2">
-                        {doctor.specialties.map((specialty, idx) => (
-                          <span key={idx} className="bg-teal-600/80 px-2 py-1 rounded-full text-xs">
-                            {specialty}
-                          </span>
-                        ))}
+          {loading ? (
+            <div className="flex justify-center items-center h-64">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {doctors.map((doctor) => (
+                <Card
+                  key={doctor.id}
+                  className="bg-gradient-to-br from-white to-teal-50 border-0 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group overflow-hidden"
+                >
+                  <CardContent className="p-0">
+                    <div className="relative h-96 overflow-hidden">
+                      <Image
+                        src={doctor.image_url || "/placeholder.svg"}
+                        alt={doctor.name}
+                        fill
+                        className="object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
+                      {/* <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div className="flex flex-wrap gap-2">
+                          {doctor.specialties.map((specialty, idx) => (
+                            <span key={idx} className="bg-teal-600/80 px-3 py-1.5 rounded-full text-xs">
+                              {specialty}
+                            </span>
+
+                          ))}
+                        </div>
+                      </div> */}
+                    </div>
+
+                    <div className="p-6 space-y-4">
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-900 mb-1">{doctor.name}</h3>
+                        <p className="text-teal-600 font-medium">{doctor.position}</p>
                       </div>
-                    </div>
-                  </div>
 
-                  <div className="p-6 space-y-4">
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-1">{doctor.name}</h3>
-                      <p className="text-teal-600 font-medium">{doctor.position}</p>
-                    </div>
-
-                    <div className="space-y-2 text-sm text-gray-600">
-                      <p>
-                        <span className="font-medium">Degree:</span> {doctor.degree}
-                      </p>
-                      <p>
-                        <span className="font-medium">NMC Number:</span> {doctor.nmcNumber}
-                      </p>
-                    </div>
-
-                    {doctor.linkedin && (
-                      <div className="pt-4">
-                        <a
-                          href={doctor.linkedin}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center space-x-2 text-teal-600 hover:text-teal-700 transition-colors"
-                        >
-                          <Linkedin className="h-4 w-4" />
-                          <span className="text-sm font-medium">LinkedIn Profile</span>
-                        </a>
+                      <div className="space-y-2 text-sm text-gray-600">
+                        <p>
+                          <span className="font-medium">Degree:</span> {doctor.degree}
+                        </p>
+                        <p>
+                          <span className="font-medium">NMC Number:</span> {doctor.nmc_number}
+                        </p>
                       </div>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+
+                      {doctor.linkedin_url && (
+                        <div className="pt-4">
+                          <a
+                            href={doctor.linkedin_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center space-x-2 text-teal-600 hover:text-teal-700 transition-colors"
+                          >
+                            <Linkedin className="h-4 w-4" />
+                            <span className="text-sm font-medium">LinkedIn Profile</span>
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -412,7 +418,6 @@ export default function AboutPage() {
         <div className="absolute inset-0 bg-gradient-to-br from-teal-900/20 to-cyan-900/20"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid lg:grid-cols-4 gap-12">
-            {/* Logo and Description */}
             <div className="lg:col-span-2 space-y-6">
               <div className="flex items-center space-x-2">
                 <Image
@@ -429,7 +434,6 @@ export default function AboutPage() {
               </p>
             </div>
 
-            {/* Quick Links */}
             <div className="space-y-6">
               <h3 className="text-xl font-bold text-white">Quick Links</h3>
               <nav className="space-y-3">
@@ -451,7 +455,6 @@ export default function AboutPage() {
               </nav>
             </div>
 
-            {/* Contact Info */}
             <div className="space-y-6">
               <h3 className="text-xl font-bold text-white">Contact Info</h3>
               <div className="space-y-4">
@@ -475,7 +478,6 @@ export default function AboutPage() {
             </div>
           </div>
 
-          {/* Bottom Footer */}
           <div className="mt-12 pt-8 border-t border-gray-700">
             <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
               <p className="text-gray-400 text-sm">© 2024 Dr. Kareem's Dental Clinic. All rights reserved.</p>

@@ -401,13 +401,13 @@ export default function WhyUsPage() {
             </div>
 
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-teal-200/30 to-cyan-200/30 rounded-3xl blur-2xl transform rotate-6"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-teal-200/30 to-cyan-200/30 rounded-3xl  blur-2xl transform rotate-6"></div>
               <Image
-                src="/placeholder.svg?height=600&width=500&text=Happy+Patient+Testimonial"
+                src="/images/MPS__6.jpg"
                 alt="Happy patients at Dr. Kareem's Clinic"
-                width={500}
-                height={600}
-                className="rounded-3xl shadow-2xl relative z-10 hover:scale-105 transition-transform duration-500"
+                width={600}
+                height={750}
+                className="rounded-1xl shadow-2xl relative z-10 hover:scale-105 transition-transform duration-500"
               />
             </div>
           </div>

@@ -105,6 +105,16 @@ export default function Sidebar() {
             <ImageIcon className="h-5 w-5" />
             <span>Gallery</span>
           </Link>
+          <Link
+            href="/admin/doctors"
+            onClick={() => setIsOpen(false)}
+            className={`flex items-center space-x-3 px-4 py-3 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors ${
+              isActive("/admin/doctors") ? "bg-teal-50 border-l-4 border-teal-600" : ""
+            }`}
+          >
+            <Users className="h-5 w-5" />
+            <span>Doctors</span>
+          </Link>
         </nav>
         <div className="p-4">
           <Button

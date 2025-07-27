@@ -5,3 +5,16 @@ CREATE TABLE gallery_images (
   category VARCHAR(50) NOT NULL,
   created_at DATETIME NOT NULL
 );
+
+-- Creating the doctors table
+CREATE TABLE doctors (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  position VARCHAR(255) NOT NULL,
+  degree VARCHAR(255) NOT NULL,
+  nmc_number VARCHAR(50) NOT NULL,
+  linkedin VARCHAR(255) DEFAULT '',
+  image VARCHAR(255) NOT NULL,
+  specialties JSON NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
