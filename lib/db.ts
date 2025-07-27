@@ -1,3 +1,4 @@
+// db.ts
 import mysql from "mysql2/promise"
 
 const dbConfig = {
@@ -38,3 +39,5 @@ export async function query(sql: string, params?: any[]) {
         throw error
     }
 }
+
+export default getPool

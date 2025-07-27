@@ -1,0 +1,7 @@
+CREATE TABLE gallery_images (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  src VARCHAR(255) NOT NULL,
+  alt TEXT NOT NULL,
+  category VARCHAR(50) NOT NULL,
+  created_at DATETIME NOT NULL
+);

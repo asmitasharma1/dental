@@ -41,9 +41,8 @@ export default function Navigation({ currentPage }: NavigationProps) {
           <nav className="hidden md:flex items-center space-x-8">
             <Link
               href="/"
-              className={`text-gray-700 hover:text-teal-600 transition-all duration-300 font-medium relative group ${
-                currentPage === "home" ? "text-teal-600" : ""
-              }`}
+              className={`text-gray-700 hover:text-teal-600 transition-all duration-300 font-medium relative group ${currentPage === "home" ? "text-teal-600" : ""
+                }`}
             >
               Home
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-500 to-teal-600 transition-all duration-300 group-hover:w-full rounded-full"></span>
@@ -53,9 +52,8 @@ export default function Navigation({ currentPage }: NavigationProps) {
               <NavigationMenuList>
                 <NavigationMenuItem>
                   <NavigationMenuTrigger
-                    className={`text-gray-700 hover:text-teal-600 transition-all duration-300 font-medium ${
-                      currentPage === "about" ? "text-teal-600" : ""
-                    }`}
+                    className={`text-gray-700 hover:text-teal-600 transition-all duration-300 font-medium ${currentPage === "about" ? "text-teal-600" : ""
+                      }`}
                   >
                     About Us
                   </NavigationMenuTrigger>
@@ -93,9 +91,8 @@ export default function Navigation({ currentPage }: NavigationProps) {
               <NavigationMenuList>
                 <NavigationMenuItem>
                   <NavigationMenuTrigger
-                    className={`text-gray-700 hover:text-teal-600 transition-all duration-300 font-medium ${
-                      currentPage === "services" ? "text-teal-600" : ""
-                    }`}
+                    className={`text-gray-700 hover:text-teal-600 transition-all duration-300 font-medium ${currentPage === "services" ? "text-teal-600" : ""
+                      }`}
                   >
                     Price/Service
                   </NavigationMenuTrigger>
@@ -159,12 +156,27 @@ export default function Navigation({ currentPage }: NavigationProps) {
             </NavigationMenu>
 
             <Link
+              href="/gallery"
+              className={`text-gray-700 hover:text-teal-600 transition-all duration-300 font-medium relative group ${currentPage === "gallery" ? "text-teal-600" : ""
+                }`}
+            >
+              Gallery
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-500 to-teal-600 transition-all duration-300 group-hover:w-full rounded-full"></span>
+            </Link>
+
+            <Link
               href="/why-us"
-              className={`text-gray-700 hover:text-teal-600 transition-all duration-300 font-medium relative group ${
-                currentPage === "why-us" ? "text-teal-600" : ""
-              }`}
+              className={`text-gray-700 hover:text-teal-600 transition-all duration-300 font-medium relative group ${currentPage === "why-us" ? "text-teal-600" : ""
+                }`}
             >
               Why Us
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-500 to-teal-600 transition-all duration-300 group-hover:w-full rounded-full"></span>
+            </Link>
+            <Link
+              href="/gallery"
+              className="text-gray-700 hover:text-teal-600 transition-all duration-300 font-medium relative group"
+            >
+              Gallery
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-500 to-teal-600 transition-all duration-300 group-hover:w-full rounded-full"></span>
             </Link>
           </nav>
@@ -197,7 +209,10 @@ export default function Navigation({ currentPage }: NavigationProps) {
                 About Us
               </Link>
               <Link href="/services" className="text-gray-700 hover:text-teal-600 transition-colors">
-                Price/Service
+                Services
+              </Link>
+              <Link href="/gallery" className="text-gray-700 hover:text-teal-600 transition-colors">
+                Gallery
               </Link>
               <Link href="/why-us" className="text-gray-700 hover:text-teal-600 transition-colors">
                 Why Us

@@ -1,15 +1,15 @@
 "use client"
-
 import { useState } from "react"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { Calendar, Clock, Users, LogOut, Menu, X } from "lucide-react"
+import { Calendar, Clock, Users, LogOut, Menu, X, ImageIcon } from "lucide-react" // Renamed Image to ImageIcon to avoid conflict
 import Image from "next/image"
 import Link from "next/link"
 
 export default function Sidebar() {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
+
   const isActive = (path: string) => pathname === path
 
   const handleLogout = async () => {
@@ -36,15 +36,10 @@ export default function Sidebar() {
           <Image src="/images/logo.png" alt="Logo" width={40} height={40} className="rounded-full" />
           <span className="text-white font-bold lg:text-gray-700">Admin Panel</span>
         </div>
-        <Button
-          variant="ghost"
-          className="lg:hidden text-white"
-          onClick={toggleSidebar}
-        >
+        <Button variant="ghost" className="lg:hidden text-white" onClick={toggleSidebar}>
           {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </Button>
       </div>
-
       <div
         className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform ${
           isOpen ? "translate-x-0" : "-translate-x-full"
@@ -55,15 +50,10 @@ export default function Sidebar() {
             <Image src="/images/logo.png" alt="Logo" width={40} height={40} className="rounded-full" />
             <span className="text-white font-bold">Admin Panel</span>
           </div>
-          <Button
-            variant="ghost"
-            className="text-white"
-            onClick={toggleSidebar}
-          >
+          <Button variant="ghost" className="text-white" onClick={toggleSidebar}>
             <X className="h-6 w-6" />
           </Button>
         </div>
-
         <nav className="mt-8 px-4 space-y-2 flex-grow">
           <Link
             href="/admin/dashboard"
@@ -105,8 +95,17 @@ export default function Sidebar() {
             <Users className="h-5 w-5" />
             <span>Testimonials</span>
           </Link>
+          <Link
+            href="/admin/gallery"
+            onClick={() => setIsOpen(false)}
+            className={`flex items-center space-x-3 px-4 py-3 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors ${
+              isActive("/admin/gallery") ? "bg-teal-50 border-l-4 border-teal-600" : ""
+            }`}
+          >
+            <ImageIcon className="h-5 w-5" />
+            <span>Gallery</span>
+          </Link>
         </nav>
-
         <div className="p-4">
           <Button
             onClick={() => {

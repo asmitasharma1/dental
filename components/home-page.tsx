@@ -143,12 +143,12 @@ export default function HomePage() {
             <div className="flex items-center space-x-4">
               <Link href="#hero">
                 <Image
-                            src="/images/logo.png"
-                            alt="Smile by Dr. Kareen Logo"
-                            width={500}
-                            height={300}
-                            className="cursor-pointer"
-                            style={{ width: '80px', height: '80px' }}
+                  src="/images/logo.png"
+                  alt="Smile by Dr. Kareen Logo"
+                  width={500}
+                  height={300}
+                  className="cursor-pointer"
+                  style={{ width: '80px', height: '80px' }}
                 />
               </Link>
             </div>
@@ -271,6 +271,13 @@ export default function HomePage() {
                 Why Us
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-500 to-teal-600 transition-all duration-300 group-hover:w-full rounded-full"></span>
               </Link>
+              <Link
+                href="/gallery"
+                className="text-gray-700 hover:text-teal-600 transition-all duration-300 font-medium relative group"
+              >
+                Gallery
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-500 to-teal-600 transition-all duration-300 group-hover:w-full rounded-full"></span>
+              </Link>
             </nav>
 
             <div className="flex items-center space-x-4">
@@ -301,10 +308,13 @@ export default function HomePage() {
                   About Us
                 </Link>
                 <Link href="/services" className="text-gray-700 hover:text-teal-600 transition-colors">
-                  Price/Service
+                  Services
                 </Link>
                 <Link href="/why-us" className="text-gray-700 hover:text-teal-600 transition-colors">
                   Why Us
+                </Link>
+                <Link href="/gallery" className="block text-gray-300 hover:text-teal-400 transition-colors">
+                  Gallery
                 </Link>
                 <Link href="/book-now">
                   <Button className="w-full bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white">
@@ -325,7 +335,7 @@ export default function HomePage() {
         {/* Social Media Links - Right Side */}
         <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-40 flex flex-col space-y-4">
           <a
-            href="https://instagram.com/drkareen"
+            href="https://www.instagram.com/smilebydrkareen_dentalclinic/"
             target="_blank"
             rel="noopener noreferrer"
             className="w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-teal-50 transition-all duration-300 hover:scale-110"
@@ -472,9 +482,8 @@ export default function HomePage() {
               {topServices.map((_, index) => (
                 <button
                   key={index}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    index === currentService ? "bg-teal-600" : "bg-gray-300"
-                  }`}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentService ? "bg-teal-600" : "bg-gray-300"
+                    }`}
                   onClick={() => setCurrentService(index)}
                 />
               ))}
@@ -687,9 +696,8 @@ export default function HomePage() {
                 {testimonials.map((_, index) => (
                   <button
                     key={index}
-                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                      index === currentTestimonial ? "bg-white" : "bg-white/40"
-                    }`}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentTestimonial ? "bg-white" : "bg-white/40"
+                      }`}
                     onClick={() => setCurrentTestimonial(index)}
                   />
                 ))}
@@ -733,6 +741,9 @@ export default function HomePage() {
                 </Link>
                 <Link href="/why-us" className="block text-gray-300 hover:text-teal-400 transition-colors">
                   Why Us
+                </Link>
+                <Link href="/gallery" className="block text-gray-300 hover:text-teal-400 transition-colors">
+                  Gallery
                 </Link>
                 <Link href="/book-now" className="block text-gray-300 hover:text-teal-400 transition-colors">
                   Book Appointment

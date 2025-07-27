@@ -207,6 +207,13 @@ export default function ServicesPage() {
                 Why Us
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-500 to-teal-600 transition-all duration-300 group-hover:w-full rounded-full"></span>
               </Link>
+              <Link
+                href="/gallery"
+                className="text-gray-700 hover:text-teal-600 transition-all duration-300 font-medium relative group"
+              >
+                Gallery
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-500 to-teal-600 transition-all duration-300 group-hover:w-full rounded-full"></span>
+              </Link>
             </nav>
             <div className="flex items-center space-x-4">
               <Link href="/book-now">
@@ -234,10 +241,13 @@ export default function ServicesPage() {
                   About Us
                 </Link>
                 <Link href="/services" className="text-gray-700 hover:text-teal-600 transition-colors">
-                  Price/Service
+                  Services
                 </Link>
                 <Link href="/why-us" className="text-gray-700 hover:text-teal-600 transition-colors">
                   Why Us
+                </Link>
+                <Link href="/gallery" className="block text-gray-300 hover:text-teal-400 transition-colors">
+                  Gallery
                 </Link>
                 <Link href="/book-now">
                   <Button className="w-full bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white">
