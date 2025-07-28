@@ -75,7 +75,7 @@ export default function BookNowPage() {
                             href="/about#doctors"
                             className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none"
                           >
-                            <div className="text-sm font-medium leading-none group-hover:underline">Our Doctors</div>
+                            <div className="text-sm font-Medium leading-none group-hover:underline">Our Doctors</div>
                             <div className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                               Meet our experienced dental professionals
                             </div>
@@ -230,13 +230,13 @@ export default function BookNowPage() {
 
           <div className="grid lg:grid-cols-2 gap-16">
             {/* Booking Form */}
-            <Card className="bg-white border-0 p-8 rounded-3xl shadow-2xl">
+            <Card className="bg-white border-0 p-8 rounded-1xl shadow-2xl">
               <CardContent className="p-0">
                 <div className="flex items-center space-x-3 mb-8">
                   <div className="w-12 h-12 bg-gradient-to-br from-teal-100 to-teal-200 rounded-full flex items-center justify-center">
                     <Calendar className="h-6 w-6 text-teal-600" />
                   </div>
-                  <h3 className="text-3xl font-bold bg-gradient-to-r from-teal-600 to-teal-700 bg-clip-text text-transparent">
+                  <h3 className="text-1xl font-bold bg-gradient-to-r from-teal-600 to-teal-700 bg-clip-text text-transparent">
                     Book Online Now
                   </h3>
                 </div>
@@ -248,7 +248,7 @@ export default function BookNowPage() {
             {/* Map and Contact Info */}
             <div className="space-y-8">
               {/* Contact Information */}
-              <Card className="bg-white border-0 p-8 rounded-3xl shadow-lg">
+              <Card className="bg-white border-0 p-8 rounded-1xl shadow-lg">
                 <CardContent className="p-0">
                   <h3 className="text-2xl font-bold text-gray-900 mb-6">Contact Information</h3>
                   <div className="space-y-4">
@@ -292,12 +292,16 @@ export default function BookNowPage() {
                 </CardContent>
               </Card>
 
-              {/* Baato Embedded Map */}
-              <div className="bg-gradient-to-br from-gray-200 to-gray-300 rounded-3xl overflow-hidden shadow-2xl">
+              {/* Google Embedded Map */}
+              <div className="bg-gradient-to-br from-gray-200 to-gray-300 rounded-1xl overflow-hidden shadow-2xl">
                 <iframe
-                  src="https://api.baato.io/api/v1/embeddable/024a49f9-4e3d-49fd-987b-0945a198d49e?key=bpk.mtBvo2Mo4HRe39ZmzbNZ97_29Yl9z7URWV4z3dSvUeLl"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3531.4324619938457!2d85.31550617492407!3d27.7348042242808!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xae470c3861f9509f%3A0x6b9442455247ac3f!2sSmile%20360%20Dental%20Clinic!5e0!3m2!1sen!2snp!4v1753676757830!5m2!1sen!2snp"
                   width="100%"
-                  height="400px"
+                  height="525px"
+                  style={{ border: 0 }}
+                  allowFullScreen={true}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
                 ></iframe>
               </div>
             </div>
