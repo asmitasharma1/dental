@@ -273,7 +273,7 @@ export default function WhyUsPage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-20">
             <h1 className="text-5xl lg:text-6xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 bg-clip-text text-transparent mb-6">
-              Why Choose Dr. Kareem's Clinic?
+              Why Choose Dr. Kareen's Clinic?
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               Discover what makes us the preferred choice for dental care in Lalitpur. Our commitment to excellence,
@@ -311,7 +311,7 @@ export default function WhyUsPage() {
               Our Unique Value Propositions
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Here's what makes Dr. Kareem's Clinic the right choice for your dental health
+              Here's what makes Dr. Kareen's Clinic the right choice for your dental health
             </p>
           </div>
 
@@ -347,7 +347,7 @@ export default function WhyUsPage() {
                   Our Commitment to Excellence
                 </h2>
                 <p className="text-xl text-gray-600 leading-relaxed">
-                  At Dr. Kareem's Clinic, we don't just treat teeth – we care for people. Our holistic approach ensures
+                  At Dr. Kareen's Clinic, we don't just treat teeth – we care for people. Our holistic approach ensures
                   that every patient receives personalized attention and the highest quality care.
                 </p>
               </div>
@@ -404,7 +404,7 @@ export default function WhyUsPage() {
               <div className="absolute inset-0 bg-gradient-to-br from-teal-200/30 to-cyan-200/30 rounded-3xl  blur-2xl transform rotate-6"></div>
               <Image
                 src="/images/MPS__6.jpg"
-                alt="Happy patients at Dr. Kareem's Clinic"
+                alt="Happy patients at Dr. Kareen's Clinic"
                 width={600}
                 height={750}
                 className="rounded-1xl shadow-2xl relative z-10 hover:scale-105 transition-transform duration-500"
@@ -424,7 +424,7 @@ export default function WhyUsPage() {
               <div className="flex items-center space-x-2">
                 <Image
                   src="/images/logo.png"
-                  alt="Dr. Kareem's Clinic Logo"
+                  alt="Dr. Kareen's Clinic Logo"
                   width={120}
                   height={60}
                   className="h-12 w-auto"
@@ -461,7 +461,7 @@ export default function WhyUsPage() {
               <div className="space-y-4">
                 <div className="flex items-center space-x-3">
                   <Mail className="h-5 w-5 text-teal-400" />
-                  <span className="text-gray-300">drkareem@example.com</span>
+                  <span className="text-gray-300">drkareen@example.com</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Phone className="h-5 w-5 text-teal-400" />
@@ -482,7 +482,7 @@ export default function WhyUsPage() {
           {/* Bottom Footer */}
           <div className="mt-12 pt-8 border-t border-gray-700">
             <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-              <p className="text-gray-400 text-sm">© 2024 Dr. Kareem's Dental Clinic. All rights reserved.</p>
+              <p className="text-gray-400 text-sm">© 2024 Dr. Kareen's Dental Clinic. All rights reserved.</p>
               <div className="flex space-x-6 text-sm">
                 <Link href="#" className="text-gray-400 hover:text-teal-400 transition-colors">
                   Privacy Policy

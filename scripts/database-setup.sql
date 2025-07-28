@@ -101,6 +101,6 @@ INSERT INTO admin_users (username, email, password_hash, role) VALUES
 ('admin', 'admin@smilebydrkareen.com', '$2b$10$K7L/R3.HWYTB/xJxN5.B2OKMTQ5pIpIL22jHkfDyUiflHWQhgdXSa', 'admin');
 
 
---CREATE USER 'dentalclinic'@'localhost' IDENTIFIED BY 'gorkhali';
---GRANT ALL PRIVILEGES ON dental_clinic.* TO 'dentalclinic'@'localhost';
---FLUSH PRIVILEGES;
+-- CREATE USER 'dentalclinic'@'localhost' IDENTIFIED BY 'gorkhali';
+-- GRANT ALL PRIVILEGES ON dental_clinic.* TO 'dentalclinic'@'localhost';
+-- FLUSH PRIVILEGES;

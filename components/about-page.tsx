@@ -78,7 +78,7 @@ export default function AboutPage() {
               <Link href="#hero">
                 <Image
                   src="/images/logo.png"
-                  alt="Smile by Dr. Kareem Logo"
+                  alt="Smile by Dr. Kareen Logo"
                   width={500}
                   height={300}
                   className="cursor-pointer"
@@ -269,7 +269,7 @@ export default function AboutPage() {
                   About Our Clinic
                 </h1>
                 <p className="text-xl text-gray-600 leading-relaxed">
-                  Dr. Kareem's Dental Clinic in Lalitpur is a state-of-the-art facility dedicated to providing
+                  Dr. Kareen's Dental Clinic in Lalitpur is a state-of-the-art facility dedicated to providing
                   comprehensive dental care with the latest technology and a patient-centered approach.
                 </p>
               </div>
@@ -320,7 +320,7 @@ export default function AboutPage() {
               <div className="absolute inset-0 bg-gradient-to-br from-teal-200/30 to-cyan-200/30 rounded-3xl blur-2xl transform -rotate-6"></div>
               <Image
                 src="/images/MPS__3.jpg"
-                alt="Dr. Kareem's Clinic Interior"
+                alt="Dr. Kareen's Clinic Interior"
                 width={700}
                 height={950}
                 className="rounded-1xl shadow-2xl relative z-10 hover:scale-105 transition-transform duration-500"
@@ -422,7 +422,7 @@ export default function AboutPage() {
               <div className="flex items-center space-x-2">
                 <Image
                   src="/images/logo.png"
-                  alt="Dr. Kareem's Clinic Logo"
+                  alt="Dr. Kareen's Clinic Logo"
                   width={120}
                   height={60}
                   className="h-12 w-auto"
@@ -460,7 +460,7 @@ export default function AboutPage() {
               <div className="space-y-4">
                 <div className="flex items-center space-x-3">
                   <Mail className="h-5 w-5 text-teal-400" />
-                  <span className="text-gray-300">drkareem@example.com</span>
+                  <span className="text-gray-300">drkareen@example.com</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Phone className="h-5 w-5 text-teal-400" />
@@ -480,7 +480,7 @@ export default function AboutPage() {
 
           <div className="mt-12 pt-8 border-t border-gray-700">
             <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-              <p className="text-gray-400 text-sm">© 2024 Dr. Kareem's Dental Clinic. All rights reserved.</p>
+              <p className="text-gray-400 text-sm">© 2024 Dr. Kareen's Dental Clinic. All rights reserved.</p>
               <div className="flex space-x-6 text-sm">
                 <Link href="#" className="text-gray-400 hover:text-teal-400 transition-colors">
                   Privacy Policy

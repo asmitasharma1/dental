@@ -394,7 +394,7 @@ export default function GalleryPage() {
               <div className="flex items-center space-x-2">
                 <Image
                   src="/images/logo.png"
-                  alt="Dr. Kareem's Clinic Logo"
+                  alt="Dr. Kareen's Clinic Logo"
                   width={120}
                   height={60}
                   className="h-12 w-auto"
@@ -432,7 +432,7 @@ export default function GalleryPage() {
               <div className="space-y-4">
                 <div className="flex items-center space-x-3">
                   <Mail className="h-5 w-5 text-teal-400" />
-                  <span className="text-gray-300">drkareem@example.com</span>
+                  <span className="text-gray-300">drkareen@example.com</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Phone className="h-5 w-5 text-teal-400" />
@@ -452,7 +452,7 @@ export default function GalleryPage() {
           {/* Bottom Footer */}
           <div className="mt-12 pt-8 border-t border-gray-700">
             <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-              <p className="text-gray-400 text-sm">© 2024 Dr. Kareem's Dental Clinic. All rights reserved.</p>
+              <p className="text-gray-400 text-sm">© 2024 Dr. Kareen's Dental Clinic. All rights reserved.</p>
               <div className="flex space-x-6 text-sm">
                 <Link href="#" className="text-gray-400 hover:text-teal-400 transition-colors">
                   Privacy Policy
