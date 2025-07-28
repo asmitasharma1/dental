@@ -3,7 +3,9 @@ import { query } from "@/lib/db"
 
 export async function GET() {
   try {
-    const services = await query("SELECT * FROM services WHERE is_active = TRUE ORDER BY category, title")
+    const services = await query(
+      "SELECT id, title, description, category, price, duration, is_active FROM services WHERE is_active = TRUE ORDER BY category, title"
+    );
     return NextResponse.json(services)
   } catch (error) {
     console.error("Error fetching services:", error)
