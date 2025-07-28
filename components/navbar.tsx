@@ -1,3 +1,4 @@
+// navbar.tsx
 "use client"
 
 import { Button } from "@/components/ui/button"
@@ -136,6 +137,19 @@ export default function Navbar() {
                           </div>
                         </Link>
                       </NavigationMenuLink>
+                      <NavigationMenuLink asChild>
+                        <Link
+                          href="/services/restorative-dentistry/faq"
+                          className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none"
+                        >
+                          <div className="text-sm font-medium leading-none group-hover:underline">
+                            FAQs
+                          </div>
+                          <div className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                            Frequently Asked Questions
+                          </div>
+                        </Link>
+                      </NavigationMenuLink>
                     </div>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
@@ -181,6 +195,9 @@ export default function Navbar() {
               </Link>
               <Link href="/services" className="text-gray-700 hover:text-teal-600 transition-colors">
                 Price/Service
+              </Link>
+              <Link href="/services/restorative-dentistry/faq" className="text-gray-700 hover:text-teal-600 transition-colors">
+                FAQs
               </Link>
               <Link href="/why-us" className="text-gray-700 hover:text-teal-600 transition-colors">
                 Why Us
