@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent } from "@/components/ui/card"
-import { User, Lock, AlertCircle, Bug } from "lucide-react"
+import { User, Lock, AlertCircle } from "lucide-react"
 import Image from "next/image"
 
 export default function AdminLogin() {
@@ -14,13 +14,11 @@ export default function AdminLogin() {
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
-  const [debugInfo, setDebugInfo] = useState("")
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError("")
-    setDebugInfo("")
 
     try {
       console.log("Attempting login...")
@@ -39,7 +37,6 @@ export default function AdminLogin() {
 
       if (response.ok) {
         console.log("Login successful, redirecting to dashboard...")
-        // Use window.location.replace to avoid back button issues
         window.location.replace("/admin/dashboard")
       } else {
         console.log("Login failed:", data.error)
@@ -48,53 +45,6 @@ export default function AdminLogin() {
     } catch (error) {
       console.error("Login network error:", error)
       setError("Network error. Please try again.")
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const handleDebug = async () => {
-    setLoading(true)
-    setError("")
-    setDebugInfo("")
-
-    try {
-      const response = await fetch("/api/auth/debug", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      })
-
-      const data = await response.json()
-      if (response.ok) {
-        setDebugInfo(`Debug Results:
-- User exists: ${data.userExists}
-- User active: ${data.isActive}
-- Password valid: ${data.passwordValid}
-- User ID: ${data.debug?.userId}
-- Role: ${data.debug?.role}
-        `)
-      } else {
-        setError(`Debug Error: ${data.error}`)
-        if (data.debug) {
-          setDebugInfo(`Debug Info: ${data.debug}`)
-        }
-      }
-    } catch (error) {
-      setError("Debug request failed")
-
-      // Alternative: try to check auth status
-      try {
-        const authResponse = await fetch("/api/auth/check", {
-          credentials: "include",
-        })
-        const authData = await authResponse.json()
-        setDebugInfo(`Auth Check Result:
-Status: ${authResponse.status}
-Response: ${JSON.stringify(authData, null, 2)}`)
-      } catch (authError) {
-        setDebugInfo("Could not check auth status")
-      }
     } finally {
       setLoading(false)
     }
@@ -120,12 +70,6 @@ Response: ${JSON.stringify(authData, null, 2)}`)
                 <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-center space-x-3">
                   <AlertCircle className="h-5 w-5 text-red-600" />
                   <span className="text-red-700 text-sm">{error}</span>
-                </div>
-              )}
-
-              {debugInfo && (
-                <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-                  <pre className="text-blue-700 text-xs whitespace-pre-wrap">{debugInfo}</pre>
                 </div>
               )}
 
@@ -173,23 +117,8 @@ Response: ${JSON.stringify(authData, null, 2)}`)
                 >
                   {loading ? "Signing in..." : "Sign In"}
                 </Button>
-
-                <Button
-                  type="button"
-                  onClick={handleDebug}
-                  disabled={loading}
-                  variant="outline"
-                  className="w-full border-gray-300 text-gray-700 py-3 rounded-xl hover:bg-gray-50 bg-transparent"
-                >
-                  <Bug className="h-4 w-4 mr-2" />
-                  Debug Login
-                </Button>
               </div>
             </form>
-
-            <div className="mt-6 text-center space-y-2">
-              <p className="text-sm text-gray-500">Default credentials: admin / admin123</p>
-            </div>
           </div>
         </CardContent>
       </Card>
