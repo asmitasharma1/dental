@@ -21,7 +21,6 @@ export default function AdminLogin() {
     setError("")
 
     try {
-      console.log("Attempting login...")
       const response = await fetch("/api/auth/login", {
         method: "POST",
         headers: {
@@ -32,11 +31,9 @@ export default function AdminLogin() {
       })
 
       const data = await response.json()
-      console.log("Login response status:", response.status)
-      console.log("Login response data:", data)
+   
 
       if (response.ok) {
-        console.log("Login successful, redirecting to dashboard...")
         window.location.replace("/admin/dashboard")
       } else {
         console.log("Login failed:", data.error)

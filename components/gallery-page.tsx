@@ -4,12 +4,10 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
-import { X, ChevronLeft, ChevronRight, Menu, Mail, Phone, MapPin, Clock } from "lucide-react"
+import { X, ChevronLeft, ChevronRight } from "lucide-react"
 import Image from "next/image"
-import Link from "next/link"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
-
 
 interface GalleryImage {
   id: number
@@ -21,12 +19,12 @@ interface GalleryImage {
 const categories = ["All", "Clinic Interior", "Equipment", "Treatment Rooms", "Procedures"]
 
 export default function GalleryPage() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [images, setImages] = useState<GalleryImage[]>([])
   const [loading, setLoading] = useState(true)
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [imageLoadStates, setImageLoadStates] = useState<Record<number, boolean>>({})
 
   useEffect(() => {
     fetchImages()
@@ -65,7 +63,10 @@ export default function GalleryPage() {
     setCurrentImageIndex((prevIndex) => (prevIndex - 1 + filteredImages.length) % filteredImages.length)
   }
 
-  // Fix the keyboard event handler
+  const handleImageLoad = (imageId: number) => {
+    setImageLoadStates((prev) => ({ ...prev, [imageId]: true }))
+  }
+
   useEffect(() => {
     const handleKeyDown = (e: globalThis.KeyboardEvent) => {
       if (!lightboxOpen) return
@@ -84,7 +85,7 @@ export default function GalleryPage() {
         window.removeEventListener("keydown", handleKeyDown)
       }
     }
-  }, [lightboxOpen, currentImageIndex, filteredImages.length])
+  }, [lightboxOpen, filteredImages.length])
 
   return (
     <div className="min-h-screen bg-white">
@@ -130,18 +131,33 @@ export default function GalleryPage() {
             {filteredImages.map((image, index) => (
               <Card
                 key={image.id}
-                className="overflow-hidden border-0 rounded-1xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group"
+                className="overflow-hidden border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group"
                 onClick={() => openLightbox(index)}
               >
                 <CardContent className="p-0">
-                  <div className="relative aspect-[5/4] overflow-hidden">
+                  <div className="relative aspect-[5/4] overflow-hidden bg-gray-100">
+                    {/* Loading skeleton */}
+                    {!imageLoadStates[image.id] && (
+                      <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
+                        <div className="text-gray-400 text-sm">Loading...</div>
+                      </div>
+                    )}
+
                     <Image
-                      src={image.src || "/placeholder.svg"}
+                      src={image.src || "/placeholder.svg?height=400&width=500&query=gallery image"}
                       alt={image.alt}
                       fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                      className={`object-cover group-hover:scale-105 transition-transform duration-300 ${
+                        imageLoadStates[image.id] ? "opacity-100" : "opacity-0"
+                      }`}
+                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                      quality={75}
+                      loading={index < 8 ? "eager" : "lazy"} // Load first 8 images eagerly
+                      onLoad={() => handleImageLoad(image.id)}
+                      placeholder="blur"
+                      blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                     />
+
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
                       <p className="text-white text-sm font-medium">{image.alt}</p>
                     </div>
@@ -158,12 +174,21 @@ export default function GalleryPage() {
         <DialogContent className="max-w-5xl h-[90vh] p-0 bg-transparent border-none shadow-none flex items-center justify-center">
           {filteredImages.length > 0 && (
             <div className="relative w-full h-full flex items-center justify-center">
-              <Image
-                src={filteredImages[currentImageIndex]?.src || "/placeholder.svg"}
-                alt={filteredImages[currentImageIndex]?.alt || "Gallery image"}
-                fill
-                className="object-contain"
-              />
+              <div className="relative w-full h-full">
+                <Image
+                  src={
+                    filteredImages[currentImageIndex]?.src ||
+                    "/placeholder.svg?height=800&width=1200&query=gallery lightbox"
+                  }
+                  alt={filteredImages[currentImageIndex]?.alt || "Gallery image"}
+                  fill
+                  className="object-contain"
+                  quality={90}
+                  priority
+                  sizes="100vw"
+                />
+              </div>
+
               <Button
                 variant="ghost"
                 size="icon"
@@ -172,6 +197,7 @@ export default function GalleryPage() {
               >
                 <X className="h-6 w-6" />
               </Button>
+
               {filteredImages.length > 1 && (
                 <>
                   <Button
@@ -192,6 +218,7 @@ export default function GalleryPage() {
                   </Button>
                 </>
               )}
+
               <div className="absolute bottom-4 left-0 right-0 text-center text-white text-lg bg-black/50 p-2 z-10">
                 {filteredImages[currentImageIndex]?.alt}
               </div>
@@ -201,7 +228,6 @@ export default function GalleryPage() {
       </Dialog>
 
       <Footer />
-      
     </div>
   )
 }

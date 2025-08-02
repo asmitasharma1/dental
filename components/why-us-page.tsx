@@ -209,8 +209,8 @@ export default function WhyUsPage() {
               <Image
                 src="/images/MPS__6.jpg"
                 alt="Happy patients at Dr. Kareen's Clinic"
-                width={600}
-                height={750}
+                width={500}
+                height={600}
                 className="rounded-1xl shadow-2xl relative z-10 hover:scale-105 transition-transform duration-500"
               />
             </div>

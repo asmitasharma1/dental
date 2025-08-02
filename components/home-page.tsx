@@ -221,8 +221,8 @@ export default function HomePage() {
               <Image
                 src="/images/dental-hero.jpeg"
                 alt="Professional dental care"
-                width={700}
-                height={700}
+                width={600}
+                height={600}
                 className="rounded-1xl shadow-2xl relative z-10 hover:scale-105 transition-transform duration-500"
               />
             </div>

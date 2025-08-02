@@ -6,8 +6,6 @@ export async function POST(request: NextRequest) {
   try {
     const { username, password } = await request.json()
 
-    console.log("Debug - Checking user:", username)
-
     // Check if user exists
     const users = (await query("SELECT * FROM admin_users WHERE username = ?", [username])) as any[]
     const userExists = users.length > 0

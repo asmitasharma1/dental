@@ -1,10 +1,8 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Award, Shield, Heart, Menu, X, Linkedin, MapPin, Phone, Mail, Clock } from "lucide-react"
 import Image from "next/image"
-import Link from "next/link"
 import { useState, useEffect } from "react"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
@@ -130,8 +128,8 @@ export default function AboutPage() {
               <Image
                 src="/images/MPS__3.jpg"
                 alt="Dr. Kareen's Clinic Interior"
-                width={700}
-                height={950}
+                width={500}
+                height={600}
                 className="rounded-1xl shadow-2xl relative z-10 hover:scale-105 transition-transform duration-500"
               />
             </div>

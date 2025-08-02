@@ -21,6 +21,9 @@ import {
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import Navbar from "@/components/navbar"
+import Footer from "@/components/footer"
+
 
 interface Service {
   id: number
@@ -110,86 +113,9 @@ export default function ServiceDetailPage({ serviceId }: ServiceDetailPageProps)
   }
 
   const IconComponent = categoryIcons[service.category as keyof typeof categoryIcons] || Tooth
-
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="bg-white/95 backdrop-blur-sm shadow-lg sticky top-0 z-50 border-b border-teal-100">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <Link href="/">
-                <Image
-                  src="/images/logo.png"
-                  alt="Smile by Dr. Kareen Logo"
-                  width={80}
-                  height={80}
-                  className="cursor-pointer"
-                />
-              </Link>
-            </div>
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
-              <Link
-                href="/"
-                className="text-gray-700 hover:text-teal-600 transition-all duration-300 font-medium relative group"
-              >
-                Home
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-500 to-teal-600 transition-all duration-300 group-hover:w-full rounded-full"></span>
-              </Link>
-              <Link
-                href="/about"
-                className="text-gray-700 hover:text-teal-600 transition-all duration-300 font-medium relative group"
-              >
-                About Us
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-500 to-teal-600 transition-all duration-300 group-hover:w-full rounded-full"></span>
-              </Link>
-              <Link href="/services" className="text-teal-600 font-medium relative group">
-                Services
-                <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-teal-500 to-teal-600 rounded-full"></span>
-              </Link>
-              <Link
-                href="/why-us"
-                className="text-gray-700 hover:text-teal-600 transition-all duration-300 font-medium relative group"
-              >
-                Why Us
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-500 to-teal-600 transition-all duration-300 group-hover:w-full rounded-full"></span>
-              </Link>
-            </nav>
-            <div className="flex items-center space-x-4">
-              <Link href="/book-now">
-                <Button
-                  size="lg"
-                  className="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 rounded-full px-6 py-3 font-semibold"
-                >
-                  Book Now
-                </Button>
-              </Link>
-              {/* Mobile Menu Button */}
-              <Button variant="ghost" size="sm" className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-                {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Breadcrumb */}
-      <section className="py-6 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center space-x-2 text-sm">
-            <Link href="/" className="text-gray-500 hover:text-teal-600">
-              Home
-            </Link>
-            <span className="text-gray-400">/</span>
-            <Link href="/services" className="text-gray-500 hover:text-teal-600">
-              Services
-            </Link>
-            <span className="text-gray-400">/</span>
-            <span className="text-gray-900 font-medium">{service.title}</span>
-          </div>
-        </div>
-      </section>
+      <Navbar />
 
       {/* Service Detail Hero */}
       <section className="py-16 bg-gradient-to-br from-teal-50 via-white to-cyan-50">
@@ -303,84 +229,7 @@ export default function ServiceDetailPage({ serviceId }: ServiceDetailPageProps)
         </section>
       )}
 
-      {/* Footer */}
-      <footer className="bg-gradient-to-br from-gray-900 to-gray-800 text-white py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-teal-900/20 to-cyan-900/20"></div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="grid lg:grid-cols-4 gap-12">
-            {/* Logo and Description */}
-            <div className="lg:col-span-2 space-y-6">
-              <div className="flex items-center space-x-2">
-                <Image
-                  src="/images/logo.png"
-                  alt="Dr. Kareen's Clinic Logo"
-                  width={120}
-                  height={48}
-                  className="h-12 w-auto"
-                />
-              </div>
-              <p className="text-gray-300 text-lg leading-relaxed max-w-md">
-                Your trusted dental care partner in Lalitpur. We're committed to providing exceptional dental services
-                with a personal touch.
-              </p>
-            </div>
-            {/* Quick Links */}
-            <div className="space-y-6">
-              <h3 className="text-xl font-bold text-white">Quick Links</h3>
-              <nav className="space-y-3">
-                <Link href="/" className="block text-gray-300 hover:text-teal-400 transition-colors">
-                  Home
-                </Link>
-                <Link href="/about" className="block text-gray-300 hover:text-teal-400 transition-colors">
-                  About Us
-                </Link>
-                <Link href="/why-us" className="block text-gray-300 hover:text-teal-400 transition-colors">
-                  Why Us
-                </Link>
-                <Link href="/book-now" className="block text-gray-300 hover:text-teal-400 transition-colors">
-                  Book Appointment
-                </Link>
-              </nav>
-            </div>
-            {/* Contact Info */}
-            <div className="space-y-6">
-              <h3 className="text-xl font-bold text-white">Contact Info</h3>
-              <div className="space-y-4">
-                <div className="flex items-center space-x-3">
-                  <Mail className="h-5 w-5 text-teal-400" />
-                  <span className="text-gray-300">drkareen@example.com</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Phone className="h-5 w-5 text-teal-400" />
-                  <span className="text-gray-300">985-1359775</span>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <MapPin className="h-5 w-5 text-teal-400 mt-1" />
-                  <span className="text-gray-300">Pulchowk Damkal, Lalitpur, Nepal</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Clock className="h-5 w-5 text-teal-400" />
-                  <span className="text-gray-300">Mon-Sun: 9:00 AM - 8:00 PM</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* Bottom Footer */}
-          <div className="mt-12 pt-8 border-t border-gray-700">
-            <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-              <p className="text-gray-400 text-sm">© 2024 Dr. Kareen's Dental Clinic. All rights reserved.</p>
-              <div className="flex space-x-6 text-sm">
-                <Link href="#" className="text-gray-400 hover:text-teal-400 transition-colors">
-                  Privacy Policy
-                </Link>
-                <Link href="#" className="text-gray-400 hover:text-teal-400 transition-colors">
-                  Terms of Service
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

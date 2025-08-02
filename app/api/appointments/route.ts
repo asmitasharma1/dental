@@ -33,7 +33,6 @@ export async function GET(request: NextRequest) {
 
     await connection.end()
 
-    console.log("Appointments fetched:", rows) // Debug log
 
     return NextResponse.json(rows)
   } catch (error) {

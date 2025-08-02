@@ -1,4 +1,3 @@
-// navbar.tsx
 "use client"
 
 import { Button } from "@/components/ui/button"
@@ -13,17 +12,33 @@ import {
 import { Menu, X } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const handleScrollLink = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    e.preventDefault()
+    const target = document.querySelector(targetId)
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth" })
+      setIsMenuOpen(false)
+    }
+  }
+
+  const handleMobileLinkClick = () => {
+    setIsMenuOpen(false)
+  }
 
   return (
     <header className="bg-white/95 backdrop-blur-sm shadow-lg sticky top-0 z-50 border-b border-teal-100">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
-            <Link href="#hero">
+            <Link
+              href="/"
+              className="text-gray-700 hover:text-teal-600 transition-all duration-300 font-medium relative group"
+            >
               <Image
                 src="/images/logo.png"
                 alt="Smile by Dr. Kareen Logo"
@@ -37,7 +52,7 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link
-              href="/#hero"
+              href="/"
               className="text-gray-700 hover:text-teal-600 transition-all duration-300 font-medium relative group"
             >
               Home
@@ -97,46 +112,7 @@ export default function Navbar() {
                           </div>
                         </Link>
                       </NavigationMenuLink>
-                      <NavigationMenuLink asChild>
-                        <Link
-                          href="/services/general-dentistry"
-                          className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none"
-                        >
-                          <div className="text-sm font-medium leading-none group-hover:underline">
-                            General Dentistry
-                          </div>
-                        </Link>
-                      </NavigationMenuLink>
-                      <NavigationMenuLink asChild>
-                        <Link
-                          href="/services/cosmetic-dentistry"
-                          className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none"
-                        >
-                          <div className="text-sm font-medium leading-none group-hover:underline">
-                            Cosmetic Dentistry
-                          </div>
-                        </Link>
-                      </NavigationMenuLink>
-                      <NavigationMenuLink asChild>
-                        <Link
-                          href="/services/restorative-dentistry"
-                          className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none"
-                        >
-                          <div className="text-sm font-medium leading-none group-hover:underline">
-                            Restorative Dentistry
-                          </div>
-                        </Link>
-                      </NavigationMenuLink>
-                      <NavigationMenuLink asChild>
-                        <Link
-                          href="/services/pediatric-dentistry"
-                          className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none"
-                        >
-                          <div className="text-sm font-medium leading-none group-hover:underline">
-                            Pediatric Dentistry
-                          </div>
-                        </Link>
-                      </NavigationMenuLink>
+
                       <NavigationMenuLink asChild>
                         <Link
                           href="/services/restorative-dentistry/faq"
@@ -187,22 +163,25 @@ export default function Navbar() {
         {isMenuOpen && (
           <div className="md:hidden mt-4 pb-4 border-t border-gray-100">
             <nav className="flex flex-col space-y-4 pt-4">
-              <Link href="#hero" className="text-gray-700 hover:text-teal-600 transition-colors">
+              <Link href="/" onClick={handleMobileLinkClick} className="text-gray-700 hover:text-teal-600 transition-colors">
                 Home
               </Link>
-              <Link href="/about" className="text-gray-700 hover:text-teal-600 transition-colors">
+              <Link href="/about" onClick={handleMobileLinkClick} className="text-gray-700 hover:text-teal-600 transition-colors">
                 About Us
               </Link>
-              <Link href="/services" className="text-gray-700 hover:text-teal-600 transition-colors">
+              <Link href="/services" onClick={handleMobileLinkClick} className="text-gray-700 hover:text-teal-600 transition-colors">
                 Price/Service
               </Link>
-              <Link href="/services/restorative-dentistry/faq" className="text-gray-700 hover:text-teal-600 transition-colors">
+              <Link href="/services/restorative-dentistry/faq" onClick={handleMobileLinkClick} className="text-gray-700 hover:text-teal-600 transition-colors">
                 FAQs
               </Link>
-              <Link href="/why-us" className="text-gray-700 hover:text-teal-600 transition-colors">
+              <Link href="/why-us" onClick={handleMobileLinkClick} className="text-gray-700 hover:text-teal-600 transition-colors">
                 Why Us
               </Link>
-              <Link href="/book-now">
+              <Link href="/gallery" onClick={handleMobileLinkClick} className="text-gray-700 hover:text-teal-600 transition-colors">
+                Gallery
+              </Link>
+              <Link href="/book-now" onClick={handleMobileLinkClick}>
                 <Button className="w-full bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white">
                   Book Now
                 </Button>

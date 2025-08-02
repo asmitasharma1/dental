@@ -1,23 +1,8 @@
 "use client"
-
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import {
-  Menu,
-  X,
-  ArrowRight,
-  SmileIcon as Tooth,
-  Smile,
-  Baby,
-  Wrench,
-  ChevronLeft,
-  ChevronRight,
-  Mail,
-  Phone,
-  MapPin,
-  Clock,
-} from "lucide-react"
+import { ArrowRight, SmileIcon as Tooth, Smile, Baby, Wrench, ChevronLeft, ChevronRight } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import Navbar from "@/components/navbar"
@@ -57,7 +42,6 @@ const categoryDescriptions = {
 
 export default function ServicesPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [currentSlide, setCurrentSlide] = useState(0)
   const [services, setServices] = useState<Service[]>([])
   const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
@@ -68,18 +52,11 @@ export default function ServicesPage() {
   const startIndex = (currentPage - 1) * servicesPerPage
   const currentServices = services.slice(startIndex, startIndex + servicesPerPage)
 
-  const beforeAfterImages = [
-    {
-      before: "/placeholder.svg?height=320&width=400",
-      after: "/placeholder.svg?height=320&width=400",
-      title: "Complete Smile Transformation",
-    },
-    {
-      before: "/placeholder.svg?height=320&width=400",
-      after: "/placeholder.svg?height=320&width=400",
-      title: "Professional Teeth Whitening",
-    },
-  ]
+  const beforeAfterImages = {
+    before: "/images/before.jpg",
+    after: "/images/after.jpg",
+    title: "Complete Smile Transformation",
+  }
 
   useEffect(() => {
     fetchServices()
@@ -101,17 +78,9 @@ export default function ServicesPage() {
     }
   }
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % beforeAfterImages.length)
-  }
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + beforeAfterImages.length) % beforeAfterImages.length)
-  }
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
-
       {/* Hero Section with Interactive Slider */}
       <section className="py-24 bg-gradient-to-br from-teal-50 via-white to-cyan-50 relative overflow-hidden">
         <div className="container mx-auto px-4">
@@ -124,15 +93,15 @@ export default function ServicesPage() {
             </p>
             <div className="w-32 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto mt-8"></div>
           </div>
-          {/* Interactive Before/After Slider */}
+          {/* Before/After Comparison */}
           <div className="max-w-4xl mx-auto mb-20">
-            <h3 className="text-3xl font-bold text-center mb-8 text-gray-900">See the Transformation</h3>
+            <h3 className="text-3xl font-bold text-center mb-8 text-gray-900">Professional Teeth Whitening Results</h3>
             <div className="relative bg-white rounded-3xl shadow-2xl overflow-hidden">
               <div className="grid md:grid-cols-2">
                 <div className="relative h-80">
                   <Image
-                    src={beforeAfterImages[currentSlide].before || "/placeholder.svg"}
-                    alt="Before Treatment"
+                    src={beforeAfterImages.before || "/placeholder.svg"}
+                    alt="Before Teeth Whitening Treatment"
                     fill
                     className="object-cover"
                   />
@@ -142,8 +111,8 @@ export default function ServicesPage() {
                 </div>
                 <div className="relative h-80">
                   <Image
-                    src={beforeAfterImages[currentSlide].after || "/placeholder.svg"}
-                    alt="After Treatment"
+                    src={beforeAfterImages.after || "/placeholder.svg"}
+                    alt="After Teeth Whitening Treatment"
                     fill
                     className="object-cover"
                   />
@@ -153,31 +122,7 @@ export default function ServicesPage() {
                 </div>
               </div>
               <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white/90 backdrop-blur-sm rounded-full px-6 py-2">
-                <p className="text-gray-800 font-medium">{beforeAfterImages[currentSlide].title}</p>
-              </div>
-              {/* Navigation Arrows */}
-              <button
-                onClick={prevSlide}
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white/80 backdrop-blur-sm shadow-lg rounded-full flex items-center justify-center hover:bg-white transition-all duration-300"
-              >
-                <ChevronLeft className="h-6 w-6 text-gray-600" />
-              </button>
-              <button
-                onClick={nextSlide}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white/80 backdrop-blur-sm shadow-lg rounded-full flex items-center justify-center hover:bg-white transition-all duration-300"
-              >
-                <ChevronRight className="h-6 w-6 text-gray-600" />
-              </button>
-              {/* Dots Indicator */}
-              <div className="absolute bottom-4 right-4 flex space-x-2">
-                {beforeAfterImages.map((_, index) => (
-                  <button
-                    key={index}
-                    className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentSlide ? "bg-teal-600" : "bg-gray-300"
-                      }`}
-                    onClick={() => setCurrentSlide(index)}
-                  />
-                ))}
+                <p className="text-gray-800 font-medium">{beforeAfterImages.title}</p>
               </div>
             </div>
           </div>
@@ -193,7 +138,6 @@ export default function ServicesPage() {
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">Comprehensive dental care tailored to your needs</p>
           </div>
-
           {loading ? (
             <div className="flex justify-center items-center py-20">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600"></div>
@@ -233,7 +177,6 @@ export default function ServicesPage() {
                   </Card>
                 ))}
               </div>
-
               {/* Pagination */}
               {totalPages > 1 && (
                 <div className="flex justify-center items-center space-x-4">
@@ -246,21 +189,20 @@ export default function ServicesPage() {
                     <ChevronLeft className="h-4 w-4 mr-2" />
                     Previous
                   </Button>
-
                   <div className="flex space-x-2">
                     {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                       <Button
                         key={page}
                         variant={currentPage === page ? "default" : "outline"}
                         onClick={() => setCurrentPage(page)}
-                        className={`w-10 h-10 rounded-full ${currentPage === page ? "bg-teal-600 hover:bg-teal-700 text-white" : "hover:bg-teal-50"
-                          }`}
+                        className={`w-10 h-10 rounded-full ${
+                          currentPage === page ? "bg-teal-600 hover:bg-teal-700 text-white" : "hover:bg-teal-50"
+                        }`}
                       >
                         {page}
                       </Button>
                     ))}
                   </div>
-
                   <Button
                     variant="outline"
                     onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
@@ -276,7 +218,6 @@ export default function ServicesPage() {
           )}
         </div>
       </section>
-
       <Footer />
     </div>
   )
