@@ -1,4 +1,5 @@
 "use client"
+
 import { Button } from "@/components/ui/button"
 import type React from "react"
 import {
@@ -19,8 +20,21 @@ interface NavbarProps {
   scrolled?: boolean
 }
 
+interface Service {
+  id: number
+  title: string
+  description: string
+  category: string
+  price: number
+  duration: string
+  image_url: string
+  is_active: boolean
+}
+
 export default function Navbar({ isHomePage = false, scrolled = false }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [services, setServices] = useState<Service[]>([])
+  const [servicesLoading, setServicesLoading] = useState(true)
 
   useEffect(() => {
     // Add or remove padding class to body based on isHomePage
@@ -30,11 +44,30 @@ export default function Navbar({ isHomePage = false, scrolled = false }: NavbarP
       document.body.classList.remove("non-homepage-padding")
     }
 
+    // Fetch services
+    fetchServices()
+
     // Cleanup on component unmount
     return () => {
       document.body.classList.remove("non-homepage-padding")
     }
   }, [isHomePage])
+
+  const fetchServices = async () => {
+    try {
+      const response = await fetch("/api/services")
+      if (response.ok) {
+        const data = await response.json()
+        setServices(data) // Removed .slice(0, 8)
+      } else {
+        console.error("Failed to fetch services")
+      }
+    } catch (error) {
+      console.error("Error fetching services:", error)
+    } finally {
+      setServicesLoading(false)
+    }
+  }
 
   const handleScrollLink = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault()
@@ -51,13 +84,12 @@ export default function Navbar({ isHomePage = false, scrolled = false }: NavbarP
 
   const getNavbarClasses = () => {
     if (isHomePage) {
-      return `relative w-full z-50 transition-all duration-300 ${
-        scrolled ? "bg-white/95 backdrop-blur-md shadow-lg border-b border-teal-100" : "bg-transparent"
-      }`
+      return `relative w-full z-50 transition-all duration-300 ${scrolled ? "bg-white/95 backdrop-blur-md shadow-lg border-b border-teal-100" : "bg-transparent"
+        }`
     }
     return `fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-white shadow-lg border-b border-teal-100`
   }
-  
+
   const getTextClasses = () => {
     if (!isHomePage || scrolled) {
       return "text-teal-700 hover:text-teal-600"
@@ -84,6 +116,13 @@ export default function Navbar({ isHomePage = false, scrolled = false }: NavbarP
       return "border-teal-100"
     }
     return "border-gray-300/50"
+  }
+
+  const getMobileSubTextClasses = () => {
+    if (!isHomePage || scrolled) {
+      return "text-teal-600 hover:text-teal-500 hover:bg-teal-50"
+    }
+    return "text-gray-600 hover:text-teal-700 hover:bg-gray-100/50"
   }
 
   return (
@@ -175,11 +214,11 @@ export default function Navbar({ isHomePage = false, scrolled = false }: NavbarP
                         Price/Service
                       </NavigationMenuTrigger>
                       <NavigationMenuContent>
-                        <div className="grid w-[300px] p-4 bg-white shadow-md">
+                        <div className="grid w-[400px] p-4 bg-white shadow-md max-h-[500px] overflow-y-auto">
                           <NavigationMenuLink asChild>
                             <Link
                               href="/services"
-                              className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none"
+                              className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none border-b border-gray-100"
                             >
                               <div className="text-sm font-medium leading-none group-hover:underline">All Services</div>
                               <div className="line-clamp-2 text-sm leading-snug text-muted-foreground">
@@ -187,10 +226,39 @@ export default function Navbar({ isHomePage = false, scrolled = false }: NavbarP
                               </div>
                             </Link>
                           </NavigationMenuLink>
+
+                          {/* Services from Database */}
+                          {servicesLoading ? (
+                            <div className="p-4 text-center text-sm text-gray-500">Loading services...</div>
+                          ) : (
+                            <>
+                              {services.map((service) => (
+                                <NavigationMenuLink key={service.id} asChild>
+                                  <Link
+                                    href={`/services/${service.id}`}
+                                    className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-3 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none"
+                                  >
+                                    <div className="flex items-center justify-between w-full">
+                                      <div className="flex-1">
+                                        <div className="text-xs font-medium leading-none group-hover:underline line-clamp-1">
+                                          {service.title}
+                                        </div>
+
+                                      </div>
+                                    </div>
+                                  </Link>
+                                </NavigationMenuLink>
+                              ))}
+                              {services.length === 0 && (
+                                <div className="p-4 text-center text-sm text-gray-500">No services available</div>
+                              )}
+                            </>
+                          )}
+
                           <NavigationMenuLink asChild>
                             <Link
                               href="/services/restorative-dentistry/faq"
-                              className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none"
+                              className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none border-t border-gray-100 mt-2"
                             >
                               <div className="text-sm font-medium leading-none group-hover:underline">FAQs</div>
                               <div className="line-clamp-2 text-sm leading-snug text-muted-foreground">
@@ -239,7 +307,10 @@ export default function Navbar({ isHomePage = false, scrolled = false }: NavbarP
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className={`${!isHomePage || scrolled ? "text-teal-700 hover:text-teal-600 hover:bg-teal-50" : "text-gray-800 hover:text-teal-700 hover:bg-gray-100/50"} rounded-full`}
+                className={`${!isHomePage || scrolled
+                    ? "text-teal-700 hover:text-teal-600 hover:bg-teal-50"
+                    : "text-gray-800 hover:text-teal-700 hover:bg-gray-100/50"
+                  } rounded-full`}
               >
                 {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </Button>
@@ -248,9 +319,8 @@ export default function Navbar({ isHomePage = false, scrolled = false }: NavbarP
 
           {/* Mobile Menu */}
           <div
-            className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-              isMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
-            }`}
+            className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${isMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
+              }`}
           >
             <nav className={`flex flex-col space-y-4 pt-6 pb-8 border-t ${getMobileBorderClasses()}`}>
               <Link
@@ -270,14 +340,14 @@ export default function Navbar({ isHomePage = false, scrolled = false }: NavbarP
               <Link
                 href="/about"
                 onClick={handleMobileLinkClick}
-                className={`${!isHomePage || scrolled ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : "text-gray-600 hover:text-teal-700 hover:bg-gray-100/50"} transition-colors text-sm px-8 py-2 rounded-md`}
+                className={`${getMobileSubTextClasses()} transition-colors text-sm px-8 py-2 rounded-md`}
               >
                 Our Clinic
               </Link>
               <Link
                 href="/about#doctors"
                 onClick={handleMobileLinkClick}
-                className={`${!isHomePage || scrolled ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : "text-gray-600 hover:text-teal-700 hover:bg-gray-100/50"} transition-colors text-sm px-8 py-2 rounded-md`}
+                className={`${getMobileSubTextClasses()} transition-colors text-sm px-8 py-2 rounded-md`}
               >
                 Our Doctors
               </Link>
@@ -289,9 +359,17 @@ export default function Navbar({ isHomePage = false, scrolled = false }: NavbarP
                 Price/Service
               </Link>
               <Link
+                href="/services"
+                onClick={handleMobileLinkClick}
+                className={`${getMobileSubTextClasses()} transition-colors text-sm px-8 py-2 rounded-md`}
+              >
+                All Services
+              </Link>
+
+              <Link
                 href="/services/restorative-dentistry/faq"
                 onClick={handleMobileLinkClick}
-                className={`${!isHomePage || scrolled ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : "text-gray-600 hover:text-teal-700 hover:bg-gray-100/50"} transition-colors text-sm px-8 py-2 rounded-md`}
+                className={`${getMobileSubTextClasses()} transition-colors text-sm px-8 py-2 rounded-md`}
               >
                 FAQs
               </Link>

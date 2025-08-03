@@ -5,19 +5,15 @@ interface RouteParams {
   params: Promise<{ id: string }>
 }
 
-// Define valid categories
-const VALID_CATEGORIES = [
-    "general",
-    "cosmetic",
-    "pediatric",
-    "restorative",
-  ]
-  
-
 export async function GET(request: NextRequest, { params }: RouteParams) {
   try {
     const { id } = await params
-    const services = (await query("SELECT * FROM services WHERE id = ? AND is_active = TRUE", [id])) as any[]
+    const services = (await query(
+      `SELECT id, title, description, category, price, duration, image_url,
+       why_use_service, what_if_not_used, before_appointment, after_service, is_active
+       FROM services WHERE id = ? AND is_active = TRUE`,
+      [id],
+    )) as any[]
 
     if (!services || services.length === 0) {
       return NextResponse.json({ error: "Service not found" }, { status: 404 })
@@ -34,19 +30,40 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
   try {
     const { id } = await params
     const body = await request.json()
-    const { title, description, category, price, duration } = body
+    const {
+      title,
+      description,
+      category,
+      price,
+      duration,
+      image_url,
+      why_use_service,
+      what_if_not_used,
+      before_appointment,
+      after_service,
+    } = body
 
-    if (!title || !category) {
-      return NextResponse.json({ error: "Title and category are required" }, { status: 400 })
-    }
-
-    if (!VALID_CATEGORIES.includes(category)) {
-      return NextResponse.json({ error: `Invalid category. Must be one of: ${VALID_CATEGORIES.join(", ")}` }, { status: 400 })
+    if (!title) {
+      return NextResponse.json({ error: "Title is required" }, { status: 400 })
     }
 
     const result = await query(
-      "UPDATE services SET title = ?, description = ?, category = ?, price = ?, duration = ? WHERE id = ? AND is_active = TRUE",
-      [title, description, category, price, duration, id]
+      `UPDATE services SET title = ?, description = ?, category = ?, price = ?, duration = ?, 
+       image_url = ?, why_use_service = ?, what_if_not_used = ?, before_appointment = ?, after_service = ?
+       WHERE id = ? AND is_active = TRUE`,
+      [
+        title,
+        description,
+        category,
+        price,
+        duration,
+        image_url,
+        why_use_service,
+        what_if_not_used,
+        before_appointment,
+        after_service,
+        id,
+      ],
     )
 
     if ((result as any).affectedRows === 0) {

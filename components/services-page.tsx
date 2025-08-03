@@ -1,8 +1,9 @@
 "use client"
+
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { ArrowRight, SmileIcon as Tooth, Smile, Baby, Wrench, ChevronLeft, ChevronRight } from "lucide-react"
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import Navbar from "@/components/navbar"
@@ -15,33 +16,11 @@ interface Service {
   category: string
   price: number
   duration: string
+  image_url: string
   is_active: boolean
 }
 
-interface ServiceCategory {
-  title: string
-  description: string
-  icon: any
-  services: Service[]
-  link: string
-}
-
-const categoryIcons = {
-  "General Dentistry": Tooth,
-  "Cosmetic Dentistry": Smile,
-  "Pediatric Dentistry": Baby,
-  "Restorative Dentistry": Wrench,
-}
-
-const categoryDescriptions = {
-  "General Dentistry": "Comprehensive oral health care including cleanings, fillings, and preventive treatments",
-  "Cosmetic Dentistry": "Enhance your smile with veneers, whitening, and aesthetic treatments",
-  "Pediatric Dentistry": "Specialized dental care for children in a comfortable, friendly environment",
-  "Restorative Dentistry": "Restore damaged teeth with crowns, bridges, and implant solutions",
-}
-
 export default function ServicesPage() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [services, setServices] = useState<Service[]>([])
   const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
@@ -81,6 +60,7 @@ export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
+
       {/* Hero Section with Interactive Slider */}
       <section className="py-24 bg-gradient-to-br from-teal-50 via-white to-cyan-50 relative overflow-hidden">
         <div className="container mx-auto px-4">
@@ -93,8 +73,9 @@ export default function ServicesPage() {
             </p>
             <div className="w-32 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto mt-8"></div>
           </div>
+
           {/* Before/After Comparison */}
-          <div className="max-w-4xl mx-auto mb-20">
+          <div className="max-w-4xl mx-auto">
             <h3 className="text-3xl font-bold text-center mb-8 text-gray-900">Professional Teeth Whitening Results</h3>
             <div className="relative bg-white rounded-3xl shadow-2xl overflow-hidden">
               <div className="grid md:grid-cols-2">
@@ -121,7 +102,7 @@ export default function ServicesPage() {
                   </div>
                 </div>
               </div>
-              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white/90 backdrop-blur-sm rounded-full px-6 py-2">
+              <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 bg-white/90 backdrop-blur-sm rounded-full px-6 py-2">
                 <p className="text-gray-800 font-medium">{beforeAfterImages.title}</p>
               </div>
             </div>
@@ -138,6 +119,7 @@ export default function ServicesPage() {
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">Comprehensive dental care tailored to your needs</p>
           </div>
+
           {loading ? (
             <div className="flex justify-center items-center py-20">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600"></div>
@@ -153,18 +135,20 @@ export default function ServicesPage() {
                   >
                     <CardContent className="p-0">
                       <div className="text-center">
-                        <div className="w-16 h-16 bg-gradient-to-br from-teal-100 to-teal-200 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                          {(() => {
-                            const IconComponent = categoryIcons[service.category as keyof typeof categoryIcons] || Tooth
-                            return <IconComponent className="h-8 w-8 text-teal-600" />
-                          })()}
+                        <div className="w-full h-48 mb-4 rounded-2xl overflow-hidden">
+                          <Image
+                            src={service.image_url || "/placeholder.svg?height=200&width=300&query=dental service"}
+                            alt={service.title}
+                            width={300}
+                            height={200}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
                         </div>
                         <h3 className="text-xl font-bold text-gray-900 mb-2">{service.title}</h3>
-                        <p className="text-sm text-teal-600 font-medium mb-3">{service.category}</p>
+                        <p className="text-sm text-teal-600 font-medium mb-3 capitalize">{service.category}</p>
                         <p className="text-gray-600 mb-4 leading-relaxed text-sm line-clamp-3">{service.description}</p>
                         <div className="flex items-center justify-center space-x-4 mb-6">
                           <div className="text-2xl font-bold text-teal-600">NPR {service.price.toLocaleString()}</div>
-                          {/* {service.duration && <div className="text-sm text-gray-500">{service.duration}</div>} */}
                         </div>
                         <Link href={`/services/${service.id}`}>
                           <Button className="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white rounded-full px-6 py-2 group-hover:scale-105 transition-all duration-300 w-full">
@@ -177,6 +161,7 @@ export default function ServicesPage() {
                   </Card>
                 ))}
               </div>
+
               {/* Pagination */}
               {totalPages > 1 && (
                 <div className="flex justify-center items-center space-x-4">
@@ -218,6 +203,7 @@ export default function ServicesPage() {
           )}
         </div>
       </section>
+
       <Footer />
     </div>
   )

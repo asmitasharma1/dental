@@ -1,13 +1,23 @@
 "use client"
 
 import type React from "react"
-
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { User, Mail, Phone, MessageSquare, CheckCircle } from "lucide-react"
+
+interface Service {
+  id: number
+  title: string
+  description: string
+  category: string
+  price: number
+  duration: string
+  image_url: string
+  is_active: boolean
+}
 
 export default function BookNowForm() {
   const [formData, setFormData] = useState({
@@ -24,6 +34,28 @@ export default function BookNowForm() {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState("")
+  const [services, setServices] = useState<Service[]>([])
+  const [servicesLoading, setServicesLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const response = await fetch("/api/services")
+        if (response.ok) {
+          const data = await response.json()
+          setServices(data)
+        } else {
+          console.error("Failed to fetch services")
+        }
+      } catch (error) {
+        console.error("Error fetching services:", error)
+      } finally {
+        setServicesLoading(false)
+      }
+    }
+
+    fetchServices()
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -94,7 +126,9 @@ export default function BookNowForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {error && <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-red-700 text-sm">{error}</div>}
+      {error && (
+        <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-red-700 text-sm">{error}</div>
+      )}
 
       <div className="grid md:grid-cols-2 gap-4">
         <div className="space-y-2">
@@ -203,14 +237,15 @@ export default function BookNowForm() {
           className="w-full rounded-xl border-gray-200 focus:border-teal-500 focus:ring-teal-500 h-12 px-3"
         >
           <option value="">Select a service</option>
-          <option value="1">Teeth Cleaning & Scaling</option>
-          <option value="2">Dental Filling</option>
-          <option value="3">Teeth Whitening</option>
-          <option value="4">Porcelain Veneers</option>
-          <option value="5">Dental Crowns</option>
-          <option value="6">Dental Implants</option>
-          <option value="7">Children's Dental Cleaning</option>
-          <option value="8">Root Canal Treatment</option>
+          {servicesLoading ? (
+            <option disabled>Loading services...</option>
+          ) : (
+            services.map((service) => (
+              <option key={service.id} value={service.id}>
+                {service.title}
+              </option>
+            ))
+          )}
         </select>
       </div>
 
@@ -232,14 +267,14 @@ export default function BookNowForm() {
         </div>
       </div>
 
-      <div className="flex items-center space-x-2">
+      <div className={`flex items-center space-x-2 ${error && !formData.agreeToTerms ? 'bg-red-50 border border-red-200 rounded-xl p-3' : ''}`}>
         <Checkbox
           id="agreeToTerms"
           checked={formData.agreeToTerms}
           onCheckedChange={(checked) => setFormData((prev) => ({ ...prev, agreeToTerms: checked as boolean }))}
-          className="border-gray-300"
+          className={`border-gray-300 ${error && !formData.agreeToTerms ? 'border-red-500' : ''}`}
         />
-        <Label htmlFor="agreeToTerms" className="text-sm text-gray-600">
+        <Label htmlFor="agreeToTerms" className={`text-sm ${error && !formData.agreeToTerms ? 'text-red-700' : 'text-gray-600'}`}>
           I agree to the terms and conditions and privacy policy
         </Label>
       </div>

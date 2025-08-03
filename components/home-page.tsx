@@ -12,19 +12,19 @@ const topServices = [
   {
     title: "Professional Teeth Cleaning & Scaling",
     description: "Deep cleaning to remove plaque and tartar buildup for optimal oral health",
-    image: "/images/dental-instruments.avif",
+    image: "/images/MPS__40.jpg",
     link: "/services/teeth-cleaning",
   },
   {
     title: "Dental Fillings & Cavity Treatment",
     description: "High-quality composite fillings to restore damaged teeth",
-    image: "/images/dental-instruments.avif",
+    image: "/images/MPS__40.jpg",
     link: "/services/dental-fillings",
   },
   {
     title: "Professional Teeth Whitening",
     description: "Advanced whitening treatments for a brighter, confident smile",
-    image: "/images/dental-instruments.avif",
+    image: "/images/MPS__40.jpg",
     link: "/services/teeth-whitening",
   },
 ]
@@ -95,7 +95,6 @@ export default function HomePage() {
       setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
     }, 10000)
 
-    // Scroll listener for navbar background
     const handleScroll = () => {
       const heroSection = document.getElementById('hero')
       if (heroSection) {
@@ -139,9 +138,7 @@ export default function HomePage() {
       <div className="relative z-10">
         <Navbar isHomePage={true} scrolled={scrolled} />
 
-        {/* Hero Section */}
         <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
-          {/* Social Media Links - Right Side */}
           <div className="fixed right-4 md:right-6 top-1/2 transform -translate-y-1/2 z-40 flex flex-col space-y-3 md:space-y-4">
             <a
               href="https://www.instagram.com/smilebydrkareen_dentalclinic/"
@@ -179,7 +176,6 @@ export default function HomePage() {
             </a>
           </div>
 
-          {/* Decorative Elements */}
           <div className="absolute top-10 left-10 w-8 h-10 bg-white/20 rounded-t-full rounded-b-sm transform rotate-12 blur-sm animate-pulse"></div>
           <div className="absolute top-32 right-20 w-6 h-8 bg-teal-200/30 rounded-t-full rounded-b-sm transform -rotate-45 blur-sm animate-pulse delay-1000"></div>
           <div className="absolute bottom-32 left-1/4 w-10 h-12 bg-gray-200/20 rounded-t-full rounded-b-sm transform rotate-45 blur-sm animate-pulse delay-2000"></div>
@@ -226,197 +222,148 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Services Section */}
-        <section id="services" className="py-24 relative">
-          <div className="absolute inset-0 bg-white/95 backdrop-blur-sm"></div>
-          <div className="relative z-10">
-            <div className="container mx-auto px-4 relative z-10">
-              <div className="text-center mb-20">
-                <h2 className="text-5xl lg:text-6xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent mb-6">
-                  Our Services
-                </h2>
-                <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                  Comprehensive dental care with state-of-the-art technology and personalized treatment plans
-                </p>
-                <div className="w-32 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto mt-8"></div>
-              </div>
+        <section id="services" className="relative py-20">
+          <div className="absolute inset-0 z-0">
+            <Image
+              src={topServices[currentService].image || "/placeholder.svg"}
+              alt={topServices[currentService].title}
+              fill
+              className="object-cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-white/20 bg-gradient-to-t from-black/10 to-transparent"></div>
+          </div>
 
-              <div className="relative flex items-center justify-center">
-                <button
-                  onClick={prevService}
-                  className="z-10 absolute -left-10 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-all duration-300"
-                >
-                  <ChevronLeft className="h-6 w-6 text-gray-600" />
-                </button>
-                <div className="w-full max-w-4xl overflow-hidden rounded-3xl shadow-2xl relative">
-                  <div className="relative h-96 bg-gradient-to-br from-teal-50 to-gray-50">
-                    <Image
-                      src={topServices[currentService].image || "/placeholder.svg"}
-                      alt={topServices[currentService].title}
-                      fill
-                      className="object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                    <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-                      <h3 className="text-3xl font-bold mb-4">{topServices[currentService].title}</h3>
-                      <p className="text-lg mb-6">{topServices[currentService].description}</p>
-                      <div className="flex space-x-4">
-                        <Link href={topServices[currentService].link}>
-                          <Button className="bg-teal-600 hover:bg-teal-700 text-white rounded-full px-6 py-2">
-                            Read More
-                          </Button>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
+          <div className="relative z-10 container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-5xl lg:text-6xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent mb-6">
+                Our Services
+              </h2>
+              <p className="text-xl text-gray-900 max-w-3xl mx-auto">
+                Comprehensive dental care with state-of-the-art technology and personalized treatment plans
+              </p>
+              <div className="w-32 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto mt-4"></div>
+            </div>
+
+            <div className="relative flex items-center justify-center mb-12">
+              <div className="w-full max-w-4xl text-center">
+                <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-xl p-6 shadow-lg">
+                  <h3 className="text-3xl font-bold text-gray-900 mb-4 drop-shadow-lg">{topServices[currentService].title}</h3>
+                  <p className="text-lg text-gray-800 leading-relaxed drop-shadow-md font-medium">{topServices[currentService].description}</p>
                 </div>
+              </div>
+            </div>
+
+            <div className="flex justify-center space-x-2 mb-12">
+              {topServices.map((_, index) => (
                 <button
-                  onClick={nextService}
-                  className="z-10 absolute -right-10 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-all duration-300"
-                >
-                  <ChevronRight className="h-6 w-6 text-gray-600" />
-                </button>
-              </div>
+                  key={index}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentService ? "bg-teal-600" : "bg-gray-300"}`}
+                  onClick={() => setCurrentService(index)}
+                />
+              ))}
+            </div>
 
-              <div className="flex justify-center space-x-2 mt-8">
-                {topServices.map((_, index) => (
-                  <button
-                    key={index}
-                    className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentService ? "bg-teal-600" : "bg-gray-300"}`}
-                    onClick={() => setCurrentService(index)}
-                  />
-                ))}
-              </div>
-
-              <div className="text-center mt-12">
-                <Link href="/services">
-                  <Button className="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white px-8 py-4 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
-                    More Services
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </Link>
-              </div>
-
+            <div className="max-w-4xl mx-auto px-4">
               <div className="grid lg:grid-cols-2 gap-8 mt-20">
-                <Card className="bg-gradient-to-br from-teal-50 to-teal-100 border-0 p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group">
+                {/* Left Card - Basic Dental Care */}
+                <Card className="bg-white/20 backdrop-blur-md border border-white/30 p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group hover:bg-white/25 lg:-translate-x-48">
                   <CardContent className="p-0">
                     <div className="flex items-center justify-between mb-8">
-                      <h3 className="text-3xl font-bold text-gray-900">Basic Dental Care</h3>
-                      <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                        <Image src="/images/dental-instruments.avif" alt="Dental care" width={40} height={40} />
+                      <h3 className="text-3xl font-bold text-gray-900 drop-shadow-lg">Basic Dental Care</h3>
+                      <div className="w-20 h-20 bg-white/50 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 border border-white/40">
+                        <Image src="/images/dental-instruments.avif" alt="Dental care" width={30} height={30} />
                       </div>
                     </div>
-                    <ul className="space-y-4 text-gray-700">
+                    <ul className="space-y-4 text-gray-800">
                       <li className="flex items-center space-x-3">
                         <div className="w-2 h-2 bg-gradient-to-r from-teal-500 to-teal-600 rounded-full"></div>
-                        <span>Professional Teeth Cleaning & Scaling</span>
+                        <span className="drop-shadow font-medium">Professional Teeth Cleaning & Scaling</span>
                       </li>
                       <li className="flex items-center space-x-3">
                         <div className="w-2 h-2 bg-gradient-to-r from-teal-500 to-teal-600 rounded-full"></div>
-                        <span>Dental Fillings & Cavity Treatment</span>
+                        <span className="drop-shadow font-medium">Dental Fillings & Cavity Treatment</span>
                       </li>
                       <li className="flex items-center space-x-3">
                         <div className="w-2 h-2 bg-gradient-to-r from-teal-500 to-teal-600 rounded-full"></div>
-                        <span>Oral Health Consultation</span>
+                        <span className="drop-shadow font-medium">Oral Health Consultation</span>
                       </li>
                     </ul>
                   </CardContent>
                 </Card>
 
-                <Card className="bg-gradient-to-br from-gray-50 to-gray-100 border-0 p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group">
+                {/* Right Card - Aesthetic Care */}
+                <Card className="bg-white/20 backdrop-blur-md border border-white/30 p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group hover:bg-white/25 lg:translate-x-48">
                   <CardContent className="p-0">
                     <div className="flex items-center justify-between mb-8">
-                      <h3 className="text-3xl font-bold text-gray-900">Aesthetic Care</h3>
-                      <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                        <Image src="/images/dental-instruments.avif" alt="Aesthetic care" width={40} height={40} />
+                      <h3 className="text-3xl font-bold text-gray-900 drop-shadow-lg">Aesthetic Care</h3>
+                      <div className="w-20 h-20 bg-white/50 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 border border-white/40">
+                        <Image src="/images/dental-instruments.avif" alt="Aesthetic care" width={30} height={30} />
                       </div>
                     </div>
-                    <ul className="space-y-4 text-gray-700">
+                    <ul className="space-y-4 text-gray-800">
                       <li className="flex items-center space-x-3">
                         <div className="w-2 h-2 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full"></div>
-                        <span>Premium Porcelain Veneers</span>
+                        <span className="drop-shadow font-medium">Premium Porcelain Veneers</span>
                       </li>
                       <li className="flex items-center space-x-3">
                         <div className="w-2 h-2 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full"></div>
-                        <span>Professional Teeth Whitening</span>
+                        <span className="drop-shadow font-medium">Professional Teeth Whitening</span>
                       </li>
                       <li className="flex items-center space-x-3">
                         <div className="w-2 h-2 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full"></div>
-                        <span>Invisalign Clear Aligners</span>
+                        <span className="drop-shadow font-medium">Invisalign Clear Aligners</span>
                       </li>
                     </ul>
-                  </CardContent>
-                </Card>
-              </div>
-
-              <div className="grid md:grid-cols-4 gap-6 mt-20">
-                <Card className="bg-gradient-to-br from-teal-100 to-teal-200 border-0 p-6 rounded-2xl text-center shadow-lg hover:shadow-xl transition-all duration-300">
-                  <CardContent className="p-0">
-                    <Users className="h-8 w-8 text-teal-600 mx-auto mb-3" />
-                    <h3 className="text-2xl font-bold text-gray-900 mb-1">500+</h3>
-                    <p className="text-gray-600">Happy Patients</p>
-                  </CardContent>
-                </Card>
-                <Card className="bg-gradient-to-br from-gray-100 to-gray-200 border-0 p-6 rounded-2xl text-center shadow-lg hover:shadow-xl transition-all duration-300">
-                  <CardContent className="p-0">
-                    <Award className="h-8 w-8 text-gray-600 mx-auto mb-3" />
-                    <h3 className="text-2xl font-bold text-gray-900 mb-1">10+</h3>
-                    <p className="text-gray-600">Years Experience</p>
-                  </CardContent>
-                </Card>
-                <Card className="bg-gradient-to-br from-teal-200 to-teal-300 border-0 p-6 rounded-2xl text-center shadow-lg hover:shadow-xl transition-all duration-300">
-                  <CardContent className="p-0">
-                    <Shield className="h-8 w-8 text-teal-700 mx-auto mb-3" />
-                    <h3 className="text-2xl font-bold text-gray-900 mb-1">100%</h3>
-                    <p className="text-gray-600">Safe Procedures</p>
-                  </CardContent>
-                </Card>
-                <Card className="bg-gradient-to-br from-gray-200 to-gray-300 border-0 p-6 rounded-2xl text-center shadow-lg hover:shadow-xl transition-all duration-300">
-                  <CardContent className="p-0">
-                    <Star className="h-8 w-8 text-gray-700 mx-auto mb-3" />
-                    <h3 className="text-2xl font-bold text-gray-900 mb-1">4.9/5</h3>
-                    <p className="text-gray-600">Patient Rating</p>
-                  </CardContent>
-                </Card>
-              </div>
-
-              <div className="grid lg:grid-cols-3 gap-8 mt-20">
-                <Card className="bg-gradient-to-br from-gray-50 to-white border-0 p-6 rounded-3xl text-center shadow-lg hover:shadow-2xl transition-all duration-500 group">
-                  <CardContent className="p-0">
-                    <div className="mb-6">
-                      <div className="w-16 h-16 bg-gradient-to-br from-teal-100 to-teal-200 rounded-full mx-auto flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                        <Image src="/images/dental-instruments.avif" alt="Restorative" width={32} height={32} />
-                      </div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-4">Restorative Dentistry</h3>
-                    </div>
-                  </CardContent>
-                </Card>
-                <Card className="bg-gradient-to-br from-gray-50 to-white border-0 p-6 rounded-3xl text-center shadow-lg hover:shadow-2xl transition-all duration-500 group">
-                  <CardContent className="p-0">
-                    <div className="mb-6">
-                      <div className="w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full mx-auto flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                        <Image src="/images/dental-instruments.avif" alt="Pediatric" width={32} height={32} />
-                      </div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-4">Pediatric Dentistry</h3>
-                    </div>
-                  </CardContent>
-                </Card>
-                <Card className="bg-gradient-to-br from-gray-50 to-white border-0 p-6 rounded-3xl text-center shadow-lg hover:shadow-2xl transition-all duration-500 group">
-                  <CardContent className="p-0">
-                    <div className="mb-6">
-                      <div className="w-16 h-16 bg-gradient-to-br from-teal-200 to-teal-300 rounded-full mx-auto flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                        <Image src="/images/dental-instruments.avif" alt="Implants" width={32} height={32} />
-                      </div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-4">Dental Implants</h3>
-                    </div>
                   </CardContent>
                 </Card>
               </div>
             </div>
+
+            <div className="grid lg:grid-cols-3 gap-8 mt-20">
+              <Card className="bg-white/20 backdrop-blur-md border border-white/30 p-6 rounded-3xl text-center shadow-lg hover:shadow-2xl transition-all duration-500 group hover:bg-white/25">
+                <CardContent className="p-0">
+                  <div className="mb-6">
+                    <div className="w-16 h-16 bg-white/40 backdrop-blur-sm rounded-full mx-auto flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 border border-white/50">
+                      <Image src="/images/dental-instruments.avif" alt="Restorative" width={32} height={32} />
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-4 drop-shadow-lg">Restorative Dentistry</h3>
+                  </div>
+                </CardContent>
+              </Card>
+              <Card className="bg-white/20 backdrop-blur-md border border-white/30 p-6 rounded-3xl text-center shadow-lg hover:shadow-2xl transition-all duration-500 group hover:bg-white/25">
+                <CardContent className="p-0">
+                  <div className="mb-6">
+                    <div className="w-16 h-16 bg-white/40 backdrop-blur-sm rounded-full mx-auto flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 border border-white/50">
+                      <Image src="/images/dental-instruments.avif" alt="Pediatric" width={32} height={32} />
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-4 drop-shadow-lg">Pediatric Dentistry</h3>
+                  </div>
+                </CardContent>
+              </Card>
+              <Card className="bg-white/20 backdrop-blur-md border border-white/30 p-6 rounded-3xl text-center shadow-lg hover:shadow-2xl transition-all duration-500 group hover:bg-white/25">
+                <CardContent className="p-0">
+                  <div className="mb-6">
+                    <div className="w-16 h-16 bg-white/40 backdrop-blur-sm rounded-full mx-auto flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 border border-white/50">
+                      <Image src="/images/dental-instruments.avif" alt="Implants" width={32} height={32} />
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-4 drop-shadow-lg">Dental Implants</h3>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="text-center mt-12">
+              <Link href="/services">
+                <Button className="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white px-8 py-4 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+                  More Services
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+            </div>
           </div>
         </section>
 
-        {/* Our Mission Section */}
         <section className="py-24 relative">
           <div className="absolute inset-0 bg-white/90 backdrop-blur-sm"></div>
           <div className="relative z-10">
@@ -470,7 +417,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Testimonials Section */}
         <section className="py-24 relative">
           <div className="absolute inset-0 bg-gradient-to-br from-gray-50/90 to-teal-50/90 backdrop-blur-sm"></div>
           <div className="relative z-10">
