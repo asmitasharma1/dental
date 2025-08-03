@@ -7,6 +7,23 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  .max-w-custom {
+    max-width: var(--max-width);
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .non-homepage-padding {
+    padding-top: 3.5rem; /* Matches navbar height with py-4 and logo size */
+  }
+
+  @media (min-width: 768px) {
+    .non-homepage-padding {
+      padding-top: 4rem; /* Slightly more for desktop to account for larger logo */
+    }
+  }
 }
 
 @layer base {
@@ -38,7 +55,7 @@
     --radius: 0.5rem;
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
+    --sipressdebar-primary: 240 5.9% 10%;
     --sidebar-primary-foreground: 0 0% 98%;
     --sidebar-accent: 240 4.8% 95.9%;
     --sidebar-accent-foreground: 240 5.9% 10%;
@@ -118,15 +135,6 @@
         width: 100% !important;
       }
     }
-  }
-}
-
-@layer utilities {
-  .max-w-custom {
-    max-width: var(--max-width);
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
   }
 }
 

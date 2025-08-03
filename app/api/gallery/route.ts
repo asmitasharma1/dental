@@ -10,7 +10,7 @@ const VALID_CATEGORIES = ["Clinic Interior", "Equipment", "Treatment Rooms", "Pr
 
 export async function GET(request: NextRequest) {
   try {
-    const images = await query("SELECT * FROM gallery_images")
+    const images = await query("SELECT id, src, alt, category FROM gallery_images")
     return NextResponse.json(images)
   } catch (error) {
     console.error("Error fetching images:", error)

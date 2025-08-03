@@ -138,10 +138,12 @@ export default function AboutPage() {
       </section>
 
       {/* Our Doctors Section */}
-      <section id="doctors" className="py-24 bg-white relative">
+      <section
+        id="doctors"
+        className="py-24 bg-gradient-to-br from-teal-50 via-white to-cyan-50 relative overflow-hidden"
+      >
         <div className="container mx-auto px-4">
-          <div className="text-center mb-20">
-            <div><br /></div>
+          <div className="text-center mb-12">
             <h2 className="text-5xl lg:text-6xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 bg-clip-text text-transparent mb-6">
               Our Doctors
             </h2>

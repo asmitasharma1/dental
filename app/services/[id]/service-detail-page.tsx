@@ -118,7 +118,7 @@ export default function ServiceDetailPage({ serviceId }: ServiceDetailPageProps)
       <Navbar />
 
       {/* Service Detail Hero */}
-      <section className="py-16 bg-gradient-to-br from-teal-50 via-white to-cyan-50">
+      <section className="py-24 bg-gradient-to-br from-teal-50 via-white to-cyan-50">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <Link href="/services" className="inline-flex items-center text-teal-600 hover:text-teal-700 mb-8">
