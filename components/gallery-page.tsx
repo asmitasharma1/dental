@@ -88,8 +88,9 @@ export default function GalleryPage() {
   }, [lightboxOpen, filteredImages.length])
 
   return (
-    <section className="py-24 bg-gradient-to-br from-teal-50 via-white to-cyan-50 relative overflow-hidden">
-      <div className="min-h-screen bg-white">
+
+    <div className="min-h-screen bg-white">
+      <section className="py-24 bg-gradient-to-br from-teal-50 via-white to-cyan-50 relative overflow-hidden">
         <Navbar />
         <main className="container mx-auto px-4">
           <div className="text-center mb-12">
@@ -224,11 +225,13 @@ export default function GalleryPage() {
                 </div>
               </div>
             )}
+
           </DialogContent>
         </Dialog>
+      </section>
 
-        <Footer />
-      </div>
-    </section>
+      <Footer />
+    </div >
+
   )
 }
