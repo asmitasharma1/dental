@@ -63,19 +63,19 @@ const topServices = [
   {
     title: "Professional Teeth Cleaning & Scaling",
     description: "Deep cleaning to remove plaque and tartar buildup for optimal oral health",
-    image: "/images/MPS__40.jpg",
+    image: "/images/MPS__40.webp",
     link: "/services/teeth-cleaning",
   },
   {
     title: "Dental Fillings & Cavity Treatment",
     description: "High-quality composite fillings to restore damaged teeth",
-    image: "/images/MPS__40.jpg",
+    image: "/images/MPS__40.webp",
     link: "/services/dental-fillings",
   },
   {
     title: "Professional Teeth Whitening",
     description: "Advanced whitening treatments for a brighter, confident smile",
-    image: "/images/MPS__40.jpg",
+    image: "/images/MPS__40.webp",
     link: "/services/teeth-whitening",
   },
 ]
@@ -333,7 +333,7 @@ export default function HomePage() {
             </div>
 
             <div className="max-w-4xl mx-auto px-4">
-              <div className="grid lg:grid-cols-2 gap-8 mt-20">
+              <div className="grid lg:grid-cols-2 gap-8 mt-20 ipad-pro-grid">
                 <Link href="/services" className="block">
                   <Card className="bg-white/20 backdrop-blur-md border border-white/30 p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group hover:bg-white/25 lg:-translate-x-48 cursor-pointer">
                     <CardContent className="p-0">
@@ -390,7 +390,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="grid lg:grid-cols-3 gap-8 mt-20">
+            <div className="grid lg:grid-cols-3 gap-8 mt-20 ipad-pro-grid">
               <Link href="/services" className="block">
                 <Card className="bg-white/20 backdrop-blur-md border border-white/30 p-6 rounded-3xl text-center shadow-lg hover:shadow-2xl transition-all duration-500 group hover:bg-white/25 cursor-pointer">
                   <CardContent className="p-0">

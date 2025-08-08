@@ -147,3 +147,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  @media (min-width: 1024px) and (max-width: 1366px) {
+    .ipad-pro-grid {
+      grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+    }
+  }
+}
