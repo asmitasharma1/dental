@@ -66,7 +66,8 @@ export default function Footer() {
               </div>
               <div className="flex items-center justify-center lg:justify-start space-x-3">
                 <Clock className="h-5 w-5 text-teal-400" />
-                <span className="text-gray-300">Mon-Sun: 9:00 AM - 8:00 PM</span>
+                <span className="text-gray-300">Mon-Sun: 10:00 AM - 6:00 PM</span>
+                <span className="text-gray-300">Sat: 10:00 AM - 3:00 PM</span>
               </div>
             </div>
           </div>
