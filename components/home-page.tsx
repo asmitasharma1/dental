@@ -2,12 +2,61 @@
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Mail, Quote, Instagram, MessageCircle, ArrowRight, Heart, Clock, Shield, Award, Users, ChevronRight, ChevronLeft, Sparkles, Star } from 'lucide-react'
+import { Mail, Quote, Instagram, MessageCircle, ArrowRight, Heart, Clock, Shield, Award, Users, ChevronRight, ChevronLeft, Sparkles, Star, Microscope, Monitor, Home, DollarSign, Music, CreditCard } from 'lucide-react'
 import Image from "next/image"
 import Link from "next/link"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 
+const whyUsReasons = [
+  {
+    icon: Award,
+    title: "Certified Dental Surgeons",
+    description: "Nepal Medical Council and NDA certified Dentists with years of professional experience",
+  },
+  {
+    icon: Microscope,
+    title: "Evidence Based Practice",
+    description: "Integration of best scientific evidence with clinical expertise and patient values",
+  },
+  {
+    icon: Shield,
+    title: "Assurance of Quality",
+    description: "Patient's Satisfaction is our highest priority & we give 100% to ensure best Quality of Treatment",
+  },
+  {
+    icon: Monitor,
+    title: "Modern Equipments",
+    description: "State of the art, high quality portable instruments for utmost efficiency & care",
+  },
+  {
+    icon: Home,
+    title: "Professional Home Services",
+    description: "One of the 1st institutes in Nepal to provide home treatments with great success",
+  },
+  {
+    icon: DollarSign,
+    title: "Affordable and Accessible",
+    description: "Our services are affordable & accessible through online booking or social media platforms",
+  },
+  {
+    icon: Music,
+    title: "Sound & Hassle Free Experience",
+    description: "Beverages & Calm music at our Reception will help you relax before & after the treatment",
+  },
+  {
+    icon: CreditCard,
+    title: "Flexible Payment Options",
+    description: "We offer all kinds of Digital Payment options. EMI payment is available for local residents",
+  },
+]
+
+const achievements = [
+  { number: "500+", label: "Happy Patients", icon: Users },
+  { number: "10+", label: "Years Experience", icon: Award },
+  { number: "100%", label: "Safe Procedures", icon: Shield },
+  { number: "4.9/5", label: "Patient Rating", icon: Star },
+]
 const topServices = [
   {
     title: "Professional Teeth Cleaning & Scaling",
@@ -222,7 +271,8 @@ export default function HomePage() {
                   <Clock className="h-6 w-6 text-teal-600" />
                   <div className="text-center">
                     <p className="font-semibold text-teal-700">Open 7 Days a Week</p>
-                    <p className="text-base text-teal-700">Monday - Sunday: 9:00 AM - 8:00 PM</p>
+                    <p className="text-base text-teal-700">Monday - Sunday: 10:00 AM - 6:00 PM</p>
+                    <p className="text-base text-teal-700">Saturday: 10:00 AM - 3:00 PM</p>
                   </div>
                 </div>
               </div>
@@ -424,6 +474,48 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+
+        <section className="py-24 relative">
+          <div className="absolute inset-0 bg-white/90 backdrop-blur-sm"></div>
+          <div className="relative z-10">
+            <div className="container mx-auto px-4 relative z-10">
+              
+                      <div className="container mx-auto px-4">
+                        <div className="text-center mb-20">
+                          <h1 className="text-5xl lg:text-6xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 bg-clip-text text-transparent mb-6">
+                            Why Choose Dr. Kareen's Clinic?
+                          </h1>
+                          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                            Discover what makes us the preferred choice for dental care in Lalitpur. Our commitment to excellence,
+                            advanced technology, and patient satisfaction sets us apart.
+                          </p>
+                          <div className="w-32 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto mt-8"></div>
+                        </div>
+                        {/* Achievements Stats */}
+                        <div className="grid md:grid-cols-4 gap-6 mb-20">
+                          {achievements.map((achievement, index) => {
+                            const IconComponent = achievement.icon
+                            return (
+                              <Card
+                                key={index}
+                                className="bg-white/80 backdrop-blur-sm border-0 p-6 rounded-2xl text-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                              >
+                                <CardContent className="p-0">
+                                  <IconComponent className="h-8 w-8 text-teal-600 mx-auto mb-3" />
+                                  <h3 className="text-3xl font-bold text-gray-900 mb-1">{achievement.number}</h3>
+                                  <p className="text-gray-600 font-medium">{achievement.label}</p>
+                                </CardContent>
+                              </Card>
+                            )
+                          })}
+                        </div>
+                      </div>
+            
+            </div>
+          </div>
+        </section> 
+
+        
 
         <section className="py-24 relative">
           <div className="absolute inset-0 bg-gradient-to-br from-gray-50/90 to-teal-50/90 backdrop-blur-sm"></div>
