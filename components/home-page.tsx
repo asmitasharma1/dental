@@ -196,42 +196,42 @@ export default function HomePage() {
         <Navbar isHomePage={true} scrolled={scrolled} />
 
         <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
-          <div className="fixed right-4 md:right-6 top-1/2 transform -translate-y-1/2 z-40 flex flex-col space-y-3 md:space-y-4">
-            <a
-              href="https://www.instagram.com/smilebydrkareen_dentalclinic/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur-sm shadow-lg rounded-full flex items-center justify-center hover:bg-teal-50 transition-all duration-300 hover:scale-105 md:hover:scale-110"
-            >
-              <Instagram className="h-5 w-5 md:h-6 md:w-6 text-teal-600" />
-            </a>
-            <a
-              href="https://www.tiktok.com/@smilebydrkareen_dental"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur-sm shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-all duration-300 hover:scale-105 md:hover:scale-110"
-            >
-              <div className="w-5 h-5 md:w-6 md:h-6 bg-gray-800 rounded-sm flex items-center justify-center">
-                <span className="text-white text-xs font-bold">T</span>
-              </div>
-            </a>
-            <a
-              href="https://wa.me/9851359775"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur-sm shadow-lg rounded-full flex items-center justify-center hover:bg-teal-50 transition-all duration-300 hover:scale-105 md:hover:scale-110"
-            >
-              <MessageCircle className="h-5 w-5 md:h-6 md:w-6 text-teal-600" />
-            </a>
-            <a
-              href="mailto:smilebydrkareen@gmail.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur-sm shadow-lg rounded-full flex items-center justify-center hover:bg-teal-50 transition-all duration-300 hover:scale-105 md:hover:scale-110"
-            >
-              <Mail className="h-5 w-5 md:h-6 md:w-6 text-teal-600" />
-            </a>
-          </div>
+          <div className="fixed left-4 md:left-6 top-1/2 transform -translate-y-1/2 z-40 flex flex-col space-y-3 md:space-y-4">
+  <a
+    href="https://www.instagram.com/smilebydrkareen_dentalclinic/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur-sm shadow-lg rounded-full flex items-center justify-center hover:bg-teal-50 transition-all duration-300 hover:scale-105 md:hover:scale-110"
+  >
+    <Instagram className="h-5 w-5 md:h-6 md:w-6 text-teal-600" />
+  </a>
+  <a
+    href="https://www.tiktok.com/@smilebydrkareen_dental"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur-sm shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-all duration-300 hover:scale-105 md:hover:scale-110"
+  >
+    <div className="w-5 h-5 md:w-6 md:h-6 bg-gray-800 rounded-sm flex items-center justify-center">
+      <span className="text-white text-xs font-bold">T</span>
+    </div>
+  </a>
+  <a
+    href="https://wa.me/9851359775"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur-sm shadow-lg rounded-full flex items-center justify-center hover:bg-teal-50 transition-all duration-300 hover:scale-105 md:hover:scale-110"
+  >
+    <MessageCircle className="h-5 w-5 md:h-6 md:w-6 text-teal-600" />
+  </a>
+  <a
+    href="mailto:smilebydrkareen@gmail.com"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur-sm shadow-lg rounded-full flex items-center justify-center hover:bg-teal-50 transition-all duration-300 hover:scale-105 md:hover:scale-110"
+  >
+    <Mail className="h-5 w-5 md:h-6 md:w-6 text-teal-600" />
+  </a>
+</div>
 
           <div className="absolute top-10 left-10 w-8 h-10 bg-white/20 rounded-t-full rounded-b-sm transform rotate-12 blur-sm animate-pulse"></div>
           <div className="absolute top-32 right-20 w-6 h-8 bg-teal-200/30 rounded-t-full rounded-b-sm transform -rotate-45 blur-sm animate-pulse delay-1000"></div>
@@ -304,13 +304,35 @@ export default function HomePage() {
             </div>
 
             <div className="relative flex items-center justify-center mb-12">
-              <div className="w-full max-w-4xl text-center">
-                <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-xl p-6 shadow-lg">
-                  <h3 className="text-3xl font-bold text-gray-900 mb-4 drop-shadow-lg">{topServices[currentService].title}</h3>
-                  <p className="text-lg text-gray-800 leading-relaxed drop-shadow-md font-medium">{topServices[currentService].description}</p>
-                </div>
-              </div>
-            </div>
+  {/* Left Arrow */}
+  <button 
+    onClick={() => setCurrentService(currentService === 0 ? topServices.length - 1 : currentService - 1)}
+    className="absolute left-0 z-10 p-3 rounded-full bg-white/20 backdrop-blur-md border border-white/30 hover:bg-white/30 transition-all duration-300 shadow-lg hover:shadow-xl"
+    aria-label="Previous service"
+  >
+    <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+    </svg>
+  </button>
+
+  <div className="w-full max-w-4xl text-center mx-8">
+    <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-xl p-6 shadow-lg">
+      <h3 className="text-3xl font-bold text-gray-900 mb-4 drop-shadow-lg">{topServices[currentService].title}</h3>
+      <p className="text-lg text-gray-800 leading-relaxed drop-shadow-md font-medium">{topServices[currentService].description}</p>
+    </div>
+  </div>
+
+  {/* Right Arrow */}
+  <button 
+    onClick={() => setCurrentService(currentService === topServices.length - 1 ? 0 : currentService + 1)}
+    className="absolute right-0 z-10 p-3 rounded-full bg-white/20 backdrop-blur-md border border-white/30 hover:bg-white/30 transition-all duration-300 shadow-lg hover:shadow-xl"
+    aria-label="Next service"
+  >
+    <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+    </svg>
+    </button>
+</div>
 
             <div className="flex justify-center space-x-2 mb-12">
               {topServices.map((_, index) => (
@@ -328,7 +350,7 @@ export default function HomePage() {
                 <Card className="bg-white/20 backdrop-blur-md border border-white/30 p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group hover:bg-white/25 lg:-translate-x-48">
                   <CardContent className="p-0">
                     <div className="flex items-center justify-between mb-8">
-                      <h3 className="text-3xl font-bold text-gray-900 drop-shadow-lg">Basic Dental Care</h3>
+                      <h3 className="text-3xl font-bold text-gray-900 drop-shadow-lg">Dental Care</h3>
                       <div className="w-20 h-20 bg-white/50 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 border border-white/40">
                         <Image src="/images/dental-instruments.avif" alt="Dental care" width={30} height={30} />
                       </div>

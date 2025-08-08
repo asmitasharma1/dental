@@ -11,13 +11,16 @@ export default function Footer() {
           {/* Logo and Description */}
           <div className="lg:col-span-2 space-y-6">
             <div className="flex items-center space-x-2">
-              <Image
-                src="/images/logo.png"
-                alt="Smile by Dr. Kareen Logo"
-                width={120}
-                height={60}
-                className="h-12 w-auto"
-              />
+              <Link href="/" className="flex items-center justify-center">
+                <Image
+                  src="/images/logo.png"
+                  alt="Smile by Dr. Kareen Logo"
+                  width={100}
+                  height={100}
+                  className="cursor-pointer drop-shadow-lg transition-transform duration-300 hover:scale-105"
+                  priority
+                />
+              </Link>
             </div>
             <p className="text-gray-300 text-lg leading-relaxed max-w-md">
               Your trusted dental care partner in Lalitpur. We're committed to providing exceptional dental services
