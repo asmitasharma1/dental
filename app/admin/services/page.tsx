@@ -230,7 +230,7 @@ export default function AdminServices(): ReactElement {
                           <td className="px-6 py-4 text-sm text-gray-900">{service.title}</td>
                           <td className="px-6 py-4 text-sm text-gray-900 capitalize">{service.category}</td>
                           <td className="px-6 py-4 text-sm text-gray-900">NPR {service.price}</td>
-                          <td className="px-6 py-4 text-sm text-gray-900">{service.duration} min</td>
+                          <td className="px-6 py-4 text-sm text-gray-900">{service.duration}</td>
                           <td className="px-6 py-4 text-sm text-gray-900">
                             <Button variant="ghost" size="sm" onClick={() => handleEdit(service)}>
                               <Pencil className="h-4 w-4 mr-1" /> Edit

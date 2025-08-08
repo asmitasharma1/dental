@@ -165,7 +165,7 @@ export default function ServiceDetailPage({ serviceId }: ServiceDetailPageProps)
                       </div>
                       <div>
                         <p className="text-sm text-gray-500">Duration</p>
-                        <p className="text-xl font-bold text-gray-900">{service.duration}</p>
+                        <p className="text-xl font-bold text-gray-900">{service.duration} min</p>
                       </div>
                     </div>
                   )}
