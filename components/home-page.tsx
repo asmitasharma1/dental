@@ -193,6 +193,7 @@ export default function HomePage() {
 
       {/* Content */}
       <div className="relative z-10">
+        
         <Navbar isHomePage={true} scrolled={scrolled} />
 
         <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
