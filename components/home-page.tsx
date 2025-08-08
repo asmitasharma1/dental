@@ -344,94 +344,107 @@ export default function HomePage() {
               ))}
             </div>
 
-            <div className="max-w-4xl mx-auto px-4">
-              <div className="grid lg:grid-cols-2 gap-8 mt-20">
-                {/* Left Card - Basic Dental Care */}
-                <Card className="bg-white/20 backdrop-blur-md border border-white/30 p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group hover:bg-white/25 lg:-translate-x-48">
-                  <CardContent className="p-0">
-                    <div className="flex items-center justify-between mb-8">
-                      <h3 className="text-3xl font-bold text-gray-900 drop-shadow-lg">Dental Care</h3>
-                      <div className="w-20 h-20 bg-white/50 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 border border-white/40">
-                        <Image src="/images/dental-instruments.avif" alt="Dental care" width={30} height={30} />
-                      </div>
-                    </div>
-                    <ul className="space-y-4 text-gray-800">
-                      <li className="flex items-center space-x-3">
-                        <div className="w-2 h-2 bg-gradient-to-r from-teal-500 to-teal-600 rounded-full"></div>
-                        <span className="drop-shadow font-medium">Professional Teeth Cleaning & Scaling</span>
-                      </li>
-                      <li className="flex items-center space-x-3">
-                        <div className="w-2 h-2 bg-gradient-to-r from-teal-500 to-teal-600 rounded-full"></div>
-                        <span className="drop-shadow font-medium">Dental Fillings & Cavity Treatment</span>
-                      </li>
-                      <li className="flex items-center space-x-3">
-                        <div className="w-2 h-2 bg-gradient-to-r from-teal-500 to-teal-600 rounded-full"></div>
-                        <span className="drop-shadow font-medium">Oral Health Consultation</span>
-                      </li>
-                    </ul>
-                  </CardContent>
-                </Card>
-
-                {/* Right Card - Aesthetic Care */}
-                <Card className="bg-white/20 backdrop-blur-md border border-white/30 p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group hover:bg-white/25 lg:translate-x-48">
-                  <CardContent className="p-0">
-                    <div className="flex items-center justify-between mb-8">
-                      <h3 className="text-3xl font-bold text-gray-900 drop-shadow-lg">Aesthetic Care</h3>
-                      <div className="w-20 h-20 bg-white/50 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 border border-white/40">
-                        <Image src="/images/dental-instruments.avif" alt="Aesthetic care" width={30} height={30} />
-                      </div>
-                    </div>
-                    <ul className="space-y-4 text-gray-800">
-                      <li className="flex items-center space-x-3">
-                        <div className="w-2 h-2 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full"></div>
-                        <span className="drop-shadow font-medium">Premium Porcelain Veneers</span>
-                      </li>
-                      <li className="flex items-center space-x-3">
-                        <div className="w-2 h-2 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full"></div>
-                        <span className="drop-shadow font-medium">Professional Teeth Whitening</span>
-                      </li>
-                      <li className="flex items-center space-x-3">
-                        <div className="w-2 h-2 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full"></div>
-                        <span className="drop-shadow font-medium">Invisalign Clear Aligners</span>
-                      </li>
-                    </ul>
-                  </CardContent>
-                </Card>
-              </div>
+           <div className="max-w-4xl mx-auto px-4">
+  <div className="grid lg:grid-cols-2 gap-8 mt-20">
+    {/* Left Card - Basic Dental Care */}
+    <Link href="/services" className="block">
+      <Card className="bg-white/20 backdrop-blur-md border border-white/30 p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group hover:bg-white/25 lg:-translate-x-48 cursor-pointer">
+        <CardContent className="p-0">
+          <div className="flex items-center justify-between mb-8">
+            <h3 className="text-3xl font-bold text-gray-900 drop-shadow-lg">Dental Care</h3>
+            <div className="w-20 h-20 bg-white/50 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 border border-white/40">
+              <Image src="/images/dental-instruments.avif" alt="Dental care" width={30} height={30} />
             </div>
+          </div>
+          <ul className="space-y-4 text-gray-800">
+            <li className="flex items-center space-x-3">
+              <div className="w-2 h-2 bg-gradient-to-r from-teal-500 to-teal-600 rounded-full"></div>
+              <span className="drop-shadow font-medium">Professional Teeth Cleaning & Scaling</span>
+            </li>
+            <li className="flex items-center space-x-3">
+              <div className="w-2 h-2 bg-gradient-to-r from-teal-500 to-teal-600 rounded-full"></div>
+              <span className="drop-shadow font-medium">Dental Fillings & Cavity Treatment</span>
+            </li>
+            <li className="flex items-center space-x-3">
+              <div className="w-2 h-2 bg-gradient-to-r from-teal-500 to-teal-600 rounded-full"></div>
+              <span className="drop-shadow font-medium">Oral Health Consultation</span>
+            </li>
+          </ul>
+        </CardContent>
+      </Card>
+    </Link>
 
-            <div className="grid lg:grid-cols-3 gap-8 mt-20">
-              <Card className="bg-white/20 backdrop-blur-md border border-white/30 p-6 rounded-3xl text-center shadow-lg hover:shadow-2xl transition-all duration-500 group hover:bg-white/25">
-                <CardContent className="p-0">
-                  <div className="mb-6">
-                    <div className="w-16 h-16 bg-white/40 backdrop-blur-sm rounded-full mx-auto flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 border border-white/50">
-                      <Image src="/images/dental-instruments.avif" alt="Restorative" width={32} height={32} />
-                    </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-4 drop-shadow-lg">Restorative Dentistry</h3>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card className="bg-white/20 backdrop-blur-md border border-white/30 p-6 rounded-3xl text-center shadow-lg hover:shadow-2xl transition-all duration-500 group hover:bg-white/25">
-                <CardContent className="p-0">
-                  <div className="mb-6">
-                    <div className="w-16 h-16 bg-white/40 backdrop-blur-sm rounded-full mx-auto flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 border border-white/50">
-                      <Image src="/images/dental-instruments.avif" alt="Pediatric" width={32} height={32} />
-                    </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-4 drop-shadow-lg">Pediatric Dentistry</h3>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card className="bg-white/20 backdrop-blur-md border border-white/30 p-6 rounded-3xl text-center shadow-lg hover:shadow-2xl transition-all duration-500 group hover:bg-white/25">
-                <CardContent className="p-0">
-                  <div className="mb-6">
-                    <div className="w-16 h-16 bg-white/40 backdrop-blur-sm rounded-full mx-auto flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 border border-white/50">
-                      <Image src="/images/dental-instruments.avif" alt="Implants" width={32} height={32} />
-                    </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-4 drop-shadow-lg">Dental Implants</h3>
-                  </div>
-                </CardContent>
-              </Card>
+    {/* Right Card - Aesthetic Care */}
+    <Link href="/services" className="block">
+      <Card className="bg-white/20 backdrop-blur-md border border-white/30 p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group hover:bg-white/25 lg:translate-x-48 cursor-pointer">
+        <CardContent className="p-0">
+          <div className="flex items-center justify-between mb-8">
+            <h3 className="text-3xl font-bold text-gray-900 drop-shadow-lg">Aesthetic Care</h3>
+            <div className="w-20 h-20 bg-white/50 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 border border-white/40">
+              <Image src="/images/dental-instruments.avif" alt="Aesthetic care" width={30} height={30} />
             </div>
+          </div>
+          <ul className="space-y-4 text-gray-800">
+            <li className="flex items-center space-x-3">
+              <div className="w-2 h-2 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full"></div>
+              <span className="drop-shadow font-medium">Premium Porcelain Veneers</span>
+            </li>
+            <li className="flex items-center space-x-3">
+              <div className="w-2 h-2 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full"></div>
+              <span className="drop-shadow font-medium">Professional Teeth Whitening</span>
+            </li>
+            <li className="flex items-center space-x-3">
+              <div className="w-2 h-2 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full"></div>
+              <span className="drop-shadow font-medium">Invisalign Clear Aligners</span>
+            </li>
+          </ul>
+        </CardContent>
+      </Card>
+    </Link>
+  </div>
+</div>
+
+{/* Bottom 3 Cards */}
+<div className="grid lg:grid-cols-3 gap-8 mt-20">
+  <Link href="/services" className="block">
+    <Card className="bg-white/20 backdrop-blur-md border border-white/30 p-6 rounded-3xl text-center shadow-lg hover:shadow-2xl transition-all duration-500 group hover:bg-white/25 cursor-pointer">
+      <CardContent className="p-0">
+        <div className="mb-6">
+          <div className="w-16 h-16 bg-white/40 backdrop-blur-sm rounded-full mx-auto flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 border border-white/50">
+            <Image src="/images/dental-instruments.avif" alt="Restorative" width={32} height={32} />
+          </div>
+          <h3 className="text-xl font-bold text-gray-900 mb-4 drop-shadow-lg">Restorative Dentistry</h3>
+        </div>
+      </CardContent>
+    </Card>
+  </Link>
+
+  <Link href="/services" className="block">
+    <Card className="bg-white/20 backdrop-blur-md border border-white/30 p-6 rounded-3xl text-center shadow-lg hover:shadow-2xl transition-all duration-500 group hover:bg-white/25 cursor-pointer">
+      <CardContent className="p-0">
+        <div className="mb-6">
+          <div className="w-16 h-16 bg-white/40 backdrop-blur-sm rounded-full mx-auto flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 border border-white/50">
+            <Image src="/images/dental-instruments.avif" alt="Pediatric" width={32} height={32} />
+          </div>
+          <h3 className="text-xl font-bold text-gray-900 mb-4 drop-shadow-lg">Pediatric Dentistry</h3>
+        </div>
+      </CardContent>
+    </Card>
+  </Link>
+
+  <Link href="/services" className="block">
+    <Card className="bg-white/20 backdrop-blur-md border border-white/30 p-6 rounded-3xl text-center shadow-lg hover:shadow-2xl transition-all duration-500 group hover:bg-white/25 cursor-pointer">
+      <CardContent className="p-0">
+        <div className="mb-6">
+          <div className="w-16 h-16 bg-white/40 backdrop-blur-sm rounded-full mx-auto flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 border border-white/50">
+            <Image src="/images/dental-instruments.avif" alt="Implants" width={32} height={32} />
+          </div>
+          <h3 className="text-xl font-bold text-gray-900 mb-4 drop-shadow-lg">Dental Implants</h3>
+        </div>
+      </CardContent>
+    </Card>
+  </Link>
+</div>
 
             <div className="text-center mt-12">
               <Link href="/services">
