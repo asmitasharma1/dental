@@ -84,10 +84,10 @@ export default function Navbar({ isHomePage = false, scrolled = false }: NavbarP
 
   const getNavbarClasses = () => {
     if (isHomePage) {
-      return `relative w-full z-50 transition-all duration-300 mt-8 ${scrolled ? "bg-white/95 backdrop-blur-md shadow-lg border-b border-teal-100" : "bg-transparent"
+      return `relative w-full z-50 transition-all duration-300 ${scrolled ? "bg-white/95 backdrop-blur-md shadow-lg border-b border-teal-100" : "bg-transparent"
         }`
     }
-    return `fixed top-8 left-0 w-full z-50 transition-all duration-300 bg-white shadow-lg border-b border-teal-100`
+    return `fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-white shadow-lg border-b border-teal-100`
   }
 
   const getTextClasses = () => {
@@ -130,167 +130,166 @@ export default function Navbar({ isHomePage = false, scrolled = false }: NavbarP
       <div className="relative z-10">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-  {/* Desktop Navigation */}
-  <nav className="hidden md:flex items-center w-full relative">
-    {/* Left Side Menu (3 items) */}
-    <div className="flex items-center space-x-8 lg:space-x-12 flex-1 justify-start">
-      <Link
-        href="/"
-        className={`${getTextClasses()} transition-all duration-300 font-medium relative group text-lg tracking-wide`}
-      >
-        Home
-        <span
-          className={`absolute -bottom-1 left-0 w-0 h-0.5 ${getUnderlineClasses()} transition-all duration-300 group-hover:w-full rounded-full`}
-        ></span>
-      </Link>
-      <NavigationMenu>
-        <NavigationMenuList>
-          <NavigationMenuItem>
-            <NavigationMenuTrigger
-              className={`${getTextClasses()} transition-all duration-300 font-medium text-lg tracking-wide bg-transparent`}
-            >
-              About Us
-            </NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <div className="grid w-[300px] p-4 bg-white shadow-md">
-                <NavigationMenuLink asChild>
-                  <Link
-                    href="/about"
-                    className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none"
-                  >
-                    <div className="text-sm font-medium leading-none group-hover:underline">Our Clinic</div>
-                    <div className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                      Learn about our state-of-the-art facility
-                    </div>
-                  </Link>
-                </NavigationMenuLink>
-                <NavigationMenuLink asChild>
-                  <Link
-                    href="/about#doctors"
-                    className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none"
-                  >
-                    <div className="text-sm font-medium leading-none group-hover:underline">Our Doctors</div>
-                    <div className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                      Meet our experienced dental professionals
-                    </div>
-                  </Link>
-                </NavigationMenuLink>
-              </div>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-        </NavigationMenuList>
-      </NavigationMenu>
-      <Link
-        href="/why-us"
-        className={`${getTextClasses()} transition-all duration-300 font-medium relative group text-lg tracking-wide`}
-      >
-        Why Us
-        <span
-          className={`absolute -bottom-1 left-0 w-0 h-0.5 ${getUnderlineClasses()} transition-all duration-300 group-hover:w-full rounded-full`}
-        ></span>
-      </Link>
-    </div>
-
-    {/* Centered Logo - Absolutely positioned for perfect centering */}
-    <div className="absolute left-1/2 transform -translate-x-1/2">
-      <Link href="/" className="flex items-center justify-center">
-        <Image
-          src="/images/logo.png"
-          alt="Smile by Dr. Kareen Logo"
-          width={100}
-          height={100}
-          className="cursor-pointer drop-shadow-lg transition-transform duration-300 hover:scale-105"
-          priority
-        />
-      </Link>
-    </div>
-
-    {/* Right Side Menu (3 items) */}
-    <div className="flex items-center space-x-8 lg:space-x-12 flex-1 justify-end">
-      <NavigationMenu>
-        <NavigationMenuList>
-          <NavigationMenuItem>
-            <NavigationMenuTrigger
-              className={`${getTextClasses()} transition-all duration-300 font-medium text-lg tracking-wide bg-transparent`}
-            >
-              Service
-            </NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <div className="grid w-[400px] p-4 bg-white shadow-md max-h-[500px] overflow-y-auto">
-                <NavigationMenuLink asChild>
-                  <Link
-                    href="/services"
-                    className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none border-b border-gray-100"
-                  >
-                    <div className="text-sm font-medium leading-none group-hover:underline">All Services</div>
-                    <div className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                      View our complete range of dental services
-                    </div>
-                  </Link>
-                </NavigationMenuLink>
-
-                {/* Services from Database */}
-                {servicesLoading ? (
-                  <div className="p-4 text-center text-sm text-gray-500">Loading services...</div>
-                ) : (
-                  <>
-                    {services.map((service) => (
-                      <NavigationMenuLink key={service.id} asChild>
-                        <Link
-                          href={`/services/${service.id}`}
-                          className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-3 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none"
-                        >
-                          <div className="flex items-center justify-between w-full">
-                            <div className="flex-1">
-                              <div className="text-xs font-medium leading-none group-hover:underline line-clamp-1">
-                                {service.title}
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center justify-between w-full">
+              {/* Left Side Menu (3 items) */}
+              <div className="flex items-center space-x-12">
+                <Link
+                  href="/"
+                  className={`${getTextClasses()} transition-all duration-300 font-medium relative group text-lg tracking-wide`}
+                >
+                  Home
+                  <span
+                    className={`absolute -bottom-1 left-0 w-0 h-0.5 ${getUnderlineClasses()} transition-all duration-300 group-hover:w-full rounded-full`}
+                  ></span>
+                </Link>
+                <NavigationMenu>
+                  <NavigationMenuList>
+                    <NavigationMenuItem>
+                      <NavigationMenuTrigger
+                        className={`${getTextClasses()} transition-all duration-300 font-medium text-lg tracking-wide bg-transparent`}
+                      >
+                        About Us
+                      </NavigationMenuTrigger>
+                      <NavigationMenuContent>
+                        <div className="grid w-[300px] p-4 bg-white shadow-md">
+                          <NavigationMenuLink asChild>
+                            <Link
+                              href="/about"
+                              className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none"
+                            >
+                              <div className="text-sm font-medium leading-none group-hover:underline">Our Clinic</div>
+                              <div className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                                Learn about our state-of-the-art facility
                               </div>
-                            </div>
-                          </div>
-                        </Link>
-                      </NavigationMenuLink>
-                    ))}
-                    {services.length === 0 && (
-                      <div className="p-4 text-center text-sm text-gray-500">No services available</div>
-                    )}
-                  </>
-                )}
-
-                <NavigationMenuLink asChild>
-                  <Link
-                    href="/services/restorative-dentistry/faq"
-                    className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none border-t border-gray-100 mt-2"
-                  >
-                    <div className="text-sm font-medium leading-none group-hover:underline">FAQs</div>
-                    <div className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                      Frequently Asked Questions
-                    </div>
-                  </Link>
-                </NavigationMenuLink>
+                            </Link>
+                          </NavigationMenuLink>
+                          <NavigationMenuLink asChild>
+                            <Link
+                              href="/about#doctors"
+                              className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none"
+                            >
+                              <div className="text-sm font-medium leading-none group-hover:underline">Our Doctors</div>
+                              <div className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                                Meet our experienced dental professionals
+                              </div>
+                            </Link>
+                          </NavigationMenuLink>
+                        </div>
+                      </NavigationMenuContent>
+                    </NavigationMenuItem>
+                  </NavigationMenuList>
+                </NavigationMenu>
+                <Link
+                  href="/why-us"
+                  className={`${getTextClasses()} transition-all duration-300 font-medium relative group text-lg tracking-wide`}
+                >
+                  Why Us
+                  <span
+                    className={`absolute -bottom-1 left-0 w-0 h-0.5 ${getUnderlineClasses()} transition-all duration-300 group-hover:w-full rounded-full`}
+                  ></span>
+                </Link>
               </div>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-        </NavigationMenuList>
-      </NavigationMenu>
-      <Link
-        href="/gallery"
-        className={`${getTextClasses()} transition-all duration-300 font-medium relative group text-lg tracking-wide`}
-      >
-        Gallery
-        <span
-          className={`absolute -bottom-1 left-0 w-0 h-0.5 ${getUnderlineClasses()} transition-all duration-300 group-hover:w-full rounded-full`}
-        ></span>
-      </Link>
-      <Link href="/book-now">
-        <Button
-          size="lg"
-          className="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 rounded-full px-6 py-3 font-semibold"
-        >
-          Book Now
-        </Button>
-      </Link>
-    </div>
-  </nav>
+
+              {/* Centered Logo */}
+              <Link href="/" className="flex items-center justify-center">
+                <Image
+                  src="/images/logo.png"
+                  alt="Smile by Dr. Kareen Logo"
+                  width={100}
+                  height={100}
+                  className="cursor-pointer drop-shadow-lg transition-transform duration-300 hover:scale-105"
+                  priority
+                />
+              </Link>
+
+              {/* Right Side Menu (3 items) */}
+              <div className="flex items-center space-x-12">
+                <NavigationMenu>
+                  <NavigationMenuList>
+                    <NavigationMenuItem>
+                      <NavigationMenuTrigger
+                        className={`${getTextClasses()} transition-all duration-300 font-medium text-lg tracking-wide bg-transparent`}
+                      >
+                        Service
+                      </NavigationMenuTrigger>
+                      <NavigationMenuContent>
+                        <div className="grid w-[400px] p-4 bg-white shadow-md max-h-[500px] overflow-y-auto">
+                          <NavigationMenuLink asChild>
+                            <Link
+                              href="/services"
+                              className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none border-b border-gray-100"
+                            >
+                              <div className="text-sm font-medium leading-none group-hover:underline">All Services</div>
+                              <div className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                                View our complete range of dental services
+                              </div>
+                            </Link>
+                          </NavigationMenuLink>
+
+                          {/* Services from Database */}
+                          {servicesLoading ? (
+                            <div className="p-4 text-center text-sm text-gray-500">Loading services...</div>
+                          ) : (
+                            <>
+                              {services.map((service) => (
+                                <NavigationMenuLink key={service.id} asChild>
+                                  <Link
+                                    href={`/services/${service.id}`}
+                                    className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-3 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none"
+                                  >
+                                    <div className="flex items-center justify-between w-full">
+                                      <div className="flex-1">
+                                        <div className="text-xs font-medium leading-none group-hover:underline line-clamp-1">
+                                          {service.title}
+                                        </div>
+
+                                      </div>
+                                    </div>
+                                  </Link>
+                                </NavigationMenuLink>
+                              ))}
+                              {services.length === 0 && (
+                                <div className="p-4 text-center text-sm text-gray-500">No services available</div>
+                              )}
+                            </>
+                          )}
+
+                          <NavigationMenuLink asChild>
+                            <Link
+                              href="/services/restorative-dentistry/faq"
+                              className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-4 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none border-t border-gray-100 mt-2"
+                            >
+                              <div className="text-sm font-medium leading-none group-hover:underline">FAQs</div>
+                              <div className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                                Frequently Asked Questions
+                              </div>
+                            </Link>
+                          </NavigationMenuLink>
+                        </div>
+                      </NavigationMenuContent>
+                    </NavigationMenuItem>
+                  </NavigationMenuList>
+                </NavigationMenu>
+                <Link
+                  href="/gallery"
+                  className={`${getTextClasses()} transition-all duration-300 font-medium relative group text-lg tracking-wide`}
+                >
+                  Gallery
+                  <span
+                    className={`absolute -bottom-1 left-0 w-0 h-0.5 ${getUnderlineClasses()} transition-all duration-300 group-hover:w-full rounded-full`}
+                  ></span>
+                </Link>
+                <Link href="/book-now">
+                  <Button
+                    size="lg"
+                    className="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 rounded-full px-6 py-3 font-semibold"
+                  >
+                    Book Now
+                  </Button>
+                </Link>
+              </div>
+            </nav>
 
             {/* Mobile Navigation */}
             <div className="md:hidden flex items-center justify-between w-full">
