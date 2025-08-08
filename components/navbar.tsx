@@ -404,7 +404,7 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
                   </Link>
                   
                   {/* Show services from database */}
-                  {!servicesLoading && services.slice(0, 5).map((service) => (
+                  {/* {!servicesLoading && services.slice(0, 5).map((service) => (
                     <Link
                       key={service.id}
                       href={`/services/${service.id}`}
@@ -414,7 +414,7 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
                       {service.title}
                     </Link>
                   ))}
-                  
+                   */}
                   <Link
                     href="/services/restorative-dentistry/faq"
                     onClick={handleMobileLinkClick}
