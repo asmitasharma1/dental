@@ -63,19 +63,19 @@ const topServices = [
   {
     title: "Professional Teeth Cleaning & Scaling",
     description: "Deep cleaning to remove plaque and tartar buildup for optimal oral health",
-    image: "/images/MPS__40.webp",
+    image: "/images/MPS__40.jpg",
     link: "/services/teeth-cleaning",
   },
   {
     title: "Dental Fillings & Cavity Treatment",
     description: "High-quality composite fillings to restore damaged teeth",
-    image: "/images/MPS__40.webp",
+    image: "/images/MPS__40.jpg",
     link: "/services/dental-fillings",
   },
   {
     title: "Professional Teeth Whitening",
     description: "Advanced whitening treatments for a brighter, confident smile",
-    image: "/images/MPS__40.webp",
+    image: "/images/MPS__40.jpg",
     link: "/services/teeth-whitening",
   },
 ]
@@ -317,7 +317,7 @@ export default function HomePage() {
                 aria-label="Next service"
               >
                 <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l-7 7 7-7" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </button>
             </div>
@@ -333,7 +333,7 @@ export default function HomePage() {
             </div>
 
             <div className="max-w-4xl mx-auto px-4">
-              <div className="grid lg:grid-cols-2 gap-8 mt-20 ipad-pro-grid">
+              <div className="grid lg:grid-cols-2 gap-8 mt-20">
                 <Link href="/services" className="block">
                   <Card className="bg-white/20 backdrop-blur-md border border-white/30 p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group hover:bg-white/25 lg:-translate-x-48 cursor-pointer">
                     <CardContent className="p-0">
@@ -390,7 +390,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="grid lg:grid-cols-3 gap-8 mt-20 ipad-pro-grid">
+            <div className="grid lg:grid-cols-3 gap-8 mt-20">
               <Link href="/services" className="block">
                 <Card className="bg-white/20 backdrop-blur-md border border-white/30 p-6 rounded-3xl text-center shadow-lg hover:shadow-2xl transition-all duration-500 group hover:bg-white/25 cursor-pointer">
                   <CardContent className="p-0">
