@@ -32,7 +32,8 @@ const positions = [
   "Orthodontist",
   "Oral and Maxillofacial Surgeon",
   "Endodontist",
-  "General Dentist"
+  "General Dentist",
+  "Implantologist"
 ]
 
 export default function AdminDoctors() {
