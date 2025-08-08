@@ -165,24 +165,31 @@ export default function AboutPage() {
                   className="bg-gradient-to-br from-white to-teal-50 border-0 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group overflow-hidden"
                 >
                   <CardContent className="p-0">
-                    <div className="relative h-96 overflow-hidden">
+                    <div className="relative aspect-[3/4] overflow-hidden">
                       <Image
                         src={doctor.image_url || "/placeholder.svg"}
                         alt={doctor.name}
                         fill
-                        className="object-cover group-hover:scale-110 transition-transform duration-500"
+                        className="object-cover object-top group-hover:scale-110 transition-transform duration-500"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       />
-                      {/* <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div className="flex flex-wrap gap-2">
-                          {doctor.specialties.map((specialty, idx) => (
-                            <span key={idx} className="bg-teal-600/80 px-3 py-1.5 rounded-full text-xs">
-                              {specialty}
-                            </span>
-
-                          ))}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      {doctor.specialties.length > 0 && (
+                        <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <div className="flex flex-wrap gap-2">
+                            {doctor.specialties.slice(0, 2).map((specialty, idx) => (
+                              <span key={idx} className="bg-teal-600/90 text-white px-3 py-1.5 rounded-full text-xs font-medium">
+                                {specialty}
+                              </span>
+                            ))}
+                            {doctor.specialties.length > 2 && (
+                              <span className="bg-gray-600/90 text-white px-3 py-1.5 rounded-full text-xs font-medium">
+                                +{doctor.specialties.length - 2} more
+                              </span>
+                            )}
+                          </div>
                         </div>
-                      </div> */}
+                      )}
                     </div>
 
                     <div className="p-6 space-y-4">

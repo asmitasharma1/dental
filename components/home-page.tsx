@@ -120,6 +120,14 @@ export default function HomePage() {
     setCurrentService((prev) => (prev - 1 + topServices.length) % topServices.length)
   }
 
+  const nextTestimonial = () => {
+    setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
+  }
+
+  const prevTestimonial = () => {
+    setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)
+  }
+
   return (
     <div className="min-h-screen relative">
       {/* Background Image */}
@@ -427,25 +435,52 @@ export default function HomePage() {
                 </h2>
                 <div className="w-24 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto"></div>
               </div>
-              <Card className="bg-gradient-to-br from-teal-600 to-gray-700 text-white p-8 rounded-3xl shadow-2xl max-w-4xl mx-auto">
-                <CardContent className="p-0 text-center">
-                  <Quote className="h-12 w-12 mx-auto mb-6 opacity-80" />
-                  <p className="text-xl mb-6 leading-relaxed">{testimonials[currentTestimonial].quote}</p>
-                  <div className="space-y-2">
-                    <p className="font-bold text-lg">{testimonials[currentTestimonial].name}</p>
-                    <p className="text-gray-200">{testimonials[currentTestimonial].service}</p>
-                  </div>
-                  <div className="flex justify-center space-x-2 mt-6">
-                    {testimonials.map((_, index) => (
+              
+              {/* Testimonial Card with Arrow Navigation */}
+              <div className="relative max-w-4xl mx-auto">
+                <Card className="bg-gradient-to-br from-teal-600 to-gray-700 text-white p-8 rounded-3xl shadow-2xl">
+                  <CardContent className="p-0 text-center">
+                    <Quote className="h-12 w-12 mx-auto mb-6 opacity-80" />
+                    <p className="text-xl mb-6 leading-relaxed">{testimonials[currentTestimonial].quote}</p>
+                    <div className="space-y-2">
+                      <p className="font-bold text-lg">{testimonials[currentTestimonial].name}</p>
+                      <p className="text-gray-200">{testimonials[currentTestimonial].service}</p>
+                    </div>
+                    
+                    {/* Navigation Controls */}
+                    <div className="flex items-center justify-center space-x-6 mt-8">
+                      {/* Previous Button */}
                       <button
-                        key={index}
-                        className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentTestimonial ? "bg-white" : "bg-white/40"}`}
-                        onClick={() => setCurrentTestimonial(index)}
-                      />
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+                        onClick={prevTestimonial}
+                        className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110 shadow-lg"
+                        aria-label="Previous testimonial"
+                      >
+                        <ChevronLeft className="h-6 w-6 text-white" />
+                      </button>
+                      
+                      {/* Dots Indicator */}
+                      <div className="flex space-x-2">
+                        {testimonials.map((_, index) => (
+                          <button
+                            key={index}
+                            className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentTestimonial ? "bg-white" : "bg-white/40"}`}
+                            onClick={() => setCurrentTestimonial(index)}
+                          />
+                        ))}
+                      </div>
+                      
+                      {/* Next Button */}
+                      <button
+                        onClick={nextTestimonial}
+                        className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110 shadow-lg"
+                        aria-label="Next testimonial"
+                      >
+                        <ChevronRight className="h-6 w-6 text-white" />
+                      </button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
           </div>
         </section>
