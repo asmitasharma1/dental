@@ -335,24 +335,24 @@ export default function Navbar({ isHomePage = false, scrolled = false }: NavbarP
           <div
             className={`xl:hidden overflow-hidden transition-all duration-300 ease-in-out ${
               isMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
-            }`}
+            } ${isMenuOpen ? "bg-white shadow-lg border-b border-teal-100" : ""}`}
           >
-            <nav className={`flex flex-col pt-6 pb-8 border-t ${getMobileBorderClasses()}`}>
+            <nav className={`flex flex-col pt-6 pb-8 border-t ${isMenuOpen ? "border-teal-100" : getMobileBorderClasses()}`}>
               {/* Home */}
               <Link
                 href="/"
                 onClick={handleMobileLinkClick}
-                className={`${getMobileTextClasses()} transition-colors font-medium text-xl px-6 py-4 border-b ${getMobileBorderClasses()}`}
+                className={`${isMenuOpen ? "text-teal-700 hover:text-teal-600 hover:bg-teal-50" : getMobileTextClasses()} transition-colors font-medium text-xl px-6 py-4 border-b ${isMenuOpen ? "border-teal-100" : getMobileBorderClasses()}`}
               >
                 Home
               </Link>
               
               {/* About Us Section */}
-              <div className={`border-b ${getMobileBorderClasses()}`}>
+              <div className={`border-b ${isMenuOpen ? "border-teal-100" : getMobileBorderClasses()}`}>
                 <Link
                   href="/about"
                   onClick={handleMobileLinkClick}
-                  className={`${getMobileTextClasses()} transition-colors font-medium text-xl px-6 py-4 block`}
+                  className={`${isMenuOpen ? "text-teal-700 hover:text-teal-600 hover:bg-teal-50" : getMobileTextClasses()} transition-colors font-medium text-xl px-6 py-4 block`}
                 >
                   About Us
                 </Link>
@@ -360,14 +360,14 @@ export default function Navbar({ isHomePage = false, scrolled = false }: NavbarP
                   <Link
                     href="/about"
                     onClick={handleMobileLinkClick}
-                    className={`${getMobileSubTextClasses()} transition-colors text-base px-8 py-3 block`}
+                    className={`${isMenuOpen ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : getMobileSubTextClasses()} transition-colors text-base px-8 py-3 block`}
                   >
                     Our Clinic
                   </Link>
                   <Link
                     href="/about#doctors"
                     onClick={handleMobileLinkClick}
-                    className={`${getMobileSubTextClasses()} transition-colors text-base px-8 py-3 block`}
+                    className={`${isMenuOpen ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : getMobileSubTextClasses()} transition-colors text-base px-8 py-3 block`}
                   >
                     Our Doctors
                   </Link>
@@ -375,19 +375,19 @@ export default function Navbar({ isHomePage = false, scrolled = false }: NavbarP
               </div>
               
               {/* Services Section */}
-              <div className={`border-b ${getMobileBorderClasses()}`}>
+              <div className={`border-b ${isMenuOpen ? "border-teal-100" : getMobileBorderClasses()}`}>
                 <Link
                   href="/services"
                   onClick={handleMobileLinkClick}
-                  className={`${getMobileTextClasses()} transition-colors font-medium text-xl px-6 py-4 block`}
+                  className={`${isMenuOpen ? "text-teal-700 hover:text-teal-600 hover:bg-teal-50" : getMobileTextClasses()} transition-colors font-medium text-xl px-6 py-4 block`}
                 >
-                  Price/Service
+                  Service
                 </Link>
                 <div className="pb-2">
                   <Link
                     href="/services"
                     onClick={handleMobileLinkClick}
-                    className={`${getMobileSubTextClasses()} transition-colors text-base px-8 py-3 block`}
+                    className={`${isMenuOpen ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : getMobileSubTextClasses()} transition-colors text-base px-8 py-3 block`}
                   >
                     All Services
                   </Link>
@@ -398,7 +398,7 @@ export default function Navbar({ isHomePage = false, scrolled = false }: NavbarP
                       key={service.id}
                       href={`/services/${service.id}`}
                       onClick={handleMobileLinkClick}
-                      className={`${getMobileSubTextClasses()} transition-colors text-sm px-8 py-2 block truncate`}
+                      className={`${isMenuOpen ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : getMobileSubTextClasses()} transition-colors text-sm px-8 py-2 block truncate`}
                     >
                       {service.title}
                     </Link>
@@ -407,7 +407,7 @@ export default function Navbar({ isHomePage = false, scrolled = false }: NavbarP
                   <Link
                     href="/services/restorative-dentistry/faq"
                     onClick={handleMobileLinkClick}
-                    className={`${getMobileSubTextClasses()} transition-colors text-base px-8 py-3 block`}
+                    className={`${isMenuOpen ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : getMobileSubTextClasses()} transition-colors text-base px-8 py-3 block`}
                   >
                     FAQs
                   </Link>
@@ -418,7 +418,7 @@ export default function Navbar({ isHomePage = false, scrolled = false }: NavbarP
               <Link
                 href="/why-us"
                 onClick={handleMobileLinkClick}
-                className={`${getMobileTextClasses()} transition-colors font-medium text-xl px-6 py-4 border-b ${getMobileBorderClasses()}`}
+                className={`${isMenuOpen ? "text-teal-700 hover:text-teal-600 hover:bg-teal-50" : getMobileTextClasses()} transition-colors font-medium text-xl px-6 py-4 border-b ${isMenuOpen ? "border-teal-100" : getMobileBorderClasses()}`}
               >
                 Why Us
               </Link>
@@ -427,7 +427,7 @@ export default function Navbar({ isHomePage = false, scrolled = false }: NavbarP
               <Link
                 href="/gallery"
                 onClick={handleMobileLinkClick}
-                className={`${getMobileTextClasses()} transition-colors font-medium text-xl px-6 py-4 border-b ${getMobileBorderClasses()}`}
+                className={`${isMenuOpen ? "text-teal-700 hover:text-teal-600 hover:bg-teal-50" : getMobileTextClasses()} transition-colors font-medium text-xl px-6 py-4 border-b ${isMenuOpen ? "border-teal-100" : getMobileBorderClasses()}`}
               >
                 Gallery
               </Link>
