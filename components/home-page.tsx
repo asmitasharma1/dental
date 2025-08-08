@@ -182,7 +182,7 @@ export default function HomePage() {
       {/* Background Image */}
       <div className="fixed inset-0 z-0">
         <Image
-          src="/images/MPS__5.jpg"
+          src="/images/MPS__5.webp"
           alt="Traditional architecture background"
           fill
           className="object-cover"
