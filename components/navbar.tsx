@@ -10,14 +10,14 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
-import { Menu, X } from "lucide-react"
+import { Menu, X } from 'lucide-react'
 import Image from "next/image"
 import Link from "next/link"
 import { useState, useEffect } from "react"
+import { usePathname } from "next/navigation"
 
 interface NavbarProps {
   isHomePage?: boolean
-  scrolled?: boolean
 }
 
 interface Service {
@@ -31,10 +31,13 @@ interface Service {
   is_active: boolean
 }
 
-export default function Navbar({ isHomePage = false, scrolled = false }: NavbarProps) {
+export default function Navbar({ isHomePage = false }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [services, setServices] = useState<Service[]>([])
   const [servicesLoading, setServicesLoading] = useState(true)
+  const [isTablet, setIsTablet] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const pathname = usePathname()
 
   useEffect(() => {
     // Add or remove padding class to body based on isHomePage
@@ -47,11 +50,33 @@ export default function Navbar({ isHomePage = false, scrolled = false }: NavbarP
     // Fetch services
     fetchServices()
 
+    // Check if device is tablet
+    const checkTablet = () => {
+      const width = window.innerWidth
+      setIsTablet(width >= 768 && width < 1024) // Tablet range: 768px to 1023px
+    }
+
+    // Handle scroll for homepage
+    const handleScroll = () => {
+      if (isHomePage) {
+        setScrolled(window.scrollY > 50)
+      }
+    }
+
+    checkTablet()
+    window.addEventListener('resize', checkTablet)
+    window.addEventListener('scroll', handleScroll)
+
+    // Set initial scroll state
+    handleScroll()
+
     // Cleanup on component unmount
     return () => {
       document.body.classList.remove("non-homepage-padding")
+      window.removeEventListener('resize', checkTablet)
+      window.removeEventListener('scroll', handleScroll)
     }
-  }, [isHomePage])
+  }, [isHomePage, pathname])
 
   const fetchServices = async () => {
     try {
@@ -129,10 +154,10 @@ export default function Navbar({ isHomePage = false, scrolled = false }: NavbarP
   return (
     <header className={getNavbarClasses()}>
       <div className="relative z-10">
-        <div className="container mx-auto px-3 sm:px-4 lg:px-6 xl:px-8 py-3 sm:py-4">
-          <div className="flex items-center justify-between">
+        <div className="container mx-auto px-3 sm:px-4 lg:px-6 xl:px-8 py-4 sm:py-5">
+          <div className="relative flex items-center justify-between">
             {/* Desktop Navigation - Hidden on tablets and mobile */}
-            <nav className="hidden xl:flex items-center justify-between w-full">
+            <nav className="hidden xl:flex items-center justify-between w-full relative">
               {/* Left Side Menu (3 items) */}
               <div className="flex items-center space-x-8 2xl:space-x-12">
                 <Link
@@ -192,13 +217,13 @@ export default function Navbar({ isHomePage = false, scrolled = false }: NavbarP
                 </Link>
               </div>
 
-              {/* Centered Logo */}
-              <Link href="/" className="flex items-center justify-center mx-4">
+              {/* Centered Logo - Absolutely positioned to center of screen */}
+              <Link href="/" className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center">
                 <Image
                   src="/images/logo.png"
                   alt="Smile by Dr. Kareen Logo"
-                  width={80}
-                  height={80}
+                  width={100}
+                  height={100}
                   className="cursor-pointer drop-shadow-lg transition-transform duration-300 hover:scale-105 lg:w-[100px] lg:h-[100px]"
                   priority
                 />
@@ -227,7 +252,6 @@ export default function Navbar({ isHomePage = false, scrolled = false }: NavbarP
                               </div>
                             </Link>
                           </NavigationMenuLink>
-
                           {/* Services from Database */}
                           {servicesLoading ? (
                             <div className="p-4 text-center text-sm text-gray-500">Loading services...</div>
@@ -254,7 +278,6 @@ export default function Navbar({ isHomePage = false, scrolled = false }: NavbarP
                               )}
                             </>
                           )}
-
                           <NavigationMenuLink asChild>
                             <Link
                               href="/services/restorative-dentistry/faq"
@@ -297,24 +320,12 @@ export default function Navbar({ isHomePage = false, scrolled = false }: NavbarP
                 <Image
                   src="/images/logo.png"
                   alt="Smile by Dr. Kareen Logo"
-                  width={60}
-                  height={60}
+                  width={80}
+                  height={80}
                   className="cursor-pointer drop-shadow-lg transition-transform duration-300 hover:scale-105 sm:w-[70px] sm:h-[70px] md:w-[80px] md:h-[80px]"
                   priority
                 />
               </Link>
-              
-              {/* Quick Book Now button for tablet */}
-              <div className="hidden md:block lg:block xl:hidden">
-                <Link href="/book-now">
-                  <Button
-                    size="sm"
-                    className="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 rounded-full px-4 py-2 font-semibold text-sm mr-4"
-                  >
-                    Book Now
-                  </Button>
-                </Link>
-              </div>
               
               <Button
                 variant="ghost"
@@ -360,14 +371,14 @@ export default function Navbar({ isHomePage = false, scrolled = false }: NavbarP
                   <Link
                     href="/about"
                     onClick={handleMobileLinkClick}
-                    className={`${isMenuOpen ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : getMobileSubTextClasses()} transition-colors text-base px-8 py-3 block`}
+                    className={`${isTablet ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : getMobileSubTextClasses()} transition-colors text-base px-8 py-3 block`}
                   >
                     Our Clinic
                   </Link>
                   <Link
                     href="/about#doctors"
                     onClick={handleMobileLinkClick}
-                    className={`${isMenuOpen ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : getMobileSubTextClasses()} transition-colors text-base px-8 py-3 block`}
+                    className={`${isTablet ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : getMobileSubTextClasses()} transition-colors text-base px-8 py-3 block`}
                   >
                     Our Doctors
                   </Link>
@@ -387,7 +398,7 @@ export default function Navbar({ isHomePage = false, scrolled = false }: NavbarP
                   <Link
                     href="/services"
                     onClick={handleMobileLinkClick}
-                    className={`${isMenuOpen ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : getMobileSubTextClasses()} transition-colors text-base px-8 py-3 block`}
+                    className={`${isTablet ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : getMobileSubTextClasses()} transition-colors text-base px-8 py-3 block`}
                   >
                     All Services
                   </Link>
@@ -398,7 +409,7 @@ export default function Navbar({ isHomePage = false, scrolled = false }: NavbarP
                       key={service.id}
                       href={`/services/${service.id}`}
                       onClick={handleMobileLinkClick}
-                      className={`${isMenuOpen ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : getMobileSubTextClasses()} transition-colors text-sm px-8 py-2 block truncate`}
+                      className={`${isTablet ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : getMobileSubTextClasses()} transition-colors text-sm px-8 py-2 block truncate`}
                     >
                       {service.title}
                     </Link>
@@ -407,7 +418,7 @@ export default function Navbar({ isHomePage = false, scrolled = false }: NavbarP
                   <Link
                     href="/services/restorative-dentistry/faq"
                     onClick={handleMobileLinkClick}
-                    className={`${isMenuOpen ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : getMobileSubTextClasses()} transition-colors text-base px-8 py-3 block`}
+                    className={`${isTablet ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : getMobileSubTextClasses()} transition-colors text-base px-8 py-3 block`}
                   >
                     FAQs
                   </Link>
