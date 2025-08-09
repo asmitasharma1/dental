@@ -95,15 +95,13 @@ export default function BookNowPage() {
 
               {/* Google Embedded Map */}
               <div className="bg-gradient-to-br from-gray-200 to-gray-300 rounded-1xl overflow-hidden shadow-2xl">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3531.4324619938457!2d85.31550617492407!3d27.7348042242808!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xae470c3861f9509f%3A0x6b9442455247ac3f!2sSmile%20360%20Dental%20Clinic!5e0!3m2!1sen!2snp!4v1753676757830!5m2!1sen!2snp"
-                  width="100%"
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d220.83391289495006!2d85.31452701679683!3d27.675803989387717!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1736a7e1d95f%3A0x562d6d11b052b9fe!2sSmile%20by%20Dr%20Kareen%20-%20Dental%20Clinic!5e0!3m2!1sne!2snp!4v1754719856531!5m2!1sne!2snp" 
+                width="100%"
                   height="525px"
                   style={{ border: 0 }}
                   allowFullScreen={true}
                   loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                ></iframe>
+                  referrerPolicy="no-referrer-when-downgrade"></iframe>
               </div>
             </div>
           </div>
