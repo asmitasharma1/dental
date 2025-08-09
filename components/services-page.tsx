@@ -130,35 +130,39 @@ export default function ServicesPage() {
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
                 {currentServices.map((service) => (
                   <Card
-                    key={service.id}
-                    className="bg-gradient-to-br from-white to-teal-50 border-0 p-6 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group"
-                  >
-                    <CardContent className="p-0">
-                      <div className="text-center">
-                        <div className="w-full h-48 mb-4 rounded-2xl overflow-hidden">
-                          <Image
-                            src={service.image_url || "/placeholder.svg?height=200&width=300&query=dental service"}
-                            alt={service.title}
-                            width={300}
-                            height={200}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                          />
-                        </div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-2">{service.title}</h3>
-                        <p className="text-sm text-teal-600 font-medium mb-3 capitalize">{service.category}</p>
-                        <p className="text-gray-600 mb-4 leading-relaxed text-sm line-clamp-3">{service.description}</p>
-                        <div className="flex items-center justify-center space-x-4 mb-6">
-                          <div className="text-2xl font-bold text-teal-600">NPR {service.price.toLocaleString()}</div>
-                        </div>
-                        <Link href={`/services/${service.id}`}>
-                          <Button className="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white rounded-full px-6 py-2 group-hover:scale-105 transition-all duration-300 w-full">
-                            Learn More
-                            <ArrowRight className="ml-2 h-4 w-4" />
-                          </Button>
-                        </Link>
-                      </div>
-                    </CardContent>
-                  </Card>
+  key={service.id}
+  className="bg-gradient-to-br from-white to-teal-50 border-0 p-6 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group h-full flex flex-col"
+>
+  <CardContent className="p-0 flex flex-col flex-grow">
+    <div className="text-center flex flex-col flex-grow">
+      <div className="w-full h-48 mb-4 rounded-2xl overflow-hidden">
+        <Image
+          src={service.image_url || "/placeholder.svg?height=200&width=300&query=dental service"}
+          alt={service.title}
+          width={300}
+          height={200}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+        />
+      </div>
+      <h3 className="text-xl font-bold text-gray-900 mb-2">{service.title}</h3>
+      <p className="text-sm text-teal-600 font-medium mb-3 capitalize">{service.category}</p>
+      <p className="text-gray-600 mb-4 leading-relaxed text-sm line-clamp-3">{service.description}</p>
+      <div className="flex items-center justify-center space-x-4 mb-6">
+        <div className="text-2xl font-bold text-teal-600">NPR {service.price.toLocaleString()}</div>
+      </div>
+      {/* Pushes button to bottom */}
+      <div className="mt-auto">
+        <Link href={`/services/${service.id}`}>
+          <Button className="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white rounded-full px-6 py-2 group-hover:scale-105 transition-all duration-300 w-full">
+            Learn More
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
+        </Link>
+      </div>
+    </div>
+  </CardContent>
+</Card>
+
                 ))}
               </div>
 
