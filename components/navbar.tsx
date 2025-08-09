@@ -107,14 +107,17 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
     setIsMenuOpen(false)
   }
 
-  const getNavbarClasses = () => {
-    if (isHomePage) {
-      return `relative w-full z-50 transition-all duration-300 ${
-        scrolled ? "bg-white/95 backdrop-blur-md shadow-lg border-b border-teal-100" : "bg-transparent"
-      }`
-    }
-    return `fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-white shadow-lg border-b border-teal-100`
+const getNavbarClasses = () => {
+  if (isHomePage) {
+    return `relative w-full z-50 transition-all duration-300 ${
+      scrolled
+        ? "bg-white/95 backdrop-blur-md shadow-lg border-b border-teal-100"
+        : "bg-transparent xl:bg-transparent bg-white"
+    }`
   }
+  return `fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-white shadow-lg border-b border-teal-100`
+}
+
 
   const getTextClasses = () => {
     if (!isHomePage || scrolled) {

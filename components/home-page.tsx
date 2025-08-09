@@ -173,12 +173,12 @@ export default function HomePage() {
       <div className="fixed inset-0 z-0">
         <Image
           src="/images/MPS__5.webp"
-          alt="Traditional architecture background"
+          alt="Background"
           fill
-          className="object-cover"
+          className="object-cover blur-sm"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-white/40"></div>
+        <div className="absolute inset-0 bg-white/30"></div>
       </div>
 
       {/* Content */}
