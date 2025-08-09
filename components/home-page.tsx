@@ -176,7 +176,7 @@ export default function HomePage() {
           alt="Traditional architecture background"
           fill
           className="object-cover"
-          priority
+          loading="lazy"
         />
         <div className="absolute inset-0 bg-white/40"></div>
       </div>
@@ -277,7 +277,7 @@ export default function HomePage() {
               alt={topServices[currentService].title}
               fill
               className="object-cover"
-              priority
+              loading="lazy"
             />
             <div className="absolute inset-0 bg-white/20 bg-gradient-to-t from-black/10 to-transparent"></div>
           </div>
