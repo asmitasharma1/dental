@@ -89,10 +89,36 @@
   }
 }
 
-@layer utilities {
-  @media (min-width: 1024px) and (max-width: 1366px) {
-    .ipad-pro-grid {
-      grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
-    }
+
+/* =====================
+   iPad Pro Portrait Fix
+   ===================== */
+@media only screen 
+  and (min-device-width: 1024px) 
+  and (max-device-width: 1024px)
+  and (min-device-height: 1366px) 
+  and (max-device-height: 1366px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: portrait) {
+
+  .ipad-pro-adjust .grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+
+  .ipad-pro-adjust .relative.flex.items-center.justify-center {
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
+
+  .ipad-pro-adjust img {
+    max-width: 80% !important;
+    height: auto !important;
+  }
+
+  .ipad-pro-adjust .rounded-3xl {
+    margin: 0 auto !important;
+    width: 90% !important;
   }
 }
+

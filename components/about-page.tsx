@@ -126,7 +126,7 @@ export default function AboutPage() {
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-br from-teal-200/30 to-cyan-200/30 rounded-3xl blur-2xl transform -rotate-6"></div>
               <Image
-                src="/images/MPS__3.jpg"
+                src="/images/MPS__3.webp"
                 alt="Dr. Kareen's Clinic Interior"
                 width={500}
                 height={600}

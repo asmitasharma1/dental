@@ -282,7 +282,7 @@ export default function HomePage() {
             <div className="absolute inset-0 bg-white/20 bg-gradient-to-t from-black/10 to-transparent"></div>
           </div>
 
-          <div className="relative z-10 container mx-auto px-4">
+          <div className="relative z-10 container mx-auto px-4 ipad-pro-adjust">
             <div className="text-center mb-12">
               <h2 className="text-5xl lg:text-6xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent mb-6">
                 Our Services
