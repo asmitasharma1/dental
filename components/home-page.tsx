@@ -1,9 +1,31 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Mail, Quote, Instagram, MessageCircle, ArrowRight, Heart, Clock, Shield, Award, Users, ChevronRight, ChevronLeft, Sparkles, Star, Microscope, Monitor, Home, DollarSign, Music, CreditCard, ArrowUp } from 'lucide-react'
+import {
+  Mail,
+  Quote,
+  Instagram,
+  MessageCircle,
+  ArrowRight,
+  Heart,
+  Clock,
+  Shield,
+  Award,
+  Users,
+  ChevronRight,
+  ChevronLeft,
+  Sparkles,
+  Star,
+  Microscope,
+  Monitor,
+  Home,
+  DollarSign,
+  Music,
+  CreditCard,
+  ArrowUp,
+} from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import Navbar from "@/components/navbar"
@@ -134,7 +156,33 @@ const testimonials = [
 export default function HomePage() {
   const [currentService, setCurrentService] = useState(0)
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
+  const [isVisible, setIsVisible] = useState(false)
 
+  // Replace the existing handleScroll function with this:
+  const handleScroll = useCallback(() => {
+    // Check multiple scroll sources
+    const windowScrollY = window.scrollY || window.pageYOffset
+    const documentScrollTop = document.documentElement.scrollTop
+    const bodyScrollTop = document.body.scrollTop
+
+    // Use the maximum of all scroll positions
+    const scrollTop = Math.max(windowScrollY, documentScrollTop, bodyScrollTop)
+
+    console.log("Window scrollY:", windowScrollY)
+    console.log("Document scrollTop:", documentScrollTop)
+    console.log("Body scrollTop:", bodyScrollTop)
+    console.log("Final scroll position:", scrollTop)
+
+    if (scrollTop > 100) {
+      console.log("Setting button visible")
+      setIsVisible(true)
+    } else {
+      console.log("Setting button hidden")
+      setIsVisible(false)
+    }
+  }, [])
+
+  // Replace the useEffect scroll listener setup with this:
   useEffect(() => {
     const serviceInterval = setInterval(() => {
       setCurrentService((prev) => (prev + 1) % topServices.length)
@@ -144,11 +192,30 @@ export default function HomePage() {
       setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
     }, 10000)
 
+    // Add multiple scroll event listeners for better compatibility
+    const addScrollListeners = () => {
+      window.addEventListener("scroll", handleScroll, { passive: true })
+      document.addEventListener("scroll", handleScroll, { passive: true })
+      document.body.addEventListener("scroll", handleScroll, { passive: true })
+    }
+
+    const removeScrollListeners = () => {
+      window.removeEventListener("scroll", handleScroll)
+      document.removeEventListener("scroll", handleScroll)
+      document.body.removeEventListener("scroll", handleScroll)
+    }
+
+    addScrollListeners()
+
+    // Check initial position
+    handleScroll()
+
     return () => {
       clearInterval(serviceInterval)
       clearInterval(testimonialInterval)
+      removeScrollListeners()
     }
-  }, [])
+  }, [handleScroll])
 
   const nextService = () => {
     setCurrentService((prev) => (prev + 1) % topServices.length)
@@ -166,19 +233,26 @@ export default function HomePage() {
     setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)
   }
 
-  const handleGoToTop = () => {
+  const scrollToTop = () => {
+    // Try multiple scroll methods for better compatibility
     try {
-      // Smooth scroll to the absolute top of the page
-      window.scrollTo({ top: 0, behavior: "smooth" })
+      // Method 1: Smooth scroll
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      })
 
-      // Ensure the scroll reaches the top by setting scroll positions for document elements
+      // Method 2: Fallback for browsers that don't support smooth scroll
       setTimeout(() => {
         document.documentElement.scrollTop = 0
         document.body.scrollTop = 0
+        window.pageYOffset = 0
       }, 100)
     } catch (error) {
-      console.error('Scroll to top failed:', error)
-      // Fallback to instant scroll if smooth scroll fails
+      // Method 3: Instant scroll fallback
+      document.documentElement.scrollTop = 0
+      document.body.scrollTop = 0
       window.scrollTo(0, 0)
     }
   }
@@ -187,13 +261,7 @@ export default function HomePage() {
     <div className="min-h-screen relative">
       {/* Background Image */}
       <div className="fixed inset-0 z-0">
-        <Image
-          src="/images/MPS__5.webp"
-          alt="Background"
-          fill
-          className="object-cover blur-sm"
-          loading="lazy"
-        />
+        <Image src="/images/MPS__5.webp" alt="Background" fill className="object-cover blur-sm" loading="lazy" />
         <div className="absolute inset-0 bg-white/30"></div>
       </div>
 
@@ -322,8 +390,12 @@ export default function HomePage() {
 
               <div className="w-full max-w-4xl text-center mx-8">
                 <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-xl p-6 shadow-lg">
-                  <h3 className="text-3xl font-bold text-gray-900 mb-4 drop-shadow-lg">{topServices[currentService].title}</h3>
-                  <p className="text-lg text-gray-800 leading-relaxed drop-shadow-md font-medium">{topServices[currentService].description}</p>
+                  <h3 className="text-3xl font-bold text-gray-900 mb-4 drop-shadow-lg">
+                    {topServices[currentService].title}
+                  </h3>
+                  <p className="text-lg text-gray-800 leading-relaxed drop-shadow-md font-medium">
+                    {topServices[currentService].description}
+                  </p>
                 </div>
               </div>
 
@@ -468,6 +540,7 @@ export default function HomePage() {
                 </h2>
                 <div className="w-32 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto"></div>
               </div>
+
               <div className="grid lg:grid-cols-2 gap-16 items-center text-center md:text-left">
                 <Card className="bg-gradient-to-br from-teal-50 to-gray-50 border-0 p-12 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500">
                   <CardContent className="p-0">
@@ -487,6 +560,7 @@ export default function HomePage() {
                     </div>
                   </CardContent>
                 </Card>
+
                 <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
                   {missionValues.map((value, index) => {
                     const IconComponent = value.icon
@@ -525,6 +599,7 @@ export default function HomePage() {
                 </p>
                 <div className="w-32 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto mt-8"></div>
               </div>
+
               <div className="grid md:grid-cols-4 gap-6 mb-20">
                 {achievements.map((achievement, index) => {
                   const IconComponent = achievement.icon
@@ -566,7 +641,6 @@ export default function HomePage() {
                       <p className="font-bold text-lg">{testimonials[currentTestimonial].name}</p>
                       <p className="text-gray-200">{testimonials[currentTestimonial].service}</p>
                     </div>
-
                     <div className="flex items-center justify-center space-x-6 mt-8">
                       <button
                         onClick={prevTestimonial}
@@ -575,7 +649,6 @@ export default function HomePage() {
                       >
                         <ChevronLeft className="h-6 w-6 text-white" />
                       </button>
-
                       <div className="flex space-x-2">
                         {testimonials.map((_, index) => (
                           <button
@@ -585,7 +658,6 @@ export default function HomePage() {
                           />
                         ))}
                       </div>
-
                       <button
                         onClick={nextTestimonial}
                         className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110 shadow-lg"
@@ -603,14 +675,16 @@ export default function HomePage() {
 
         <Footer />
 
-        {/* Go to Top Button */}
-        <Button
-          onClick={handleGoToTop}
-          className="fixed bottom-6 right-6 p-4 rounded-full bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 z-[1000]"
-          aria-label="Go to top"
-        >
-          <ArrowUp className="h-6 w-6" />
-        </Button>
+        {/* Scroll to Top Button - Smaller and teal colored */}
+        {isVisible && (
+          <button
+            onClick={scrollToTop}
+            className="fixed bottom-6 right-6 z-[9999] bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 border-2 border-white/20"
+            aria-label="Scroll to top"
+          >
+            <ArrowUp className="h-5 w-5" />
+          </button>
+        )}
       </div>
     </div>
   )
