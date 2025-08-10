@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Mail, Quote, Instagram, MessageCircle, ArrowRight, Heart, Clock, Shield, Award, Users, ChevronRight, ChevronLeft, Sparkles, Star, Microscope, Monitor, Home, DollarSign, Music, CreditCard } from 'lucide-react'
+import { Mail, Quote, Instagram, MessageCircle, ArrowRight, Heart, Clock, Shield, Award, Users, ChevronRight, ChevronLeft, Sparkles, Star, Microscope, Monitor, Home, DollarSign, Music, CreditCard, ArrowUp } from 'lucide-react'
 import Image from "next/image"
 import Link from "next/link"
 import Navbar from "@/components/navbar"
@@ -134,7 +134,6 @@ const testimonials = [
 export default function HomePage() {
   const [currentService, setCurrentService] = useState(0)
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   useEffect(() => {
     const serviceInterval = setInterval(() => {
@@ -165,6 +164,23 @@ export default function HomePage() {
 
   const prevTestimonial = () => {
     setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)
+  }
+
+  const handleGoToTop = () => {
+    try {
+      // Smooth scroll to the absolute top of the page
+      window.scrollTo({ top: 0, behavior: "smooth" })
+
+      // Ensure the scroll reaches the top by setting scroll positions for document elements
+      setTimeout(() => {
+        document.documentElement.scrollTop = 0
+        document.body.scrollTop = 0
+      }, 100)
+    } catch (error) {
+      console.error('Scroll to top failed:', error)
+      // Fallback to instant scroll if smooth scroll fails
+      window.scrollTo(0, 0)
+    }
   }
 
   return (
@@ -294,7 +310,7 @@ export default function HomePage() {
             </div>
 
             <div className="relative flex items-center justify-center mb-12">
-              <button 
+              <button
                 onClick={prevService}
                 className="absolute left-0 z-10 p-3 rounded-full bg-white/20 backdrop-blur-md border border-white/30 hover:bg-white/30 transition-all duration-300 shadow-lg hover:shadow-xl"
                 aria-label="Previous service"
@@ -311,7 +327,7 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <button 
+              <button
                 onClick={nextService}
                 className="absolute right-0 z-10 p-3 rounded-full bg-white/20 backdrop-blur-md border border-white/30 hover:bg-white/30 transition-all duration-300 shadow-lg hover:shadow-xl"
                 aria-label="Next service"
@@ -443,58 +459,57 @@ export default function HomePage() {
         </section>
 
         <section className="py-24 relative">
-  <div className="absolute inset-0 bg-white/90 backdrop-blur-sm"></div>
-  <div className="relative z-10">
-    <div className="container mx-auto px-4 relative z-10">
-      <div className="text-center mb-20">
-        <h2 className="text-5xl lg:text-6xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 bg-clip-text text-transparent mb-6">
-          Our Mission
-        </h2>
-        <div className="w-32 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto"></div>
-      </div>
-      <div className="grid lg:grid-cols-2 gap-16 items-center text-center md:text-left">
-        <Card className="bg-gradient-to-br from-teal-50 to-gray-50 border-0 p-12 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500">
-          <CardContent className="p-0">
-            <div className="space-y-6">
-              <p className="text-teal-600 text-lg font-medium">Our Mission</p>
-              <h3 className="text-4xl font-bold text-gray-900">
-                Help you achieve a{" "}
-                <span className="bg-gradient-to-r from-teal-600 to-teal-700 bg-clip-text text-transparent">
-                  healthy, confident smile
-                </span>{" "}
-                that lasts a lifetime
-              </h3>
-              <p className="text-gray-600 text-lg">
-                We believe everyone deserves a beautiful smile. Our comprehensive approach focuses on
-                prevention, treatment, and long-term oral health.
-              </p>
+          <div className="absolute inset-0 bg-white/90 backdrop-blur-sm"></div>
+          <div className="relative z-10">
+            <div className="container mx-auto px-4 relative z-10">
+              <div className="text-center mb-20">
+                <h2 className="text-5xl lg:text-6xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 bg-clip-text text-transparent mb-6">
+                  Our Mission
+                </h2>
+                <div className="w-32 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto"></div>
+              </div>
+              <div className="grid lg:grid-cols-2 gap-16 items-center text-center md:text-left">
+                <Card className="bg-gradient-to-br from-teal-50 to-gray-50 border-0 p-12 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500">
+                  <CardContent className="p-0">
+                    <div className="space-y-6">
+                      <p className="text-teal-600 text-lg font-medium">Our Mission</p>
+                      <h3 className="text-4xl font-bold text-gray-900">
+                        Help you achieve a{" "}
+                        <span className="bg-gradient-to-r from-teal-600 to-teal-700 bg-clip-text text-transparent">
+                          healthy, confident smile
+                        </span>{" "}
+                        that lasts a lifetime
+                      </h3>
+                      <p className="text-gray-600 text-lg">
+                        We believe everyone deserves a beautiful smile. Our comprehensive approach focuses on
+                        prevention, treatment, and long-term oral health.
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+                <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+                  {missionValues.map((value, index) => {
+                    const IconComponent = value.icon
+                    return (
+                      <Card
+                        key={index}
+                        className={`bg-gradient-to-br ${value.color} border-0 p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group text-center`}
+                      >
+                        <CardContent className="p-0">
+                          <div className="w-16 h-16 bg-white rounded-full mx-auto flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                            <IconComponent className={`h-8 w-8 ${value.iconColor}`} />
+                          </div>
+                          <h3 className="text-xl font-bold text-gray-900 mb-4">{value.title}</h3>
+                          <p className="text-gray-700 leading-relaxed">{value.description}</p>
+                        </CardContent>
+                      </Card>
+                    )
+                  })}
+                </div>
+              </div>
             </div>
-          </CardContent>
-        </Card>
-        <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
-          {missionValues.map((value, index) => {
-            const IconComponent = value.icon
-            return (
-              <Card
-                key={index}
-                className={`bg-gradient-to-br ${value.color} border-0 p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group text-center`}
-              >
-                <CardContent className="p-0">
-                  <div className="w-16 h-16 bg-white rounded-full mx-auto flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                    <IconComponent className={`h-8 w-8 ${value.iconColor}`} />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">{value.title}</h3>
-                  <p className="text-gray-700 leading-relaxed">{value.description}</p>
-                </CardContent>
-              </Card>
-            )
-          })}
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
+          </div>
+        </section>
 
         <section className="py-24 relative">
           <div className="absolute inset-0 bg-white/90 backdrop-blur-sm"></div>
@@ -587,6 +602,15 @@ export default function HomePage() {
         </section>
 
         <Footer />
+
+        {/* Go to Top Button */}
+        <Button
+          onClick={handleGoToTop}
+          className="fixed bottom-6 right-6 p-4 rounded-full bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 z-[1000]"
+          aria-label="Go to top"
+        >
+          <ArrowUp className="h-6 w-6" />
+        </Button>
       </div>
     </div>
   )
