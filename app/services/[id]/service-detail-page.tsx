@@ -1,9 +1,9 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { ArrowLeft, Calendar, DollarSign, Timer, HelpCircle, AlertTriangle, Clock, Heart } from "lucide-react"
+import { ArrowLeft, Calendar, DollarSign, Timer, HelpCircle, AlertTriangle, Clock, Heart, ArrowUp } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import Navbar from "@/components/navbar"
@@ -33,6 +33,63 @@ export default function ServiceDetailPage({ serviceId }: ServiceDetailPageProps)
   const [service, setService] = useState<Service | null>(null)
   const [relatedServices, setRelatedServices] = useState<Service[]>([])
   const [loading, setLoading] = useState(true)
+  const [isVisible, setIsVisible] = useState(false)
+
+  // Add scroll detection logic
+  const handleScroll = useCallback(() => {
+    const windowScrollY = window.scrollY || window.pageYOffset
+    const documentScrollTop = document.documentElement.scrollTop
+    const bodyScrollTop = document.body.scrollTop
+    const scrollTop = Math.max(windowScrollY, documentScrollTop, bodyScrollTop)
+
+    if (scrollTop > 100) {
+      setIsVisible(true)
+    } else {
+      setIsVisible(false)
+    }
+  }, [])
+
+  // Add useEffect to set up scroll listeners
+  useEffect(() => {
+    const addScrollListeners = () => {
+      window.addEventListener("scroll", handleScroll, { passive: true })
+      document.addEventListener("scroll", handleScroll, { passive: true })
+      document.body.addEventListener("scroll", handleScroll, { passive: true })
+    }
+
+    const removeScrollListeners = () => {
+      window.removeEventListener("scroll", handleScroll)
+      document.removeEventListener("scroll", handleScroll)
+      document.body.removeEventListener("scroll", handleScroll)
+    }
+
+    addScrollListeners()
+    handleScroll()
+
+    return () => {
+      removeScrollListeners()
+    }
+  }, [handleScroll])
+
+  const scrollToTop = () => {
+    try {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      })
+
+      setTimeout(() => {
+        document.documentElement.scrollTop = 0
+        document.body.scrollTop = 0
+        window.pageYOffset = 0
+      }, 100)
+    } catch (error) {
+      document.documentElement.scrollTop = 0
+      document.body.scrollTop = 0
+      window.scrollTo(0, 0)
+    }
+  }
 
   useEffect(() => {
     if (serviceId) {
@@ -141,13 +198,11 @@ export default function ServiceDetailPage({ serviceId }: ServiceDetailPageProps)
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Services
             </Link>
-
             <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
               <div>
                 <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">{service.title}</h1>
                 <p className="text-teal-600 font-medium mb-6 capitalize">{service.category} Dentistry</p>
                 <p className="text-xl text-gray-600 leading-relaxed mb-8">{service.description}</p>
-
                 <div className="grid grid-cols-2 gap-6 mb-8">
                   <div className="flex items-center space-x-3">
                     <div className="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center">
@@ -170,7 +225,6 @@ export default function ServiceDetailPage({ serviceId }: ServiceDetailPageProps)
                     </div>
                   )}
                 </div>
-
                 <Link href="/book-now">
                   <Button
                     size="lg"
@@ -181,7 +235,6 @@ export default function ServiceDetailPage({ serviceId }: ServiceDetailPageProps)
                   </Button>
                 </Link>
               </div>
-
               <div className="relative">
                 <Image
                   src={service.image_url || "/placeholder.svg?height=500&width=600&query=dental service"}
@@ -204,7 +257,6 @@ export default function ServiceDetailPage({ serviceId }: ServiceDetailPageProps)
               <h2 className="text-3xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
               <p className="text-gray-600">Everything you need to know about {service.title}</p>
             </div>
-
             <Accordion type="single" collapsible className="space-y-4">
               {qaItems.map((item) => {
                 const IconComponent = item.icon
@@ -245,7 +297,6 @@ export default function ServiceDetailPage({ serviceId }: ServiceDetailPageProps)
               <h2 className="text-3xl font-bold text-gray-900 mb-4">Related Services</h2>
               <p className="text-gray-600">You might also be interested in these services</p>
             </div>
-
             <div className="grid md:grid-cols-3 gap-8">
               {relatedServices.map((relatedService) => (
                 <Card
@@ -281,6 +332,17 @@ export default function ServiceDetailPage({ serviceId }: ServiceDetailPageProps)
       )}
 
       <Footer />
+
+      {/* Scroll to Top Button */}
+      {isVisible && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 z-[9999] bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 border-2 border-white/20"
+          aria-label="Scroll to top"
+        >
+          <ArrowUp className="h-5 w-5" />
+        </button>
+      )}
     </div>
   )
 }

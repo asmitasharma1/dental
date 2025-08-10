@@ -675,7 +675,6 @@ export default function HomePage() {
 
         <Footer />
 
-        {/* Scroll to Top Button - Smaller and teal colored */}
         {isVisible && (
           <button
             onClick={scrollToTop}

@@ -1,11 +1,73 @@
 "use client"
 
+import { useState, useEffect, useCallback } from "react"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { ArrowUp } from 'lucide-react'
 import Link from "next/link"
+import Navbar from "@/components/navbar"
+import Footer from "@/components/footer"
 
 export default function DentalCareFAQ() {
+  const [isVisible, setIsVisible] = useState(false)
+
+  // Add scroll detection logic
+  const handleScroll = useCallback(() => {
+    const windowScrollY = window.scrollY || window.pageYOffset
+    const documentScrollTop = document.documentElement.scrollTop
+    const bodyScrollTop = document.body.scrollTop
+    const scrollTop = Math.max(windowScrollY, documentScrollTop, bodyScrollTop)
+
+    if (scrollTop > 100) {
+      setIsVisible(true)
+    } else {
+      setIsVisible(false)
+    }
+  }, [])
+
+  // Add useEffect to set up scroll listeners
+  useEffect(() => {
+    const addScrollListeners = () => {
+      window.addEventListener("scroll", handleScroll, { passive: true })
+      document.addEventListener("scroll", handleScroll, { passive: true })
+      document.body.addEventListener("scroll", handleScroll, { passive: true })
+    }
+
+    const removeScrollListeners = () => {
+      window.removeEventListener("scroll", handleScroll)
+      document.removeEventListener("scroll", handleScroll)
+      document.body.removeEventListener("scroll", handleScroll)
+    }
+
+    addScrollListeners()
+    handleScroll()
+
+    return () => {
+      removeScrollListeners()
+    }
+  }, [handleScroll])
+
+  const scrollToTop = () => {
+    try {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      })
+
+      setTimeout(() => {
+        document.documentElement.scrollTop = 0
+        document.body.scrollTop = 0
+        window.pageYOffset = 0
+      }, 100)
+    } catch (error) {
+      document.documentElement.scrollTop = 0
+      document.body.scrollTop = 0
+      window.scrollTo(0, 0)
+    }
+  }
+
   const faqSections = [
     {
       section: "Dental Fillings and Restorations",
@@ -13,7 +75,7 @@ export default function DentalCareFAQ() {
         {
           question: "What is a dental filling or restoration?",
           answer:
-            "A dental filling is a restorative treatment used to repair cavities (tooth decay) or minor damage like cracks, chips, or worn enamel. It restores the tooth’s function, shape, and strength while preventing further decay.",
+            "A dental filling is a restorative treatment used to repair cavities (tooth decay) or minor damage like cracks, chips, or worn enamel. It restores the tooth's function, shape, and strength while preventing further decay.",
         },
         {
           question: "Why do you need a dental filling?",
@@ -51,7 +113,7 @@ export default function DentalCareFAQ() {
           `,
         },
         {
-          question: "What happens if you don’t get a dental filling?",
+          question: "What happens if you don't get a dental filling?",
           answer: `
             Ignoring a cavity can lead to serious issues:
             <ul class="list-disc pl-5">
@@ -68,7 +130,7 @@ export default function DentalCareFAQ() {
         {
           question: "When is it too late for a filling?",
           answer: `
-            It’s too late for a filling if:
+            It's too late for a filling if:
             <ul class="list-disc pl-5">
               <li>Pain is constant, indicating nerve infection (requires root canal).</li>
               <li>The tooth is cracked or broken below the gumline (may need extraction).</li>
@@ -108,7 +170,7 @@ export default function DentalCareFAQ() {
               <li>Wait 30 minutes before eating (for composite fillings).</li>
               <li>Avoid hard, sticky, or chewy foods (e.g., nuts, gum, caramel).</li>
               <li>Avoid very hot or cold foods/drinks if sensitive.</li>
-              <li>Don’t smoke or drink alcohol (delays healing).</li>
+              <li>Don't smoke or drink alcohol (delays healing).</li>
             </ul>
             <strong>Managing Sensitivity (1–2 Weeks):</strong>
             <ul class="list-disc pl-5">
@@ -128,7 +190,7 @@ export default function DentalCareFAQ() {
               <li>Eat soft foods (e.g., yogurt, mashed potatoes, soup).</li>
               <li>Stick to room-temperature drinks.</li>
               <li>Avoid hard or sticky foods for 1–2 days.</li>
-              <li>Don’t chew directly on new amalgam fillings.</li>
+              <li>Don't chew directly on new amalgam fillings.</li>
             </ul>
             <strong>Long-Term Care:</strong>
             <ul class="list-disc pl-5">
@@ -166,7 +228,7 @@ export default function DentalCareFAQ() {
               <li><strong>Indirect Pulp Capping (IPC)</strong>: Used when decay is close to but not exposing the pulp, with no constant pain. Most decay is removed, calcium hydroxide or MTA is applied to stimulate dentin repair, and sealed with a temporary filling. Monitored for weeks/months, then replaced with a permanent filling. <br><strong>Success Rate</strong>: ~75–90% if pulp is healthy.</li>
               <li><strong>Direct Pulp Capping (DPC)</strong>: Used for tiny mechanical pulp exposure with no infection. Biocompatible material (MTA or calcium hydroxide) is placed on the pulp, then sealed with a filling or crown.</li>
             </ul>
-            <p><strong>Note</strong>: Deep decay doesn’t always require a root canal. Visit your dentist ASAP for the best outcome.</p>
+            <p><strong>Note</strong>: Deep decay doesn't always require a root canal. Visit your dentist ASAP for the best outcome.</p>
           `,
         },
       ],
@@ -177,7 +239,7 @@ export default function DentalCareFAQ() {
         {
           question: "What is teeth scaling/cleaning?",
           answer: `
-            Teeth scaling, also known as professional cleaning, removes plaque, tartar (calculus), and stains from teeth. Performed by a dentist or hygienist, it targets hardened plaque that regular brushing can’t remove, helping prevent gum disease (gingivitis, periodontitis) and tooth decay.
+            Teeth scaling, also known as professional cleaning, removes plaque, tartar (calculus), and stains from teeth. Performed by a dentist or hygienist, it targets hardened plaque that regular brushing can't remove, helping prevent gum disease (gingivitis, periodontitis) and tooth decay.
           `,
         },
         {
@@ -212,7 +274,7 @@ export default function DentalCareFAQ() {
           `,
         },
         {
-          question: "What happens if you don’t get teeth scaling every 6 months?",
+          question: "What happens if you don't get teeth scaling every 6 months?",
           answer: `
             Skipping regular scaling can lead to:
             <ul class="list-disc pl-5">
@@ -248,7 +310,7 @@ export default function DentalCareFAQ() {
         {
           question: "Can scaling make teeth whiter?",
           answer: `
-            Scaling removes surface stains from coffee, tea, or smoking, making teeth appear slightly brighter but not dramatically whiter. It doesn’t bleach teeth like whitening treatments. <a href="/teeth-whitening" class="text-teal-600 hover:underline">Click here for teeth whitening or bleaching options</a>.
+            Scaling removes surface stains from coffee, tea, or smoking, making teeth appear slightly brighter but not dramatically whiter. It doesn't bleach teeth like whitening treatments. <a href="/teeth-whitening" class="text-teal-600 hover:underline">Click here for teeth whitening or bleaching options</a>.
           `,
         },
         {
@@ -284,48 +346,65 @@ export default function DentalCareFAQ() {
   ]
 
   return (
+    <div className="min-h-screen bg-white">
+      <Navbar />
+
       <section className="py-24 bg-gradient-to-br from-teal-50 via-white to-cyan-50 relative overflow-hidden">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 bg-clip-text text-transparent mb-4">
-            Dental Care FAQs
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Learn about dental fillings, restorations, and teeth scaling to keep your smile healthy and bright.
-          </p>
-        </div>
-        <Card className="bg-white rounded-3xl shadow-xl p-8">
-          <CardContent>
-            {faqSections.map((section, sectionIndex) => (
-              <div key={sectionIndex} className="mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">{section.section}</h3>
-                <Accordion type="single" collapsible className="w-full">
-                  {section.faqs.map((faq, index) => (
-                    <AccordionItem key={index} value={`item-${sectionIndex}-${index}`} className="border-b border-gray-200">
-                      <AccordionTrigger className="text-lg font-semibold text-gray-900 hover:text-teal-600 py-4">
-                        {faq.question}
-                      </AccordionTrigger>
-                      <AccordionContent className="text-gray-600 leading-relaxed">
-                        <div dangerouslySetInnerHTML={{ __html: faq.answer }} />
-                      </AccordionContent>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 bg-clip-text text-transparent mb-4">
+              Dental Care FAQs
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Learn about dental fillings, restorations, and teeth scaling to keep your smile healthy and bright.
+            </p>
+          </div>
+          <Card className="bg-white rounded-3xl shadow-xl p-8">
+            <CardContent>
+              {faqSections.map((section, sectionIndex) => (
+                <div key={sectionIndex} className="mb-8">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">{section.section}</h3>
+                  <Accordion type="single" collapsible className="w-full">
+                    {section.faqs.map((faq, index) => (
+                      <AccordionItem key={index} value={`item-${sectionIndex}-${index}`} className="border-b border-gray-200">
+                        <AccordionTrigger className="text-lg font-semibold text-gray-900 hover:text-teal-600 py-4">
+                          {faq.question}
+                        </AccordionTrigger>
+                        <AccordionContent className="text-gray-600 leading-relaxed">
+                          <div dangerouslySetInnerHTML={{ __html: faq.answer }} />
+                        </AccordionContent>
+                      </AccordionItem>
+                    ))}
+                  </Accordion>
+                </div>
+              ))}
+              <div className="mt-8 text-center">
+                <p className="text-gray-600 mb-4">
+                  Have more questions or need dental care? Book an appointment with our expert team today!
+                </p>
+                <Link href="/book-now">
+                  <Button className="bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-6 rounded-full">
+                    Schedule Your Visit
+                  </Button>
+                </Link>
               </div>
-            ))}
-            <div className="mt-8 text-center">
-              <p className="text-gray-600 mb-4">
-                Have more questions or need dental care? Book an appointment with our expert team today!
-              </p>
-              <Link href="/book-appointment">
-                <Button className="bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-6 rounded-full">
-                  Schedule Your Visit
-                </Button>
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </section>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      <Footer />
+
+      {/* Scroll to Top Button */}
+      {isVisible && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 z-[9999] bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 border-2 border-white/20"
+          aria-label="Scroll to top"
+        >
+          <ArrowUp className="h-5 w-5" />
+        </button>
+      )}
+    </div>
   )
 }

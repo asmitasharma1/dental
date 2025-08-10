@@ -1,9 +1,9 @@
 "use client"
 
 import { Card, CardContent } from "@/components/ui/card"
-import { Award, Shield, Heart, Menu, X, Linkedin, MapPin, Phone, Mail, Clock } from "lucide-react"
+import { Award, Shield, Heart, Menu, X, Linkedin, MapPin, Phone, Mail, Clock, ArrowUp } from "lucide-react"
 import Image from "next/image"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 
@@ -25,6 +25,8 @@ export default function AboutPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [doctors, setDoctors] = useState<Doctor[]>([])
   const [loading, setLoading] = useState(true)
+  const [isVisible, setIsVisible] = useState(false)
+
 
   useEffect(() => {
     const fetchDoctors = async () => {
@@ -59,6 +61,69 @@ export default function AboutPage() {
     }
     fetchDoctors()
   }, [])
+
+   const handleScroll = useCallback(() => {
+      const windowScrollY = window.scrollY || window.pageYOffset
+      const documentScrollTop = document.documentElement.scrollTop
+      const bodyScrollTop = document.body.scrollTop
+  
+      // Use the maximum of all scroll positions
+      const scrollTop = Math.max(windowScrollY, documentScrollTop, bodyScrollTop)
+  
+      if (scrollTop > 100) {
+        setIsVisible(true)
+      } else {
+        setIsVisible(false)
+      }
+    }, [])
+  
+    useEffect(() => {
+      const addScrollListeners = () => {
+        window.addEventListener("scroll", handleScroll, { passive: true })
+        document.addEventListener("scroll", handleScroll, { passive: true })
+        document.body.addEventListener("scroll", handleScroll, { passive: true })
+      }
+  
+      const removeScrollListeners = () => {
+        window.removeEventListener("scroll", handleScroll)
+        document.removeEventListener("scroll", handleScroll)
+        document.body.removeEventListener("scroll", handleScroll)
+      }
+  
+      addScrollListeners()
+  
+      // Check initial position
+      handleScroll()
+  
+      return () => {
+        removeScrollListeners()
+      }
+    }, [handleScroll])
+
+  const scrollToTop = () => {
+    // Try multiple scroll methods for better compatibility
+    try {
+      // Method 1: Smooth scroll
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      })
+
+      // Method 2: Fallback for browsers that don't support smooth scroll
+      setTimeout(() => {
+        document.documentElement.scrollTop = 0
+        document.body.scrollTop = 0
+        window.pageYOffset = 0
+      }, 100)
+    } catch (error) {
+      // Method 3: Instant scroll fallback
+      document.documentElement.scrollTop = 0
+      document.body.scrollTop = 0
+      window.scrollTo(0, 0)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
@@ -232,6 +297,16 @@ export default function AboutPage() {
         </div>
       </section>
       <Footer />
+
+      {isVisible && (
+          <button
+            onClick={scrollToTop}
+            className="fixed bottom-6 right-6 z-[9999] bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 border-2 border-white/20"
+            aria-label="Scroll to top"
+          >
+            <ArrowUp className="h-5 w-5" />
+          </button>
+        )}
     </div >
   )
 }
