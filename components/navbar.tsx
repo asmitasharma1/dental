@@ -40,31 +40,38 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
   const pathname = usePathname()
 
   useEffect(() => {
-    // Add or remove padding class to body based on isHomePage
-    if (!isHomePage) {
-      document.body.classList.add("non-homepage-padding")
-    } else {
-      document.body.classList.remove("non-homepage-padding")
-    }
-
     // Fetch services
     fetchServices()
 
-    // Check if device is tablet
-    const checkTablet = () => {
+    // Check device size
+    const checkDevice = () => {
       const width = window.innerWidth
-      setIsTablet(width >= 768 && width < 1024) // Tablet range: 768px to 1023px
+      setIsTablet(width >= 768 && width < 1024)
+      updatePadding()
     }
 
-    // Handle scroll for homepage
-    const handleScroll = () => {
-      if (isHomePage) {
-        setScrolled(window.scrollY > 50)
+    // Update padding logic
+    const updatePadding = () => {
+      const isMobileView = window.innerWidth < 1280
+      const shouldPad = !isHomePage || (isHomePage && scrolled && isMobileView)
+      if (shouldPad) {
+        document.body.classList.add("non-homepage-padding")
+      } else {
+        document.body.classList.remove("non-homepage-padding")
       }
     }
 
-    checkTablet()
-    window.addEventListener('resize', checkTablet)
+    // Handle scroll
+    const handleScroll = () => {
+      if (isHomePage) {
+        const newScrolled = window.scrollY > 50
+        setScrolled(newScrolled)
+        updatePadding()
+      }
+    }
+
+    checkDevice()
+    window.addEventListener('resize', checkDevice)
     window.addEventListener('scroll', handleScroll)
 
     // Set initial scroll state
@@ -73,10 +80,10 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
     // Cleanup on component unmount
     return () => {
       document.body.classList.remove("non-homepage-padding")
-      window.removeEventListener('resize', checkTablet)
+      window.removeEventListener('resize', checkDevice)
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [isHomePage, pathname])
+  }, [isHomePage, pathname, scrolled])
 
   const fetchServices = async () => {
     try {
@@ -109,7 +116,7 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
 
 const getNavbarClasses = () => {
   if (isHomePage) {
-    return `relative w-full z-50 transition-all duration-300 ${
+    return `${scrolled ? "xl:relative fixed top-0 left-0" : "relative"} w-full z-50 transition-all duration-300 ${
       scrolled
         ? "bg-white/95 backdrop-blur-md shadow-lg border-b border-teal-100"
         : "bg-transparent xl:bg-transparent bg-white"

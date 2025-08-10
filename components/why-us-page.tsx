@@ -139,77 +139,74 @@ export default function WhyUsSection() {
 
       {/* Commitment Section */}
       <section className="py-24 bg-gradient-to-br from-gray-50 to-teal-50">
-        <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div className="space-y-8">
-              <div className="space-y-6">
-                <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 bg-clip-text text-transparent">
-                  Our Commitment to Excellence
-                </h2>
-                <p className="text-xl text-gray-600 leading-relaxed">
-                  At Dr. Kareen's Clinic, we don't just treat teeth – we care for people. Our holistic approach ensures
-                  that every patient receives personalized attention and the highest quality care.
-                </p>
-              </div>
-              <div className="space-y-4">
-                <div className="flex items-start space-x-4">
-                  <CheckCircle className="h-6 w-6 text-green-600 mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">Modern Facilities</h4>
-                    <p className="text-gray-600">
-                      State-of-the-art equipment and sterile environment for your safety and comfort.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <CheckCircle className="h-6 w-6 text-green-600 mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">Transparent Pricing</h4>
-                    <p className="text-gray-600">
-                      No hidden costs or surprise bills. We provide clear, upfront pricing for all treatments.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <CheckCircle className="h-6 w-6 text-green-600 mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">Emergency Care</h4>
-                    <p className="text-gray-600">
-                      Available for urgent dental needs with same-day appointments when possible.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <CheckCircle className="h-6 w-6 text-green-600 mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">Follow-up Care</h4>
-                    <p className="text-gray-600">
-                      Comprehensive aftercare and regular check-ups to maintain your oral health.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="pt-6">
-                <Link href="/book-now">
-                  <Button className="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white px-8 py-4 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-                    Experience the Difference
-                  </Button>
-                </Link>
-              </div>
-            </div>
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-teal-200/30 to-cyan-200/30 rounded-3xl blur-2xl transform rotate-6"></div>
-              <Image
-                src="/images/whyus.webp"
-                alt="Happy patients at Dr. Kareen's Clinic"
-                width={500}
-                height={600}
-                className="rounded-1xl shadow-2xl relative z-10 hover:scale-105 transition-transform duration-500 w-full h-auto"
-              />
-            </div>
-          </div>
+  <div className="container mx-auto px-4">
+    <div className="grid lg:grid-cols-2 gap-16 items-center">
+      
+      {/* Left Content */}
+      <div className="space-y-8 text-center lg:text-left">
+        <div className="space-y-6">
+          <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 bg-clip-text text-transparent">
+            Our Commitment to Excellence
+          </h2>
+          <p className="text-xl text-gray-600 leading-relaxed">
+            At Dr. Kareen's Clinic, we don't just treat teeth – we care for people. Our holistic approach ensures
+            that every patient receives personalized attention and the highest quality care.
+          </p>
         </div>
-      </section>
+        
+        <div className="space-y-4">
+          {[
+            {
+              title: "Modern Facilities",
+              desc: "State-of-the-art equipment and sterile environment for your safety and comfort.",
+            },
+            {
+              title: "Transparent Pricing",
+              desc: "No hidden costs or surprise bills. We provide clear, upfront pricing for all treatments.",
+            },
+            {
+              title: "Emergency Care",
+              desc: "Available for urgent dental needs with same-day appointments when possible.",
+            },
+            {
+              title: "Follow-up Care",
+              desc: "Comprehensive aftercare and regular check-ups to maintain your oral health.",
+            },
+          ].map((item, i) => (
+            <div key={i} className="flex flex-col items-center lg:flex-row lg:items-start lg:space-x-4 text-center lg:text-left">
+              <CheckCircle className="h-6 w-6 text-green-600 mt-1 flex-shrink-0" />
+              <div>
+                <h4 className="font-semibold text-gray-900 mb-1">{item.title}</h4>
+                <p className="text-gray-600">{item.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="pt-6">
+          <Link href="/book-now">
+            <Button className="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white px-8 py-4 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+              Experience the Difference
+            </Button>
+          </Link>
+        </div>
+      </div>
+
+      {/* Right Image */}
+      <div className="relative flex justify-center">
+        <div className="absolute inset-0 bg-gradient-to-br from-teal-200/30 to-cyan-200/30 rounded-3xl blur-2xl transform rotate-6"></div>
+        <Image
+          src="/images/whyus.webp"
+          alt="Happy patients at Dr. Kareen's Clinic"
+          width={500}
+          height={600}
+          className="rounded-1xl shadow-2xl relative z-10 hover:scale-105 transition-transform duration-500 w-full h-auto max-w-md"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
       <Footer />
     </div>
   )

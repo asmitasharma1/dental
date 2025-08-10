@@ -443,57 +443,58 @@ export default function HomePage() {
         </section>
 
         <section className="py-24 relative">
-          <div className="absolute inset-0 bg-white/90 backdrop-blur-sm"></div>
-          <div className="relative z-10">
-            <div className="container mx-auto px-4 relative z-10">
-              <div className="text-center mb-20">
-                <h2 className="text-5xl lg:text-6xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 bg-clip-text text-transparent mb-6">
-                  Our Mission
-                </h2>
-                <div className="w-32 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto"></div>
-              </div>
-              <div className="grid lg:grid-cols-2 gap-16 items-center">
-                <Card className="bg-gradient-to-br from-teal-50 to-gray-50 border-0 p-12 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500">
-                  <CardContent className="p-0">
-                    <div className="space-y-6">
-                      <p className="text-teal-600 text-lg font-medium">Our Mission</p>
-                      <h3 className="text-4xl font-bold text-gray-900">
-                        Help you achieve a{" "}
-                        <span className="bg-gradient-to-r from-teal-600 to-teal-700 bg-clip-text text-transparent">
-                          healthy, confident smile
-                        </span>{" "}
-                        that lasts a lifetime
-                      </h3>
-                      <p className="text-gray-600 text-lg">
-                        We believe everyone deserves a beautiful smile. Our comprehensive approach focuses on
-                        prevention, treatment, and long-term oral health.
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-                <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
-                  {missionValues.map((value, index) => {
-                    const IconComponent = value.icon
-                    return (
-                      <Card
-                        key={index}
-                        className={`bg-gradient-to-br ${value.color} border-0 p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group text-center`}
-                      >
-                        <CardContent className="p-0">
-                          <div className="w-16 h-16 bg-white rounded-full mx-auto flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                            <IconComponent className={`h-8 w-8 ${value.iconColor}`} />
-                          </div>
-                          <h3 className="text-xl font-bold text-gray-900 mb-4">{value.title}</h3>
-                          <p className="text-gray-700 leading-relaxed">{value.description}</p>
-                        </CardContent>
-                      </Card>
-                    )
-                  })}
-                </div>
-              </div>
+  <div className="absolute inset-0 bg-white/90 backdrop-blur-sm"></div>
+  <div className="relative z-10">
+    <div className="container mx-auto px-4 relative z-10">
+      <div className="text-center mb-20">
+        <h2 className="text-5xl lg:text-6xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 bg-clip-text text-transparent mb-6">
+          Our Mission
+        </h2>
+        <div className="w-32 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto"></div>
+      </div>
+      <div className="grid lg:grid-cols-2 gap-16 items-center text-center md:text-left">
+        <Card className="bg-gradient-to-br from-teal-50 to-gray-50 border-0 p-12 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500">
+          <CardContent className="p-0">
+            <div className="space-y-6">
+              <p className="text-teal-600 text-lg font-medium">Our Mission</p>
+              <h3 className="text-4xl font-bold text-gray-900">
+                Help you achieve a{" "}
+                <span className="bg-gradient-to-r from-teal-600 to-teal-700 bg-clip-text text-transparent">
+                  healthy, confident smile
+                </span>{" "}
+                that lasts a lifetime
+              </h3>
+              <p className="text-gray-600 text-lg">
+                We believe everyone deserves a beautiful smile. Our comprehensive approach focuses on
+                prevention, treatment, and long-term oral health.
+              </p>
             </div>
-          </div>
-        </section>
+          </CardContent>
+        </Card>
+        <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+          {missionValues.map((value, index) => {
+            const IconComponent = value.icon
+            return (
+              <Card
+                key={index}
+                className={`bg-gradient-to-br ${value.color} border-0 p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group text-center`}
+              >
+                <CardContent className="p-0">
+                  <div className="w-16 h-16 bg-white rounded-full mx-auto flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                    <IconComponent className={`h-8 w-8 ${value.iconColor}`} />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">{value.title}</h3>
+                  <p className="text-gray-700 leading-relaxed">{value.description}</p>
+                </CardContent>
+              </Card>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
         <section className="py-24 relative">
           <div className="absolute inset-0 bg-white/90 backdrop-blur-sm"></div>
