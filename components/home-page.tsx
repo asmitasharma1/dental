@@ -1,36 +1,12 @@
 "use client"
-
 import { useState, useEffect, useCallback } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import {
-  Mail,
-  Quote,
-  Instagram,
-  MessageCircle,
-  ArrowRight,
-  Heart,
-  Clock,
-  Shield,
-  Award,
-  Users,
-  ChevronRight,
-  ChevronLeft,
-  Sparkles,
-  Star,
-  Microscope,
-  Monitor,
-  Home,
-  DollarSign,
-  Music,
-  CreditCard,
-  ArrowUp,
-} from "lucide-react"
+import { Mail, Quote, Instagram, MessageCircle, ArrowRight, Heart, Clock, Shield, Award, Users, ChevronRight, ChevronLeft, Sparkles, Star, Microscope, Monitor, Home, DollarSign, Music, CreditCard, ArrowUp, } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
-
 const whyUsReasons = [
   {
     icon: Award,
@@ -73,14 +49,12 @@ const whyUsReasons = [
     description: "We offer all kinds of Digital Payment options. EMI payment is available for local residents",
   },
 ]
-
 const achievements = [
   { number: "500+", label: "Happy Patients", icon: Users },
   { number: "10+", label: "Years Experience", icon: Award },
   { number: "100%", label: "Safe Procedures", icon: Shield },
   { number: "4.9/5", label: "Patient Rating", icon: Star },
 ]
-
 const topServices = [
   {
     title: "Professional Teeth Cleaning & Scaling",
@@ -101,7 +75,6 @@ const topServices = [
     link: "/services/teeth-whitening",
   },
 ]
-
 const missionValues = [
   {
     title: "Quality Service",
@@ -132,7 +105,6 @@ const missionValues = [
     iconColor: "text-gray-700",
   },
 ]
-
 const testimonials = [
   {
     quote:
@@ -152,466 +124,394 @@ const testimonials = [
     service: "Restorative Dentistry",
   },
 ]
-
 export default function HomePage() {
   const [currentService, setCurrentService] = useState(0)
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
   const [isVisible, setIsVisible] = useState(false)
-
-  // Replace the existing handleScroll function with this:
   const handleScroll = useCallback(() => {
-    // Check multiple scroll sources
     const windowScrollY = window.scrollY || window.pageYOffset
     const documentScrollTop = document.documentElement.scrollTop
     const bodyScrollTop = document.body.scrollTop
-
-    // Use the maximum of all scroll positions
     const scrollTop = Math.max(windowScrollY, documentScrollTop, bodyScrollTop)
-
-    console.log("Window scrollY:", windowScrollY)
-    console.log("Document scrollTop:", documentScrollTop)
-    console.log("Body scrollTop:", bodyScrollTop)
-    console.log("Final scroll position:", scrollTop)
-
     if (scrollTop > 100) {
-      console.log("Setting button visible")
       setIsVisible(true)
     } else {
-      console.log("Setting button hidden")
       setIsVisible(false)
     }
   }, [])
-
-  // Replace the useEffect scroll listener setup with this:
   useEffect(() => {
     const serviceInterval = setInterval(() => {
       setCurrentService((prev) => (prev + 1) % topServices.length)
     }, 10000)
-
     const testimonialInterval = setInterval(() => {
       setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
     }, 10000)
-
-    // Add multiple scroll event listeners for better compatibility
     const addScrollListeners = () => {
       window.addEventListener("scroll", handleScroll, { passive: true })
       document.addEventListener("scroll", handleScroll, { passive: true })
       document.body.addEventListener("scroll", handleScroll, { passive: true })
     }
-
     const removeScrollListeners = () => {
       window.removeEventListener("scroll", handleScroll)
       document.removeEventListener("scroll", handleScroll)
       document.body.removeEventListener("scroll", handleScroll)
     }
-
     addScrollListeners()
-
-    // Check initial position
     handleScroll()
-
     return () => {
       clearInterval(serviceInterval)
       clearInterval(testimonialInterval)
       removeScrollListeners()
     }
   }, [handleScroll])
-
   const nextService = () => {
     setCurrentService((prev) => (prev + 1) % topServices.length)
   }
-
   const prevService = () => {
     setCurrentService((prev) => (prev - 1 + topServices.length) % topServices.length)
   }
-
   const nextTestimonial = () => {
     setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
   }
-
   const prevTestimonial = () => {
     setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)
   }
-
   const scrollToTop = () => {
-    // Try multiple scroll methods for better compatibility
     try {
-      // Method 1: Smooth scroll
       window.scrollTo({
         top: 0,
         left: 0,
         behavior: "smooth",
       })
-
-      // Method 2: Fallback for browsers that don't support smooth scroll
       setTimeout(() => {
         document.documentElement.scrollTop = 0
         document.body.scrollTop = 0
         window.pageYOffset = 0
       }, 100)
     } catch (error) {
-      // Method 3: Instant scroll fallback
       document.documentElement.scrollTop = 0
       document.body.scrollTop = 0
       window.scrollTo(0, 0)
     }
   }
-
   return (
     <div className="min-h-screen relative">
-      {/* Background Image */}
-      <div className="fixed inset-0 z-0">
-        <Image src="/images/MPS__5.webp" alt="Background" fill className="object-cover blur-sm" loading="lazy" />
-        <div className="absolute inset-0 bg-white/30"></div>
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10">
-        <Navbar isHomePage={true} />
-
-        <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
-          <div className="fixed left-4 md:left-6 top-1/2 transform -translate-y-1/2 z-40 flex flex-col space-y-3 md:space-y-4">
-            <a
-              href="https://www.instagram.com/smilebydrkareen_dentalclinic/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur-sm shadow-lg rounded-full flex items-center justify-center hover:bg-teal-50 transition-all duration-300 hover:scale-105 md:hover:scale-110"
-            >
-              <Instagram className="h-5 w-5 md:h-6 md:w-6 text-teal-600" />
-            </a>
-            <a
-              href="https://www.tiktok.com/@smilebydrkareen_dental"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur-sm shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-all duration-300 hover:scale-105 md:hover:scale-110"
-            >
-              <div className="w-5 h-5 md:w-6 md:h-6 bg-gray-800 rounded-sm flex items-center justify-center">
-                <span className="text-white text-xs font-bold">T</span>
-              </div>
-            </a>
-            <a
-              href="https://wa.me/9851359775"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur-sm shadow-lg rounded-full flex items-center justify-center hover:bg-teal-50 transition-all duration-300 hover:scale-105 md:hover:scale-110"
-            >
-              <MessageCircle className="h-5 w-5 md:h-6 md:w-6 text-teal-600" />
-            </a>
-            <a
-              href="mailto:smilebydrkareen@gmail.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur-sm shadow-lg rounded-full flex items-center justify-center hover:bg-teal-50 transition-all duration-300 hover:scale-105 md:hover:scale-110"
-            >
-              <Mail className="h-5 w-5 md:h-6 md:w-6 text-teal-600" />
-            </a>
-          </div>
-
-          <div className="absolute top-10 left-10 w-8 h-10 bg-white/20 rounded-t-full rounded-b-sm transform rotate-12 blur-sm animate-pulse"></div>
-          <div className="absolute top-32 right-20 w-6 h-8 bg-teal-200/30 rounded-t-full rounded-b-sm transform -rotate-45 blur-sm animate-pulse delay-1000"></div>
-          <div className="absolute bottom-32 left-1/4 w-10 h-12 bg-gray-200/20 rounded-t-full rounded-b-sm transform rotate-45 blur-sm animate-pulse delay-2000"></div>
-          <div className="absolute bottom-1/4 right-1/3 animate-spin" style={{ animationDuration: "8s" }}>
-            <Sparkles className="h-8 w-8 text-teal-300/30" />
-          </div>
-          <div className="absolute bottom-1/3 left-16">
-            <Heart className="h-6 w-6 text-teal-300/40 animate-pulse" />
-          </div>
-
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="text-center">
-              <div className="space-y-4">
-                <h1 className="text-5xl md:text-7xl lg:text-8xl font-semibold text-gray-800 leading-tight drop-shadow-2xl">
-                  YOUR SMILE
-                </h1>
-                <h2 className="text-5xl md:text-7xl lg:text-8xl font-semibold text-teal-700 leading-tight drop-shadow-2xl">
-                  NEEDS EXPERT
-                </h2>
-                <h3 className="text-5xl md:text-7xl lg:text-8xl font-semibold text-gray-800 leading-tight drop-shadow-2xl">
-                  CARE
-                </h3>
-              </div>
-              <p className="text-xl md:text-2xl text-gray-700 max-w-4xl mx-auto leading-relaxed drop-shadow-lg font-semibold mt-8">
-                Experience exceptional dental care with our team of expert surgeons using cutting-edge technology
-              </p>
-              <div className="flex justify-center mt-8">
-                <Link href="/book-now">
-                  <Button className="bg-teal-700 hover:bg-teal-800 text-white px-10 py-4 text-lg rounded-full shadow-2xl transition-all duration-300 hover:scale-105">
-                    Book An Appointment
-                  </Button>
-                </Link>
-              </div>
-              <div className="bg-white/20 backdrop-blur-md rounded-2xl p-6 shadow-2xl border border-white/30 max-w-xl mx-auto mt-8">
-                <div className="flex items-center justify-center space-x-4 text-white">
-                  <Clock className="h-6 w-6 text-teal-600" />
-                  <div className="text-center">
-                    <p className="font-semibold text-teal-700">Open 7 Days a Week</p>
-                    <p className="text-base text-teal-700">Monday - Sunday: 10:00 AM - 6:00 PM</p>
-                    <p className="text-base text-teal-700">Saturday: 10:00 AM - 3:00 PM</p>
-                  </div>
-                </div>
-              </div>
+      <style jsx global>{`
+        html, body {
+          margin: 0;
+          padding: 0;
+          overflow-x: hidden;
+        }
+        body {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        body::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
+      <Navbar isHomePage={true} />
+      {/* Hero Section with Background */}
+      <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
+        {/* Background Image - Keep as fixed for navbar transparency */}
+        <div className="fixed inset-0 z-0">
+          <Image src="/images/MPS__5.webp" alt="Background" fill className="object-cover blur-sm" priority />
+          <div className="absolute inset-0 bg-white/30"></div>
+        </div>
+        {/* Social Media Icons */}
+        <div className="fixed left-4 md:left-6 top-1/2 transform -translate-y-1/2 z-40 flex flex-col space-y-3 md:space-y-4">
+          <a
+            href="https://www.instagram.com/smilebydrkareen_dentalclinic/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur-sm shadow-lg rounded-full flex items-center justify-center hover:bg-teal-50 transition-all duration-300 hover:scale-105 md:hover:scale-110"
+          >
+            <Instagram className="h-5 w-5 md:h-6 md:w-6 text-teal-600" />
+          </a>
+          <a
+            href="https://www.tiktok.com/@smilebydrkareen_dental"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur-sm shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-all duration-300 hover:scale-105 md:hover:scale-110"
+          >
+            <div className="w-5 h-5 md:w-6 md:h-6 bg-gray-800 rounded-sm flex items-center justify-center">
+              <span className="text-white text-xs font-bold">T</span>
             </div>
-          </div>
-        </section>
-
-        <section id="services" className="relative py-20">
-          <div className="absolute inset-0 z-0">
-            <Image
-              src={topServices[currentService].image || "/placeholder.svg"}
-              alt={topServices[currentService].title}
-              fill
-              className="object-cover"
-              loading="lazy"
-            />
-            <div className="absolute inset-0 bg-white/20 bg-gradient-to-t from-black/10 to-transparent"></div>
-          </div>
-
-          <div className="relative z-10 container mx-auto px-4 ipad-pro-adjust">
-            <div className="text-center mb-12">
-              <h2 className="text-5xl lg:text-6xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent mb-6">
-                Our Services
+          </a>
+          <a
+            href="https://wa.me/9851359775"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur-sm shadow-lg rounded-full flex items-center justify-center hover:bg-teal-50 transition-all duration-300 hover:scale-105 md:hover:scale-110"
+          >
+            <MessageCircle className="h-5 w-5 md:h-6 md:w-6 text-teal-600" />
+          </a>
+          <a
+            href="mailto:smilebydrkareen@gmail.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur-sm shadow-lg rounded-full flex items-center justify-center hover:bg-teal-50 transition-all duration-300 hover:scale-105 md:hover:scale-110"
+          >
+            <Mail className="h-5 w-5 md:h-6 md:w-6 text-teal-600" />
+          </a>
+        </div>
+        {/* Decorative Elements */}
+        <div className="absolute top-10 left-10 w-8 h-10 bg-white/20 rounded-t-full rounded-b-sm transform rotate-12 blur-sm animate-pulse"></div>
+        <div className="absolute top-32 right-20 w-6 h-8 bg-teal-200/30 rounded-t-full rounded-b-sm transform -rotate-45 blur-sm animate-pulse delay-1000"></div>
+        <div className="absolute bottom-32 left-1/4 w-10 h-12 bg-gray-200/20 rounded-t-full rounded-b-sm transform rotate-45 blur-sm animate-pulse delay-2000"></div>
+        <div className="absolute bottom-1/4 right-1/3 animate-spin" style={{ animationDuration: "8s" }}>
+          <Sparkles className="h-8 w-8 text-teal-300/30" />
+        </div>
+        <div className="absolute bottom-1/3 left-16">
+          <Heart className="h-6 w-6 text-teal-300/40 animate-pulse" />
+        </div>
+        {/* Hero Content */}
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center">
+            <div className="space-y-4">
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-semibold text-gray-800 leading-tight drop-shadow-2xl">
+                YOUR SMILE
+              </h1>
+              <h2 className="text-5xl md:text-7xl lg:text-8xl font-semibold text-teal-700 leading-tight drop-shadow-2xl">
+                NEEDS EXPERT
               </h2>
-              <p className="text-xl text-gray-900 max-w-3xl mx-auto">
-                Comprehensive dental care with state-of-the-art technology and personalized treatment plans
-              </p>
-              <div className="w-32 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto mt-4"></div>
+              <h3 className="text-5xl md:text-7xl lg:text-8xl font-semibold text-gray-800 leading-tight drop-shadow-2xl">
+                CARE
+              </h3>
             </div>
-
-            <div className="relative flex items-center justify-center mb-12">
-              <button
-                onClick={prevService}
-                className="absolute left-0 z-10 p-3 rounded-full bg-white/20 backdrop-blur-md border border-white/30 hover:bg-white/30 transition-all duration-300 shadow-lg hover:shadow-xl"
-                aria-label="Previous service"
-              >
-                <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-
-              <div className="w-full max-w-4xl text-center mx-8">
-                <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-xl p-6 shadow-lg">
-                  <h3 className="text-3xl font-bold text-gray-900 mb-4 drop-shadow-lg">
-                    {topServices[currentService].title}
-                  </h3>
-                  <p className="text-lg text-gray-800 leading-relaxed drop-shadow-md font-medium">
-                    {topServices[currentService].description}
-                  </p>
-                </div>
-              </div>
-
-              <button
-                onClick={nextService}
-                className="absolute right-0 z-10 p-3 rounded-full bg-white/20 backdrop-blur-md border border-white/30 hover:bg-white/30 transition-all duration-300 shadow-lg hover:shadow-xl"
-                aria-label="Next service"
-              >
-                <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            </div>
-
-            <div className="flex justify-center space-x-2 mb-12">
-              {topServices.map((_, index) => (
-                <button
-                  key={index}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentService ? "bg-teal-600" : "bg-gray-300"}`}
-                  onClick={() => setCurrentService(index)}
-                />
-              ))}
-            </div>
-
-            <div className="max-w-4xl mx-auto px-4">
-              <div className="grid lg:grid-cols-2 gap-8 mt-20">
-                <Link href="/services" className="block">
-                  <Card className="bg-white/20 backdrop-blur-md border border-white/30 p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group hover:bg-white/25 lg:-translate-x-48 cursor-pointer">
-                    <CardContent className="p-0">
-                      <div className="flex items-center justify-between mb-8">
-                        <h3 className="text-3xl font-bold text-gray-900 drop-shadow-lg">Dental Care</h3>
-                        <div className="w-20 h-20 bg-white/50 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 border border-white/40">
-                          <Image src="/images/dental-instruments.avif" alt="Dental care" width={30} height={30} />
-                        </div>
-                      </div>
-                      <ul className="space-y-4 text-gray-800">
-                        <li className="flex items-center space-x-3">
-                          <div className="w-2 h-2 bg-gradient-to-r from-teal-500 to-teal-600 rounded-full"></div>
-                          <span className="drop-shadow font-medium">Professional Teeth Cleaning & Scaling</span>
-                        </li>
-                        <li className="flex items-center space-x-3">
-                          <div className="w-2 h-2 bg-gradient-to-r from-teal-500 to-teal-600 rounded-full"></div>
-                          <span className="drop-shadow font-medium">Dental Fillings & Cavity Treatment</span>
-                        </li>
-                        <li className="flex items-center space-x-3">
-                          <div className="w-2 h-2 bg-gradient-to-r from-teal-500 to-teal-600 rounded-full"></div>
-                          <span className="drop-shadow font-medium">Oral Health Consultation</span>
-                        </li>
-                      </ul>
-                    </CardContent>
-                  </Card>
-                </Link>
-
-                <Link href="/services" className="block">
-                  <Card className="bg-white/20 backdrop-blur-md border border-white/30 p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group hover:bg-white/25 lg:translate-x-48 cursor-pointer">
-                    <CardContent className="p-0">
-                      <div className="flex items-center justify-between mb-8">
-                        <h3 className="text-3xl font-bold text-gray-900 drop-shadow-lg">Aesthetic Care</h3>
-                        <div className="w-20 h-20 bg-white/50 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 border border-white/40">
-                          <Image src="/images/dental-instruments.avif" alt="Aesthetic care" width={30} height={30} />
-                        </div>
-                      </div>
-                      <ul className="space-y-4 text-gray-800">
-                        <li className="flex items-center space-x-3">
-                          <div className="w-2 h-2 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full"></div>
-                          <span className="drop-shadow font-medium">Premium Porcelain Veneers</span>
-                        </li>
-                        <li className="flex items-center space-x-3">
-                          <div className="w-2 h-2 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full"></div>
-                          <span className="drop-shadow font-medium">Professional Teeth Whitening</span>
-                        </li>
-                        <li className="flex items-center space-x-3">
-                          <div className="w-2 h-2 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full"></div>
-                          <span className="drop-shadow font-medium">Invisalign Clear Aligners</span>
-                        </li>
-                      </ul>
-                    </CardContent>
-                  </Card>
-                </Link>
-              </div>
-            </div>
-
-            <div className="grid lg:grid-cols-3 gap-8 mt-20">
-              <Link href="/services" className="block">
-                <Card className="bg-white/20 backdrop-blur-md border border-white/30 p-6 rounded-3xl text-center shadow-lg hover:shadow-2xl transition-all duration-500 group hover:bg-white/25 cursor-pointer">
-                  <CardContent className="p-0">
-                    <div className="mb-6">
-                      <div className="w-16 h-16 bg-white/40 backdrop-blur-sm rounded-full mx-auto flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 border border-white/50">
-                        <Image src="/images/dental-instruments.avif" alt="Restorative" width={32} height={32} />
-                      </div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-4 drop-shadow-lg">Restorative Dentistry</h3>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-
-              <Link href="/services" className="block">
-                <Card className="bg-white/20 backdrop-blur-md border border-white/30 p-6 rounded-3xl text-center shadow-lg hover:shadow-2xl transition-all duration-500 group hover:bg-white/25 cursor-pointer">
-                  <CardContent className="p-0">
-                    <div className="mb-6">
-                      <div className="w-16 h-16 bg-white/40 backdrop-blur-sm rounded-full mx-auto flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 border border-white/50">
-                        <Image src="/images/dental-instruments.avif" alt="Pediatric" width={32} height={32} />
-                      </div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-4 drop-shadow-lg">Pediatric Dentistry</h3>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-
-              <Link href="/services" className="block">
-                <Card className="bg-white/20 backdrop-blur-md border border-white/30 p-6 rounded-3xl text-center shadow-lg hover:shadow-2xl transition-all duration-500 group hover:bg-white/25 cursor-pointer">
-                  <CardContent className="p-0">
-                    <div className="mb-6">
-                      <div className="w-16 h-16 bg-white/40 backdrop-blur-sm rounded-full mx-auto flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 border border-white/50">
-                        <Image src="/images/dental-instruments.avif" alt="Implants" width={32} height={32} />
-                      </div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-4 drop-shadow-lg">Dental Implants</h3>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            </div>
-
-            <div className="text-center mt-12">
-              <Link href="/services">
-                <Button className="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white px-8 py-4 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
-                  More Services
-                  <ArrowRight className="ml-2 h-5 w-5" />
+            <p className="text-xl md:text-2xl text-gray-700 max-w-4xl mx-auto leading-relaxed drop-shadow-lg font-semibold mt-8">
+              Experience exceptional dental care with our team of expert surgeons using cutting-edge technology
+            </p>
+            <div className="flex justify-center mt-8">
+              <Link href="/book-now">
+                <Button className="bg-teal-700 hover:bg-teal-800 text-white px-10 py-4 text-lg rounded-full shadow-2xl transition-all duration-300 hover:scale-105">
+                  Book An Appointment
                 </Button>
               </Link>
             </div>
-          </div>
-        </section>
-
-        <section className="py-24 relative">
-          <div className="absolute inset-0 bg-white/90 backdrop-blur-sm"></div>
-          <div className="relative z-10">
-            <div className="container mx-auto px-4 relative z-10">
-              <div className="text-center mb-20">
-                <h2 className="text-5xl lg:text-6xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 bg-clip-text text-transparent mb-6">
-                  Our Mission
-                </h2>
-                <div className="w-32 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto"></div>
-              </div>
-
-              <div className="grid lg:grid-cols-2 gap-16 items-center text-center md:text-left">
-                <Card className="bg-gradient-to-br from-teal-50 to-gray-50 border-0 p-12 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500">
-                  <CardContent className="p-0">
-                    <div className="space-y-6">
-                      <p className="text-teal-600 text-lg font-medium">Our Mission</p>
-                      <h3 className="text-4xl font-bold text-gray-900">
-                        Help you achieve a{" "}
-                        <span className="bg-gradient-to-r from-teal-600 to-teal-700 bg-clip-text text-transparent">
-                          healthy, confident smile
-                        </span>{" "}
-                        that lasts a lifetime
-                      </h3>
-                      <p className="text-gray-600 text-lg">
-                        We believe everyone deserves a beautiful smile. Our comprehensive approach focuses on
-                        prevention, treatment, and long-term oral health.
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
-                  {missionValues.map((value, index) => {
-                    const IconComponent = value.icon
-                    return (
-                      <Card
-                        key={index}
-                        className={`bg-gradient-to-br ${value.color} border-0 p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group text-center`}
-                      >
-                        <CardContent className="p-0">
-                          <div className="w-16 h-16 bg-white rounded-full mx-auto flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                            <IconComponent className={`h-8 w-8 ${value.iconColor}`} />
-                          </div>
-                          <h3 className="text-xl font-bold text-gray-900 mb-4">{value.title}</h3>
-                          <p className="text-gray-700 leading-relaxed">{value.description}</p>
-                        </CardContent>
-                      </Card>
-                    )
-                  })}
+            <div className="bg-white/20 backdrop-blur-md rounded-2xl p-6 shadow-2xl border border-white/30 max-w-xl mx-auto mt-8">
+              <div className="flex items-center justify-center space-x-4 text-white">
+                <Clock className="h-6 w-6 text-teal-600" />
+                <div className="text-center">
+                  <p className="font-semibold text-teal-700">Open 7 Days a Week</p>
+                  <p className="text-base text-teal-700">Monday - Sunday: 10:00 AM - 6:00 PM</p>
+                  <p className="text-base text-teal-700">Saturday: 10:00 AM - 3:00 PM</p>
                 </div>
               </div>
             </div>
           </div>
-        </section>
-
-        <section className="py-24 relative">
-          <div className="absolute inset-0 bg-white/90 backdrop-blur-sm"></div>
-          <div className="relative z-10">
-            <div className="container mx-auto px-4 relative z-10">
-              <div className="text-center mb-20">
-                <h1 className="text-5xl lg:text-6xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 bg-clip-text text-transparent mb-6">
-                  Why Choose Dr. Kareen's Clinic?
-                </h1>
-                <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                  Discover what makes us the preferred choice for dental care in Lalitpur. Our commitment to excellence,
-                  advanced technology, and patient satisfaction sets us apart.
+        </div>
+      </section>
+      {/* Services Section */}
+      <section id="services" className="relative py-20 bg-white">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src={topServices[currentService].image || "/placeholder.svg"}
+            alt={topServices[currentService].title}
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-white/20 bg-gradient-to-t from-black/10 to-transparent"></div>
+        </div>
+        <div className="relative z-10 container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-5xl lg:text-6xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent mb-6">
+              Our Services
+            </h2>
+            <p className="text-xl text-gray-900 max-w-3xl mx-auto">
+              Comprehensive dental care with state-of-the-art technology and personalized treatment plans
+            </p>
+            <div className="w-32 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto mt-4"></div>
+          </div>
+          <div className="relative flex items-center justify-center mb-12">
+            <button
+              onClick={prevService}
+              className="absolute left-0 z-10 p-3 rounded-full bg-white/20 backdrop-blur-md border border-white/30 hover:bg-white/30 transition-all duration-300 shadow-lg hover:shadow-xl"
+              aria-label="Previous service"
+            >
+              <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <div className="w-full max-w-4xl text-center mx-8">
+              <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-xl p-6 shadow-lg">
+                <h3 className="text-3xl font-bold text-gray-900 mb-4 drop-shadow-lg">
+                  {topServices[currentService].title}
+                </h3>
+                <p className="text-lg text-gray-800 leading-relaxed drop-shadow-md font-medium">
+                  {topServices[currentService].description}
                 </p>
-                <div className="w-32 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto mt-8"></div>
               </div>
-
-              <div className="grid md:grid-cols-4 gap-6 mb-20">
-                {achievements.map((achievement, index) => {
-                  const IconComponent = achievement.icon
+            </div>
+            <button
+              onClick={nextService}
+              className="absolute right-0 z-10 p-3 rounded-full bg-white/20 backdrop-blur-md border border-white/30 hover:bg-white/30 transition-all duration-300 shadow-lg hover:shadow-xl"
+              aria-label="Next service"
+            >
+              <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+          <div className="flex justify-center space-x-2 mb-12">
+            {topServices.map((_, index) => (
+              <button
+                key={index}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  index === currentService ? "bg-teal-600" : "bg-gray-300"
+                }`}
+                onClick={() => setCurrentService(index)}
+              />
+            ))}
+          </div>
+          <div className="max-w-4xl mx-auto px-4">
+            <div className="grid lg:grid-cols-2 gap-8 mt-20">
+              <Link href="/services" className="block">
+                <Card className="bg-white/20 backdrop-blur-md border border-white/30 p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group hover:bg-white/25 lg:-translate-x-48 cursor-pointer">
+                  <CardContent className="p-0">
+                    <div className="flex items-center justify-between mb-8">
+                      <h3 className="text-3xl font-bold text-gray-900 drop-shadow-lg">Dental Care</h3>
+                      <div className="w-20 h-20 bg-white/50 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 border border-white/40">
+                        <Image src="/images/dental-instruments.avif" alt="Dental care" width={30} height={30} />
+                      </div>
+                    </div>
+                    <ul className="space-y-4 text-gray-800">
+                      <li className="flex items-center space-x-3">
+                        <div className="w-2 h-2 bg-gradient-to-r from-teal-500 to-teal-600 rounded-full"></div>
+                        <span className="drop-shadow font-medium">Professional Teeth Cleaning & Scaling</span>
+                      </li>
+                      <li className="flex items-center space-x-3">
+                        <div className="w-2 h-2 bg-gradient-to-r from-teal-500 to-teal-600 rounded-full"></div>
+                        <span className="drop-shadow font-medium">Dental Fillings & Cavity Treatment</span>
+                      </li>
+                      <li className="flex items-center space-x-3">
+                        <div className="w-2 h-2 bg-gradient-to-r from-teal-500 to-teal-600 rounded-full"></div>
+                        <span className="drop-shadow font-medium">Oral Health Consultation</span>
+                      </li>
+                    </ul>
+                  </CardContent>
+                </Card>
+              </Link>
+              <Link href="/services" className="block">
+                <Card className="bg-white/20 backdrop-blur-md border border-white/30 p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group hover:bg-white/25 lg:translate-x-48 cursor-pointer">
+                  <CardContent className="p-0">
+                    <div className="flex items-center justify-between mb-8">
+                      <h3 className="text-3xl font-bold text-gray-900 drop-shadow-lg">Aesthetic Care</h3>
+                      <div className="w-20 h-20 bg-white/50 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 border border-white/40">
+                        <Image src="/images/dental-instruments.avif" alt="Aesthetic care" width={30} height={30} />
+                      </div>
+                    </div>
+                    <ul className="space-y-4 text-gray-800">
+                      <li className="flex items-center space-x-3">
+                        <div className="w-2 h-2 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full"></div>
+                        <span className="drop-shadow font-medium">Premium Porcelain Veneers</span>
+                      </li>
+                      <li className="flex items-center space-x-3">
+                        <div className="w-2 h-2 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full"></div>
+                        <span className="drop-shadow font-medium">Professional Teeth Whitening</span>
+                      </li>
+                      <li className="flex items-center space-x-3">
+                        <div className="w-2 h-2 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full"></div>
+                        <span className="drop-shadow font-medium">Invisalign Clear Aligners</span>
+                      </li>
+                    </ul>
+                  </CardContent>
+                </Card>
+              </Link>
+            </div>
+          </div>
+          <div className="grid lg:grid-cols-3 gap-8 mt-20">
+            <Link href="/services" className="block">
+              <Card className="bg-white/20 backdrop-blur-md border border-white/30 p-6 rounded-3xl text-center shadow-lg hover:shadow-2xl transition-all duration-500 group hover:bg-white/25 cursor-pointer">
+                <CardContent className="p-0">
+                  <div className="mb-6">
+                    <div className="w-16 h-16 bg-white/40 backdrop-blur-sm rounded-full mx-auto flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 border border-white/50">
+                      <Image src="/images/dental-instruments.avif" alt="Restorative" width={32} height={32} />
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-4 drop-shadow-lg">Restorative Dentistry</h3>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+            <Link href="/services" className="block">
+              <Card className="bg-white/20 backdrop-blur-md border border-white/30 p-6 rounded-3xl text-center shadow-lg hover:shadow-2xl transition-all duration-500 group hover:bg-white/25 cursor-pointer">
+                <CardContent className="p-0">
+                  <div className="mb-6">
+                    <div className="w-16 h-16 bg-white/40 backdrop-blur-sm rounded-full mx-auto flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 border border-white/50">
+                      <Image src="/images/dental-instruments.avif" alt="Pediatric" width={32} height={32} />
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-4 drop-shadow-lg">Pediatric Dentistry</h3>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+            <Link href="/services" className="block">
+              <Card className="bg-white/20 backdrop-blur-md border border-white/30 p-6 rounded-3xl text-center shadow-lg hover:shadow-2xl transition-all duration-500 group hover:bg-white/25 cursor-pointer">
+                <CardContent className="p-0">
+                  <div className="mb-6">
+                    <div className="w-16 h-16 bg-white/40 backdrop-blur-sm rounded-full mx-auto flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 border border-white/50">
+                      <Image src="/images/dental-instruments.avif" alt="Implants" width={32} height={32} />
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-4 drop-shadow-lg">Dental Implants</h3>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+          </div>
+          <div className="text-center mt-12">
+            <Link href="/services">
+              <Button className="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white px-8 py-4 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+                More Services
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+      {/* Mission Section */}
+      <section className="py-24 relative bg-white">
+        <div className="absolute inset-0 bg-white/90 backdrop-blur-sm"></div>
+        <div className="relative z-10">
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="text-center mb-20">
+              <h2 className="text-5xl lg:text-6xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 bg-clip-text text-transparent mb-6">
+                Our Mission
+              </h2>
+              <div className="w-32 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto"></div>
+            </div>
+            <div className="grid lg:grid-cols-2 gap-16 items-center text-center md:text-left">
+              <Card className="bg-gradient-to-br from-teal-50 to-gray-50 border-0 p-12 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500">
+                <CardContent className="p-0">
+                  <div className="space-y-6">
+                    <p className="text-teal-600 text-lg font-medium">Our Mission</p>
+                    <h3 className="text-4xl font-bold text-gray-900">
+                      Help you achieve a{" "}
+                      <span className="bg-gradient-to-r from-teal-600 to-teal-700 bg-clip-text text-transparent">
+                        healthy, confident smile
+                      </span>{" "}
+                      that lasts a lifetime
+                    </h3>
+                    <p className="text-gray-600 text-lg">
+                      We believe everyone deserves a beautiful smile. Our comprehensive approach focuses on prevention,
+                      treatment, and long-term oral health.
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+              <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+                {missionValues.map((value, index) => {
+                  const IconComponent = value.icon
                   return (
                     <Card
                       key={index}
-                      className="bg-white/80 backdrop-blur-sm border-0 p-6 rounded-2xl text-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                      className={`bg-gradient-to-br ${value.color} border-0 p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group text-center`}
                     >
                       <CardContent className="p-0">
-                        <IconComponent className="h-8 w-8 text-teal-600 mx-auto mb-3" />
-                        <h3 className="text-3xl font-bold text-gray-900 mb-1">{achievement.number}</h3>
-                        <p className="text-gray-600 font-medium">{achievement.label}</p>
+                        <div className="w-16 h-16 bg-white rounded-full mx-auto flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                          <IconComponent className={`h-8 w-8 ${value.iconColor}`} />
+                        </div>
+                        <h3 className="text-xl font-bold text-gray-900 mb-4">{value.title}</h3>
+                        <p className="text-gray-700 leading-relaxed">{value.description}</p>
                       </CardContent>
                     </Card>
                   )
@@ -619,72 +519,107 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-        </section>
-
-        <section className="py-24 relative">
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-50/90 to-teal-50/90 backdrop-blur-sm"></div>
-          <div className="relative z-10">
-            <div className="container mx-auto px-4 relative z-10">
-              <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 bg-clip-text text-transparent mb-6">
-                  What Our Patients Say
-                </h2>
-                <div className="w-24 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto"></div>
-              </div>
-
-              <div className="relative max-w-4xl mx-auto">
-                <Card className="bg-gradient-to-br from-teal-600 to-gray-700 text-white p-8 rounded-3xl shadow-2xl">
-                  <CardContent className="p-0 text-center">
-                    <Quote className="h-12 w-12 mx-auto mb-6 opacity-80" />
-                    <p className="text-xl mb-6 leading-relaxed">{testimonials[currentTestimonial].quote}</p>
-                    <div className="space-y-2">
-                      <p className="font-bold text-lg">{testimonials[currentTestimonial].name}</p>
-                      <p className="text-gray-200">{testimonials[currentTestimonial].service}</p>
-                    </div>
-                    <div className="flex items-center justify-center space-x-6 mt-8">
-                      <button
-                        onClick={prevTestimonial}
-                        className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110 shadow-lg"
-                        aria-label="Previous testimonial"
-                      >
-                        <ChevronLeft className="h-6 w-6 text-white" />
-                      </button>
-                      <div className="flex space-x-2">
-                        {testimonials.map((_, index) => (
-                          <button
-                            key={index}
-                            className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentTestimonial ? "bg-white" : "bg-white/40"}`}
-                            onClick={() => setCurrentTestimonial(index)}
-                          />
-                        ))}
-                      </div>
-                      <button
-                        onClick={nextTestimonial}
-                        className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110 shadow-lg"
-                        aria-label="Next testimonial"
-                      >
-                        <ChevronRight className="h-6 w-6 text-white" />
-                      </button>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
+        </div>
+      </section>
+      {/* Why Choose Us Section */}
+      <section className="py-24 relative bg-white">
+        <div className="absolute inset-0 bg-white/90 backdrop-blur-sm"></div>
+        <div className="relative z-10">
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="text-center mb-20">
+              <h1 className="text-5xl lg:text-6xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 bg-clip-text text-transparent mb-6">
+                Why Choose Dr. Kareen's Clinic?
+              </h1>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                Discover what makes us the preferred choice for dental care in Lalitpur. Our commitment to excellence,
+                advanced technology, and patient satisfaction sets us apart.
+              </p>
+              <div className="w-32 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto mt-8"></div>
+            </div>
+            <div className="grid md:grid-cols-4 gap-6 mb-20">
+              {achievements.map((achievement, index) => {
+                const IconComponent = achievement.icon
+                return (
+                  <Card
+                    key={index}
+                    className="bg-white/80 backdrop-blur-sm border-0 p-6 rounded-2xl text-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                  >
+                    <CardContent className="p-0">
+                      <IconComponent className="h-8 w-8 text-teal-600 mx-auto mb-3" />
+                      <h3 className="text-3xl font-bold text-gray-900 mb-1">{achievement.number}</h3>
+                      <p className="text-gray-600 font-medium">{achievement.label}</p>
+                    </CardContent>
+                  </Card>
+                )
+              })}
             </div>
           </div>
-        </section>
-
-        <Footer />
-
-        {isVisible && (
-          <button
-            onClick={scrollToTop}
-            className="fixed bottom-6 right-6 z-[9999] bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 border-2 border-white/20"
-            aria-label="Scroll to top"
-          >
-            <ArrowUp className="h-5 w-5" />
-          </button>
-        )}
-      </div>
+        </div>
+      </section>
+      {/* Testimonials Section */}
+      <section className="py-24 relative bg-white">
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-50/90 to-teal-50/90 backdrop-blur-sm"></div>
+        <div className="relative z-10">
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 bg-clip-text text-transparent mb-6">
+                What Our Patients Say
+              </h2>
+              <div className="w-24 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto"></div>
+            </div>
+            <div className="relative max-w-4xl mx-auto">
+              <Card className="bg-gradient-to-br from-teal-600 to-gray-700 text-white p-8 rounded-3xl shadow-2xl">
+                <CardContent className="p-0 text-center">
+                  <Quote className="h-12 w-12 mx-auto mb-6 opacity-80" />
+                  <p className="text-xl mb-6 leading-relaxed">{testimonials[currentTestimonial].quote}</p>
+                  <div className="space-y-2">
+                    <p className="font-bold text-lg">{testimonials[currentTestimonial].name}</p>
+                    <p className="text-gray-200">{testimonials[currentTestimonial].service}</p>
+                  </div>
+                  <div className="flex items-center justify-center space-x-6 mt-8">
+                    <button
+                      onClick={prevTestimonial}
+                      className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110 shadow-lg"
+                      aria-label="Previous testimonial"
+                    >
+                      <ChevronLeft className="h-6 w-6 text-white" />
+                    </button>
+                    <div className="flex space-x-2">
+                      {testimonials.map((_, index) => (
+                        <button
+                          key={index}
+                          className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                            index === currentTestimonial ? "bg-white" : "bg-white/40"
+                          }`}
+                          onClick={() => setCurrentTestimonial(index)}
+                        />
+                      ))}
+                    </div>
+                    <button
+                      onClick={nextTestimonial}
+                      className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110 shadow-lg"
+                      aria-label="Next testimonial"
+                    >
+                      <ChevronRight className="h-6 w-6 text-white" />
+                    </button>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+      <Footer />
+      {/* Scroll to Top Button */}
+      {isVisible && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 z-[9999] bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 border-2 border-white/20"
+          aria-label="Scroll to top"
+        >
+          <ArrowUp className="h-5 w-5" />
+        </button>
+      )}
     </div>
   )
 }
