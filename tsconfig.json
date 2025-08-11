@@ -22,7 +22,7 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/blogs/[id]/route.ts", "app/api/blogs/route.ts"],
   "exclude": ["node_modules"],
   "types": ["node", "@types/react-leaflet"],
   "typeRoots": ["./node_modules/@types", "./types"]

@@ -104,3 +104,66 @@ INSERT INTO admin_users (username, email, password_hash, role) VALUES
 -- CREATE USER 'dentalclinic'@'localhost' IDENTIFIED BY 'gorkhali';
 -- GRANT ALL PRIVILEGES ON dental_clinic.* TO 'dentalclinic'@'localhost';
 -- FLUSH PRIVILEGES;
+
+
+
+
+-- Create blogs table for the dental clinic
+CREATE TABLE IF NOT EXISTS blogs (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    excerpt TEXT NOT NULL,
+    author VARCHAR(100) NOT NULL,
+    image_url VARCHAR(500),
+    published_date DATE NOT NULL,
+    is_published BOOLEAN DEFAULT false,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Insert sample blog posts
+INSERT INTO blogs (title, content, excerpt, author, image_url, published_date, is_published) VALUES
+(
+    'The Importance of Regular Dental Checkups',
+    'Regular dental checkups are essential for maintaining good oral health. During these visits, your dentist can detect problems early, before they become serious and expensive to treat.
+
+During a typical checkup, your dentist will:
+- Examine your teeth and gums for signs of decay or disease
+- Clean your teeth to remove plaque and tartar buildup
+- Check for oral cancer
+- Assess your bite and jaw alignment
+- Discuss your oral hygiene routine
+
+Most dental professionals recommend visiting every six months, though some patients may need more frequent visits based on their individual risk factors.',
+    'Learn why regular dental checkups are crucial for your oral health and what to expect during your visit.',
+    'Dr. Kareen',
+    '/placeholder.svg?height=300&width=400',
+    '2024-01-15',
+    true
+),
+(
+    'How to Maintain Healthy Teeth at Home',
+    'Maintaining healthy teeth at home is just as important as regular dental visits. Here are the essential steps for proper oral hygiene:
+
+**Brushing Technique:**
+- Brush twice daily with fluoride toothpaste
+- Use a soft-bristled toothbrush
+- Brush for at least 2 minutes
+- Replace your toothbrush every 3-4 months
+
+**Flossing:**
+- Floss daily to remove plaque between teeth
+- Use proper technique to avoid damaging gums
+
+**Diet and Lifestyle:**
+- Limit sugary and acidic foods
+- Drink plenty of water
+- Avoid tobacco products
+- Consider using mouthwash for additional protection',
+    'Discover the best practices for maintaining excellent oral hygiene at home between dental visits.',
+    'Dr. Kareen',
+    '/placeholder.svg?height=300&width=400',
+    '2024-01-10',
+    true
+);

@@ -1,8 +1,9 @@
 "use client"
+
 import { useState } from "react"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { Calendar, Clock, Users, LogOut, Menu, X, ImageIcon } from "lucide-react" // Renamed Image to ImageIcon to avoid conflict
+import { Calendar, Clock, Users, LogOut, Menu, X, ImageIcon, FileText } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -114,6 +115,16 @@ export default function Sidebar() {
           >
             <Users className="h-5 w-5" />
             <span>Doctors</span>
+          </Link>
+          <Link
+            href="/admin/blogs"
+            onClick={() => setIsOpen(false)}
+            className={`flex items-center space-x-3 px-4 py-3 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors ${
+              isActive("/admin/blogs") ? "bg-teal-50 border-l-4 border-teal-600" : ""
+            }`}
+          >
+            <FileText className="h-5 w-5" />
+            <span>Blogs</span>
           </Link>
         </nav>
         <div className="p-4">

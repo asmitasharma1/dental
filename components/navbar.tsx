@@ -10,38 +10,35 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
-import { Menu, X } from 'lucide-react'
+import { Menu, X } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { usePathname } from "next/navigation"
-
-interface NavbarProps {
-  isHomePage?: boolean
-}
-
-interface Service {
-  id: number
-  title: string
-  description: string
-  category: string
-  price: number
-  duration: string
-  image_url: string
-  is_active: boolean
-}
+import type { NavbarProps, Service } from "@/types"
+import {
+  getNavbarClasses,
+  getTextClasses,
+  getUnderlineClasses,
+  getMobileBorderClasses,
+  getMobileTextClasses,
+  getMobileSubTextClasses,
+} from "@/utils"
 
 export default function Navbar({ isHomePage = false }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [services, setServices] = useState<Service[]>([])
   const [servicesLoading, setServicesLoading] = useState(true)
+  const [blogs, setBlogs] = useState<any[]>([])
+  const [blogsLoading, setBlogsLoading] = useState(true)
   const [isTablet, setIsTablet] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
 
   useEffect(() => {
-    // Fetch services
+    // Fetch services and blogs
     fetchServices()
+    fetchBlogs()
 
     // Check device size
     const checkDevice = () => {
@@ -71,8 +68,8 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
     }
 
     checkDevice()
-    window.addEventListener('resize', checkDevice)
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener("resize", checkDevice)
+    window.addEventListener("scroll", handleScroll)
 
     // Set initial scroll state
     handleScroll()
@@ -80,8 +77,8 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
     // Cleanup on component unmount
     return () => {
       document.body.classList.remove("non-homepage-padding")
-      window.removeEventListener('resize', checkDevice)
-      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener("resize", checkDevice)
+      window.removeEventListener("scroll", handleScroll)
     }
   }, [isHomePage, pathname, scrolled])
 
@@ -101,6 +98,22 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
     }
   }
 
+  const fetchBlogs = async () => {
+    try {
+      const response = await fetch("/api/blogs")
+      if (response.ok) {
+        const data = await response.json()
+        setBlogs(data.slice(0, 5)) // Show only first 5 blogs in navbar
+      } else {
+        console.error("Failed to fetch blogs")
+      }
+    } catch (error) {
+      console.error("Error fetching blogs:", error)
+    } finally {
+      setBlogsLoading(false)
+    }
+  }
+
   const handleScrollLink = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault()
     const target = document.querySelector(targetId)
@@ -114,55 +127,8 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
     setIsMenuOpen(false)
   }
 
-const getNavbarClasses = () => {
-  if (isHomePage) {
-    return `${scrolled ? "xl:relative fixed top-0 left-0" : "relative"} w-full z-50 transition-all duration-300 ${
-      scrolled
-        ? "bg-white/95 backdrop-blur-md shadow-lg border-b border-teal-100"
-        : "bg-transparent xl:bg-transparent bg-white"
-    }`
-  }
-  return `fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-white shadow-lg border-b border-teal-100`
-}
-
-
-  const getTextClasses = () => {
-    if (!isHomePage || scrolled) {
-      return "text-teal-700 hover:text-teal-600"
-    }
-    return "text-gray-800 hover:text-teal-700 drop-shadow-lg"
-  }
-
-  const getUnderlineClasses = () => {
-    if (!isHomePage || scrolled) {
-      return "bg-gradient-to-r from-teal-400 to-teal-300"
-    }
-    return "bg-gradient-to-r from-gray-800 to-teal-700"
-  }
-
-  const getMobileTextClasses = () => {
-    if (!isHomePage || scrolled) {
-      return "text-teal-700 hover:text-teal-600 hover:bg-teal-50"
-    }
-    return "text-gray-800 hover:text-teal-700 hover:bg-gray-100/50"
-  }
-
-  const getMobileBorderClasses = () => {
-    if (!isHomePage || scrolled) {
-      return "border-teal-100"
-    }
-    return "border-gray-300/50"
-  }
-
-  const getMobileSubTextClasses = () => {
-    if (!isHomePage || scrolled) {
-      return "text-teal-600 hover:text-teal-500 hover:bg-teal-50"
-    }
-    return "text-gray-600 hover:text-teal-700 hover:bg-gray-100/50"
-  }
-
   return (
-    <header className={getNavbarClasses()}>
+    <header className={getNavbarClasses(isHomePage, scrolled)}>
       <div className="relative z-10">
         <div className="container mx-auto px-3 sm:px-4 lg:px-6 xl:px-8 py-4 sm:py-5">
           <div className="relative flex items-center justify-between">
@@ -172,18 +138,18 @@ const getNavbarClasses = () => {
               <div className="flex items-center space-x-8 2xl:space-x-12">
                 <Link
                   href="/"
-                  className={`${getTextClasses()} transition-all duration-300 font-medium relative group text-base lg:text-lg tracking-wide`}
+                  className={`${getTextClasses(isHomePage, scrolled)} transition-all duration-300 font-medium relative group text-base lg:text-lg tracking-wide`}
                 >
                   Home
                   <span
-                    className={`absolute -bottom-1 left-0 w-0 h-0.5 ${getUnderlineClasses()} transition-all duration-300 group-hover:w-full rounded-full`}
+                    className={`absolute -bottom-1 left-0 w-0 h-0.5 ${getUnderlineClasses(isHomePage, scrolled)} transition-all duration-300 group-hover:w-full rounded-full`}
                   ></span>
                 </Link>
                 <NavigationMenu>
                   <NavigationMenuList>
                     <NavigationMenuItem>
                       <NavigationMenuTrigger
-                        className={`${getTextClasses()} transition-all duration-300 font-medium text-base lg:text-lg tracking-wide bg-transparent`}
+                        className={`${getTextClasses(isHomePage, scrolled)} transition-all duration-300 font-medium text-base lg:text-lg tracking-wide bg-transparent`}
                       >
                         About Us
                       </NavigationMenuTrigger>
@@ -211,6 +177,18 @@ const getNavbarClasses = () => {
                               </div>
                             </Link>
                           </NavigationMenuLink>
+                          {/* Added Blogs link to About Us dropdown */}
+                          <NavigationMenuLink asChild>
+                            <Link
+                              href="/blogs"
+                              className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-3 lg:p-4 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none"
+                            >
+                              <div className="text-sm font-medium leading-none group-hover:underline">Blogs</div>
+                              <div className="line-clamp-2 text-xs lg:text-sm leading-snug text-muted-foreground">
+                                Read our latest dental health articles
+                              </div>
+                            </Link>
+                          </NavigationMenuLink>
                         </div>
                       </NavigationMenuContent>
                     </NavigationMenuItem>
@@ -218,11 +196,11 @@ const getNavbarClasses = () => {
                 </NavigationMenu>
                 <Link
                   href="/why-us"
-                  className={`${getTextClasses()} transition-all duration-300 font-medium relative group text-base lg:text-lg tracking-wide`}
+                  className={`${getTextClasses(isHomePage, scrolled)} transition-all duration-300 font-medium relative group text-base lg:text-lg tracking-wide`}
                 >
                   Why Us
                   <span
-                    className={`absolute -bottom-1 left-0 w-0 h-0.5 ${getUnderlineClasses()} transition-all duration-300 group-hover:w-full rounded-full`}
+                    className={`absolute -bottom-1 left-0 w-0 h-0.5 ${getUnderlineClasses(isHomePage, scrolled)} transition-all duration-300 group-hover:w-full rounded-full`}
                   ></span>
                 </Link>
               </div>
@@ -245,7 +223,7 @@ const getNavbarClasses = () => {
                   <NavigationMenuList>
                     <NavigationMenuItem>
                       <NavigationMenuTrigger
-                        className={`${getTextClasses()} transition-all duration-300 font-medium text-base lg:text-lg tracking-wide bg-transparent`}
+                        className={`${getTextClasses(isHomePage, scrolled)} transition-all duration-300 font-medium text-base lg:text-lg tracking-wide bg-transparent`}
                       >
                         Service
                       </NavigationMenuTrigger>
@@ -306,11 +284,11 @@ const getNavbarClasses = () => {
                 </NavigationMenu>
                 <Link
                   href="/gallery"
-                  className={`${getTextClasses()} transition-all duration-300 font-medium relative group text-base lg:text-lg tracking-wide`}
+                  className={`${getTextClasses(isHomePage, scrolled)} transition-all duration-300 font-medium relative group text-base lg:text-lg tracking-wide`}
                 >
                   Gallery
                   <span
-                    className={`absolute -bottom-1 left-0 w-0 h-0.5 ${getUnderlineClasses()} transition-all duration-300 group-hover:w-full rounded-full`}
+                    className={`absolute -bottom-1 left-0 w-0 h-0.5 ${getUnderlineClasses(isHomePage, scrolled)} transition-all duration-300 group-hover:w-full rounded-full`}
                   ></span>
                 </Link>
                 <Link href="/book-now">
@@ -336,7 +314,7 @@ const getNavbarClasses = () => {
                   priority
                 />
               </Link>
-              
+
               <Button
                 variant="ghost"
                 size="sm"
@@ -358,22 +336,26 @@ const getNavbarClasses = () => {
               isMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
             } ${isMenuOpen ? "bg-white shadow-lg border-b border-teal-100" : ""}`}
           >
-            <nav className={`flex flex-col pt-6 pb-8 border-t ${isMenuOpen ? "border-teal-100" : getMobileBorderClasses()}`}>
+            <nav
+              className={`flex flex-col pt-6 pb-8 border-t ${isMenuOpen ? "border-teal-100" : getMobileBorderClasses(isHomePage, scrolled)}`}
+            >
               {/* Home */}
               <Link
                 href="/"
                 onClick={handleMobileLinkClick}
-                className={`${isMenuOpen ? "text-teal-700 hover:text-teal-600 hover:bg-teal-50" : getMobileTextClasses()} transition-colors font-medium text-xl px-6 py-4 border-b ${isMenuOpen ? "border-teal-100" : getMobileBorderClasses()}`}
+                className={`${isMenuOpen ? "text-teal-700 hover:text-teal-600 hover:bg-teal-50" : getMobileTextClasses(isHomePage, scrolled)} transition-colors font-medium text-xl px-6 py-4 border-b ${isMenuOpen ? "border-teal-100" : getMobileBorderClasses(isHomePage, scrolled)}`}
               >
                 Home
               </Link>
-              
+
               {/* About Us Section */}
-              <div className={`border-b ${isMenuOpen ? "border-teal-100" : getMobileBorderClasses()}`}>
+              <div
+                className={`border-b ${isMenuOpen ? "border-teal-100" : getMobileBorderClasses(isHomePage, scrolled)}`}
+              >
                 <Link
                   href="/about"
                   onClick={handleMobileLinkClick}
-                  className={`${isMenuOpen ? "text-teal-700 hover:text-teal-600 hover:bg-teal-50" : getMobileTextClasses()} transition-colors font-medium text-xl px-6 py-4 block`}
+                  className={`${isMenuOpen ? "text-teal-700 hover:text-teal-600 hover:bg-teal-50" : getMobileTextClasses(isHomePage, scrolled)} transition-colors font-medium text-xl px-6 py-4 block`}
                 >
                   About Us
                 </Link>
@@ -381,26 +363,36 @@ const getNavbarClasses = () => {
                   <Link
                     href="/about"
                     onClick={handleMobileLinkClick}
-                    className={`${isTablet ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : getMobileSubTextClasses()} transition-colors text-base px-8 py-3 block`}
+                    className={`${isTablet ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : getMobileSubTextClasses(isHomePage, scrolled)} transition-colors text-base px-8 py-3 block`}
                   >
                     Our Clinic
                   </Link>
                   <Link
                     href="/about#doctors"
                     onClick={handleMobileLinkClick}
-                    className={`${isTablet ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : getMobileSubTextClasses()} transition-colors text-base px-8 py-3 block`}
+                    className={`${isTablet ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : getMobileSubTextClasses(isHomePage, scrolled)} transition-colors text-base px-8 py-3 block`}
                   >
                     Our Doctors
                   </Link>
+                  {/* Added Blogs link to mobile About Us section */}
+                  <Link
+                    href="/blogs"
+                    onClick={handleMobileLinkClick}
+                    className={`${isTablet ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : getMobileSubTextClasses(isHomePage, scrolled)} transition-colors text-base px-8 py-3 block`}
+                  >
+                    Blogs
+                  </Link>
                 </div>
               </div>
-              
+
               {/* Services Section */}
-              <div className={`border-b ${isMenuOpen ? "border-teal-100" : getMobileBorderClasses()}`}>
+              <div
+                className={`border-b ${isMenuOpen ? "border-teal-100" : getMobileBorderClasses(isHomePage, scrolled)}`}
+              >
                 <Link
                   href="/services"
                   onClick={handleMobileLinkClick}
-                  className={`${isMenuOpen ? "text-teal-700 hover:text-teal-600 hover:bg-teal-50" : getMobileTextClasses()} transition-colors font-medium text-xl px-6 py-4 block`}
+                  className={`${isMenuOpen ? "text-teal-700 hover:text-teal-600 hover:bg-teal-50" : getMobileTextClasses(isHomePage, scrolled)} transition-colors font-medium text-xl px-6 py-4 block`}
                 >
                   Service
                 </Link>
@@ -408,51 +400,38 @@ const getNavbarClasses = () => {
                   <Link
                     href="/services"
                     onClick={handleMobileLinkClick}
-                    className={`${isTablet ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : getMobileSubTextClasses()} transition-colors text-base px-8 py-3 block`}
+                    className={`${isTablet ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : getMobileSubTextClasses(isHomePage, scrolled)} transition-colors text-base px-8 py-3 block`}
                   >
                     All Services
                   </Link>
-                  
-                  {/* Show services from database */}
-                  {/* {!servicesLoading && services.slice(0, 5).map((service) => (
-                    <Link
-                      key={service.id}
-                      href={`/services/${service.id}`}
-                      onClick={handleMobileLinkClick}
-                      className={`${isTablet ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : getMobileSubTextClasses()} transition-colors text-sm px-8 py-2 block truncate`}
-                    >
-                      {service.title}
-                    </Link>
-                  ))}
-                   */}
                   <Link
                     href="/services/restorative-dentistry/faq"
                     onClick={handleMobileLinkClick}
-                    className={`${isTablet ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : getMobileSubTextClasses()} transition-colors text-base px-8 py-3 block`}
+                    className={`${isTablet ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : getMobileSubTextClasses(isHomePage, scrolled)} transition-colors text-base px-8 py-3 block`}
                   >
                     FAQs
                   </Link>
                 </div>
               </div>
-              
+
               {/* Why Us */}
               <Link
                 href="/why-us"
                 onClick={handleMobileLinkClick}
-                className={`${isMenuOpen ? "text-teal-700 hover:text-teal-600 hover:bg-teal-50" : getMobileTextClasses()} transition-colors font-medium text-xl px-6 py-4 border-b ${isMenuOpen ? "border-teal-100" : getMobileBorderClasses()}`}
+                className={`${isMenuOpen ? "text-teal-700 hover:text-teal-600 hover:bg-teal-50" : getMobileTextClasses(isHomePage, scrolled)} transition-colors font-medium text-xl px-6 py-4 border-b ${isMenuOpen ? "border-teal-100" : getMobileBorderClasses(isHomePage, scrolled)}`}
               >
                 Why Us
               </Link>
-              
+
               {/* Gallery */}
               <Link
                 href="/gallery"
                 onClick={handleMobileLinkClick}
-                className={`${isMenuOpen ? "text-teal-700 hover:text-teal-600 hover:bg-teal-50" : getMobileTextClasses()} transition-colors font-medium text-xl px-6 py-4 border-b ${isMenuOpen ? "border-teal-100" : getMobileBorderClasses()}`}
+                className={`${isMenuOpen ? "text-teal-700 hover:text-teal-600 hover:bg-teal-50" : getMobileTextClasses(isHomePage, scrolled)} transition-colors font-medium text-xl px-6 py-4 border-b ${isMenuOpen ? "border-teal-100" : getMobileBorderClasses(isHomePage, scrolled)}`}
               >
                 Gallery
               </Link>
-              
+
               {/* Book Now Button */}
               <div className="px-6 pt-6">
                 <Link href="/book-now" onClick={handleMobileLinkClick}>
