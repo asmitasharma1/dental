@@ -474,7 +474,7 @@ export default function HomePage() {
           <div className="container mx-auto px-4 relative z-10">
             <div className="text-center mb-20">
               <h2 className="text-5xl lg:text-6xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 bg-clip-text text-transparent mb-6">
-                Our Mission
+                Dr. Kareen's Approach
               </h2>
               <div className="w-32 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto"></div>
             </div>
@@ -482,39 +482,74 @@ export default function HomePage() {
               <Card className="bg-gradient-to-br from-teal-50 to-gray-50 border-0 p-12 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500">
                 <CardContent className="p-0">
                   <div className="space-y-6">
-                    <p className="text-teal-600 text-lg font-medium">Our Mission</p>
+                    <p className="text-teal-600 text-lg font-medium">"What makes my practice special?"</p>
                     <h3 className="text-4xl font-bold text-gray-900">
-                      Help you achieve a{" "}
+                      Providing{" "}
                       <span className="bg-gradient-to-r from-teal-600 to-teal-700 bg-clip-text text-transparent">
-                        healthy, confident smile
+                        personalized, gentle care
                       </span>{" "}
-                      that lasts a lifetime
+                      with advanced techniques
                     </h3>
                     <p className="text-gray-600 text-lg">
-                      We believe everyone deserves a beautiful smile. Our comprehensive approach focuses on prevention,
-                      treatment, and long-term oral health.
+                      I believe every patient deserves exceptional care tailored to their unique needs. My approach combines cutting-edge technology with compassionate treatment to ensure your comfort and optimal results.
                     </p>
                   </div>
                 </CardContent>
               </Card>
-              <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
-                {missionValues.map((value, index) => {
-                  const IconComponent = value.icon
-                  return (
-                    <Card
-                      key={index}
-                      className={`bg-gradient-to-br ${value.color} border-0 p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group text-center`}
-                    >
-                      <CardContent className="p-0">
-                        <div className="w-16 h-16 bg-white rounded-full mx-auto flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                          <IconComponent className={`h-8 w-8 ${value.iconColor}`} />
-                        </div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-4">{value.title}</h3>
-                        <p className="text-gray-700 leading-relaxed">{value.description}</p>
-                      </CardContent>
-                    </Card>
-                  )
-                })}
+              
+              {/* Dr. Kareen's Photo Side */}
+              <div className="relative">
+                <div className="relative bg-gradient-to-br from-teal-100 to-cyan-100 p-6 rounded-3xl shadow-2xl">
+                  <div className="relative overflow-hidden rounded-2xl bg-white p-2 shadow-xl">
+                    <div className="relative h-96 md:h-[500px] overflow-hidden rounded-xl">
+                      <img
+                        src="/images/kareen.webp"
+                        alt="Dr. Kareen"
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent"></div>
+                    </div>
+                  </div>
+                  
+                  {/* Doctor info card */}
+                  <div className="absolute -bottom-4 -left-4 bg-white p-6 rounded-2xl shadow-xl border border-gray-100">
+                    <div className="flex items-center gap-3">
+                      <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                      <div>
+                        <p className="text-sm text-gray-500">Available for consultations</p>
+                        <p className="font-semibold text-gray-900">Dr. Kareen</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Decorative badge */}
+                  <div className="absolute -top-4 -right-4 bg-gradient-to-r from-teal-500 to-cyan-500 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg">
+                    Expert Care 
+                  </div>
+                </div>
+              </div>
+              
+              {/* Methods Grid - Now below on mobile, side by side on larger screens */}
+              <div className="lg:col-span-2 mt-12">
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                  {missionValues.map((value, index) => {
+                    const IconComponent = value.icon
+                    return (
+                      <Card
+                        key={index}
+                        className={`bg-gradient-to-br ${value.color} border-0 p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 group text-center`}
+                      >
+                        <CardContent className="p-0">
+                          <div className="w-16 h-16 bg-white rounded-full mx-auto flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                            <IconComponent className={`h-8 w-8 ${value.iconColor}`} />
+                          </div>
+                          <h3 className="text-xl font-bold text-gray-900 mb-4">{value.title}</h3>
+                          <p className="text-gray-700 leading-relaxed">{value.description}</p>
+                        </CardContent>
+                      </Card>
+                    )
+                  })}
+                </div>
               </div>
             </div>
           </div>
@@ -607,6 +642,49 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <section className="bg-white py-20 px-6 relative overflow-hidden">
+  {/* Background Pattern Removed for Clean White */}
+  <div className="max-w-6xl mx-auto relative z-10">
+    {/* Header */}
+    <div className="text-center mb-16">
+      <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+        Our <span className="text-teal-600">Location</span>
+      </h2>
+      <div className="w-24 h-1 bg-gradient-to-r from-teal-400 to-blue-400 mx-auto mt-6 rounded-full"></div>
+    </div>
+
+    {/* Map Container */}
+    <div className="bg-gradient-to-br from-slate-100 to-slate-200 p-6 rounded-3xl shadow-2xl border border-teal-400/20 relative overflow-hidden group">
+      {/* Animated Border */}
+      <div
+        className="absolute inset-0 bg-gradient-to-r from-teal-400 via-blue-400 to-teal-400 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        style={{ padding: "2px" }}
+      >
+        <div className="bg-white rounded-3xl h-full w-full"></div>
+      </div>
+
+      <div className="relative z-10">
+        <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl overflow-hidden shadow-inner border border-slate-300 group-hover:shadow-teal-400/20 group-hover:shadow-2xl transition-all duration-500">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d220.83391289495006!2d85.31452701679683!3d27.675803989387717!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1736a7e1d95f%3A0x562d6d11b052b9fe!2sSmile%20by%20Dr%20Kareen%20-%20Dental%20Clinic!5e0!3m2!1sne!2snp!4v1754719856531!5m2!1sne!2snp"
+            width="100%"
+            height="425px" // Smaller height
+            style={{
+              border: 0,
+              filter: "brightness(0.95) contrast(1.05) saturate(1.05)",
+            }}
+            allowFullScreen={true}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            className="transition-all duration-500 group-hover:scale-[1.02] group-hover:brightness-105"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
       <Footer />
       {/* Scroll to Top Button */}
       {isVisible && (
