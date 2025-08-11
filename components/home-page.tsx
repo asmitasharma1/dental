@@ -109,18 +109,18 @@ const testimonials = [
   {
     quote:
       "Dr. Kareen and her team provided exceptional care during my dental implant procedure. The results exceeded my expectations!",
-    name: "Sarah Johnson",
+    name: "Priya Shrestha",
     service: "Dental Implants",
   },
   {
     quote: "My children love coming here! The pediatric dentistry team makes every visit comfortable and fun for kids.",
-    name: "Michael Chen",
+    name: "Yogyata Neupane",
     service: "Pediatric Dentistry",
   },
   {
     quote:
       "The restorative work done on my teeth was amazing. I can smile confidently again thanks to Dr. Kareen's expertise.",
-    name: "Emma Rodriguez",
+    name: "Sahas Maharjan",
     service: "Restorative Dentistry",
   },
 ]
@@ -357,9 +357,8 @@ export default function HomePage() {
             {topServices.map((_, index) => (
               <button
                 key={index}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  index === currentService ? "bg-teal-600" : "bg-gray-300"
-                }`}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentService ? "bg-teal-600" : "bg-gray-300"
+                  }`}
                 onClick={() => setCurrentService(index)}
               />
             ))}
@@ -588,9 +587,8 @@ export default function HomePage() {
                       {testimonials.map((_, index) => (
                         <button
                           key={index}
-                          className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                            index === currentTestimonial ? "bg-white" : "bg-white/40"
-                          }`}
+                          className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentTestimonial ? "bg-white" : "bg-white/40"
+                            }`}
                           onClick={() => setCurrentTestimonial(index)}
                         />
                       ))}
