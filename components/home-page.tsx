@@ -2,11 +2,45 @@
 import { useState, useEffect, useCallback } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Mail, Quote, Instagram, MessageCircle, ArrowRight, Heart, Clock, Shield, Award, Users, ChevronRight, ChevronLeft, Sparkles, Star, Microscope, Monitor, Home, DollarSign, Music, CreditCard, ArrowUp, } from "lucide-react"
+import {
+  Mail,
+  Quote,
+  Instagram,
+  MessageCircle,
+  ArrowRight,
+  Heart,
+  Clock,
+  Shield,
+  Award,
+  Users,
+  ChevronRight,
+  ChevronLeft,
+  Sparkles,
+  Star,
+  Microscope,
+  Monitor,
+  Home,
+  DollarSign,
+  Music,
+  CreditCard,
+  ArrowUp,
+  Calendar,
+} from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
+
+interface Testimonial {
+  id: number
+  name: string
+  service: string
+  quote: string
+  rating: number
+  is_active: boolean
+  created_at: string
+}
+
 const whyUsReasons = [
   {
     icon: Award,
@@ -105,77 +139,32 @@ const missionValues = [
     iconColor: "text-gray-700",
   },
 ]
-const testimonials = [
-  {
-    quote:
-      "Dr. Kareen and her team provided exceptional care during my dental implant procedure. The results exceeded my expectations!",
-    name: "Priya Shrestha",
-    service: "Dental Implants",
-  },
-  {
-    quote: "My children love coming here! The pediatric dentistry team makes every visit comfortable and fun for kids.",
-    name: "Yogyata Neupane",
-    service: "Pediatric Dentistry",
-  },
-  {
-    quote:
-      "The restorative work done on my teeth was amazing. I can smile confidently again thanks to Dr. Kareen's expertise.",
-    name: "Sahas Maharjan",
-    service: "Restorative Dentistry",
-  },
-]
+// const testimonials = [
+//   {
+//     quote:
+//       "Dr. Kareen and her team provided exceptional care during my dental implant procedure. The results exceeded my expectations!",
+//     name: "Priya Shrestha",
+//     service: "Dental Implants",
+//   },
+//   {
+//     quote: "My children love coming here! The pediatric dentistry team makes every visit comfortable and fun for kids.",
+//     name: "Yogyata Neupane",
+//     service: "Pediatric Dentistry",
+//   },
+//   {
+//     quote:
+//       "The restorative work done on my teeth was amazing. I can smile confidently again thanks to Dr. Kareen's expertise.",
+//     name: "Sahas Maharjan",
+//     service: "Restorative Dentistry",
+//   },
+// ]
 export default function HomePage() {
   const [currentService, setCurrentService] = useState(0)
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([])
   const [isVisible, setIsVisible] = useState(false)
-  const handleScroll = useCallback(() => {
-    const windowScrollY = window.scrollY || window.pageYOffset
-    const documentScrollTop = document.documentElement.scrollTop
-    const bodyScrollTop = document.body.scrollTop
-    const scrollTop = Math.max(windowScrollY, documentScrollTop, bodyScrollTop)
-    if (scrollTop > 100) {
-      setIsVisible(true)
-    } else {
-      setIsVisible(false)
-    }
-  }, [])
-  useEffect(() => {
-    const serviceInterval = setInterval(() => {
-      setCurrentService((prev) => (prev + 1) % topServices.length)
-    }, 10000)
-    const testimonialInterval = setInterval(() => {
-      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
-    }, 10000)
-    const addScrollListeners = () => {
-      window.addEventListener("scroll", handleScroll, { passive: true })
-      document.addEventListener("scroll", handleScroll, { passive: true })
-      document.body.addEventListener("scroll", handleScroll, { passive: true })
-    }
-    const removeScrollListeners = () => {
-      window.removeEventListener("scroll", handleScroll)
-      document.removeEventListener("scroll", handleScroll)
-      document.body.removeEventListener("scroll", handleScroll)
-    }
-    addScrollListeners()
-    handleScroll()
-    return () => {
-      clearInterval(serviceInterval)
-      clearInterval(testimonialInterval)
-      removeScrollListeners()
-    }
-  }, [handleScroll])
-  const nextService = () => {
-    setCurrentService((prev) => (prev + 1) % topServices.length)
-  }
-  const prevService = () => {
-    setCurrentService((prev) => (prev - 1 + topServices.length) % topServices.length)
-  }
-  const nextTestimonial = () => {
-    setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
-  }
-  const prevTestimonial = () => {
-    setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)
-  }
+  const [loading, setLoading] = useState(true)
+
   const scrollToTop = () => {
     try {
       window.scrollTo({
@@ -194,6 +183,101 @@ export default function HomePage() {
       window.scrollTo(0, 0)
     }
   }
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const response = await fetch("/api/testimonials/public")
+        if (response.ok) {
+          const data = await response.json()
+          setTestimonials(data)
+        }
+      } catch (error) {
+        console.error("Error fetching testimonials:", error)
+        // Fallback to static testimonials if API fails
+        setTestimonials([
+          {
+            id: 1,
+            quote:
+              "Dr. Kareen and her team provided exceptional care during my dental implant procedure. The results exceeded my expectations!",
+            name: "Priya Shrestha",
+            service: "Dental Implants",
+            rating: 5,
+            is_active: true,
+            created_at: new Date().toISOString(),
+          },
+          {
+            id: 2,
+            quote:
+              "My children love coming here! The pediatric dentistry team makes every visit comfortable and fun for kids.",
+            name: "Yogyata Neupane",
+            service: "Pediatric Dentistry",
+            rating: 5,
+            is_active: true,
+            created_at: new Date().toISOString(),
+          },
+          {
+            id: 3,
+            quote:
+              "The restorative work done on my teeth was amazing. I can smile confidently again thanks to Dr. Kareen's expertise.",
+            name: "Sahas Maharjan",
+            service: "Restorative Dentistry",
+            rating: 5,
+            is_active: true,
+            created_at: new Date().toISOString(),
+          },
+        ])
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchTestimonials()
+  }, [])
+
+  const handleScroll = useCallback(() => {
+    // Scroll handling logic can be added here
+  }, [])
+
+  useEffect(() => {
+    if (testimonials.length === 0) return
+
+    const serviceInterval = setInterval(() => {
+      setCurrentService((prev) => (prev + 1) % topServices.length)
+    }, 8000)
+
+    const testimonialInterval = setInterval(() => {
+      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
+    }, 10000)
+
+    return () => {
+      clearInterval(serviceInterval)
+      clearInterval(testimonialInterval)
+    }
+  }, [testimonials.length])
+
+  const nextService = () => {
+    setCurrentService((prev) => (prev + 1) % topServices.length)
+  }
+
+  const prevService = () => {
+    setCurrentService((prev) => (prev - 1 + topServices.length) % topServices.length)
+  }
+
+  const nextTestimonial = () => {
+    setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
+  }
+
+  const prevTestimonial = () => {
+    setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)
+  }
+
+  const renderStars = (rating: number) => {
+    return Array.from({ length: 5 }, (_, i) => (
+      <Star key={i} className={`h-4 w-4 ${i < rating ? "text-yellow-400 fill-current" : "text-gray-300"}`} />
+    ))
+  }
+
   return (
     <div className="min-h-screen relative">
       <style jsx global>{`
@@ -284,7 +368,7 @@ export default function HomePage() {
             </p>
             <div className="flex justify-center mt-8">
               <Link href="/book-now">
-                <Button className="bg-teal-700 hover:bg-teal-800 text-white px-10 py-4 text-lg rounded-full shadow-2xl transition-all duration-300 hover:scale-105">
+                <Button className="bg-teal-700 hover:bg-teal-800 text-white px-10 py-4 text-lg rounded-full shadow-2xl hover:shadow-xl transition-all duration-300">
                   Book An Appointment
                 </Button>
               </Link>
@@ -357,8 +441,9 @@ export default function HomePage() {
             {topServices.map((_, index) => (
               <button
                 key={index}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentService ? "bg-teal-600" : "bg-gray-300"
-                  }`}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  index === currentService ? "bg-teal-600" : "bg-gray-300"
+                }`}
                 onClick={() => setCurrentService(index)}
               />
             ))}
@@ -476,7 +561,7 @@ export default function HomePage() {
               <h2 className="text-5xl lg:text-6xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 bg-clip-text text-transparent mb-6">
                 Dr. Kareen's Approach
               </h2>
-              <div className="w-32 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto"></div>
+              <div className="w-32 h-1 bg-gradient-to-r from-teal-400 to-blue-400 mx-auto mt-6 rounded-full"></div>
             </div>
             <div className="grid lg:grid-cols-2 gap-16 items-center text-center md:text-left">
               <Card className="bg-gradient-to-br from-teal-50 to-gray-50 border-0 p-12 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500">
@@ -491,26 +576,24 @@ export default function HomePage() {
                       with advanced techniques
                     </h3>
                     <p className="text-gray-600 text-lg">
-                      I believe every patient deserves exceptional care tailored to their unique needs. My approach combines cutting-edge technology with compassionate treatment to ensure your comfort and optimal results.
+                      I believe every patient deserves exceptional care tailored to their unique needs. My approach
+                      combines cutting-edge technology with compassionate treatment to ensure your comfort and optimal
+                      results.
                     </p>
                   </div>
                 </CardContent>
               </Card>
-              
+
               {/* Dr. Kareen's Photo Side */}
               <div className="relative">
                 <div className="relative bg-gradient-to-br from-teal-100 to-cyan-100 p-6 rounded-3xl shadow-2xl">
                   <div className="relative overflow-hidden rounded-2xl bg-white p-2 shadow-xl">
                     <div className="relative h-96 md:h-[500px] overflow-hidden rounded-xl">
-                      <img
-                        src="/images/kareen.webp"
-                        alt="Dr. Kareen"
-                        className="w-full h-full object-cover"
-                      />
+                      <img src="/images/kareen.webp" alt="Dr. Kareen" className="w-full h-full object-cover" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent"></div>
                     </div>
                   </div>
-                  
+
                   {/* Doctor info card */}
                   <div className="absolute -bottom-4 -left-4 bg-white p-6 rounded-2xl shadow-xl border border-gray-100">
                     <div className="flex items-center gap-3">
@@ -521,14 +604,14 @@ export default function HomePage() {
                       </div>
                     </div>
                   </div>
-                  
+
                   {/* Decorative badge */}
                   <div className="absolute -top-4 -right-4 bg-gradient-to-r from-teal-500 to-cyan-500 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg">
-                    Expert Care 
+                    Expert Care
                   </div>
                 </div>
               </div>
-              
+
               {/* Methods Grid - Now below on mobile, side by side on larger screens */}
               <div className="lg:col-span-2 mt-12">
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -590,7 +673,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      {/* Testimonials Section */}
       <section className="py-24 relative bg-white">
         <div className="absolute inset-0 bg-gradient-to-br from-gray-50/90 to-teal-50/90 backdrop-blur-sm"></div>
         <div className="relative z-10">
@@ -601,89 +683,106 @@ export default function HomePage() {
               </h2>
               <div className="w-24 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto"></div>
             </div>
-            <div className="relative max-w-4xl mx-auto">
-              <Card className="bg-gradient-to-br from-teal-600 to-gray-700 text-white p-8 rounded-3xl shadow-2xl">
-                <CardContent className="p-0 text-center">
-                  <Quote className="h-12 w-12 mx-auto mb-6 opacity-80" />
-                  <p className="text-xl mb-6 leading-relaxed">{testimonials[currentTestimonial].quote}</p>
-                  <div className="space-y-2">
-                    <p className="font-bold text-lg">{testimonials[currentTestimonial].name}</p>
-                    <p className="text-gray-200">{testimonials[currentTestimonial].service}</p>
-                  </div>
-                  <div className="flex items-center justify-center space-x-6 mt-8">
-                    <button
-                      onClick={prevTestimonial}
-                      className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110 shadow-lg"
-                      aria-label="Previous testimonial"
-                    >
-                      <ChevronLeft className="h-6 w-6 text-white" />
-                    </button>
-                    <div className="flex space-x-2">
-                      {testimonials.map((_, index) => (
-                        <button
-                          key={index}
-                          className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentTestimonial ? "bg-white" : "bg-white/40"
-                            }`}
-                          onClick={() => setCurrentTestimonial(index)}
-                        />
-                      ))}
+
+            {loading ? (
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600 mx-auto"></div>
+                <p className="text-gray-500 mt-2">Loading testimonials...</p>
+              </div>
+            ) : testimonials.length > 0 ? (
+              <div className="relative max-w-4xl mx-auto">
+                <Card className="bg-gradient-to-br from-teal-600 to-gray-700 text-white p-8 rounded-3xl shadow-2xl">
+                  <CardContent className="p-0 text-center">
+                    <Quote className="h-12 w-12 mx-auto mb-6 opacity-80" />
+                    <p className="text-xl mb-6 leading-relaxed">{testimonials[currentTestimonial].quote}</p>
+                    <div className="space-y-3">
+                      <p className="font-bold text-lg">{testimonials[currentTestimonial].name}</p>
+                      <p className="text-gray-200">{testimonials[currentTestimonial].service}</p>
+                      <div className="flex items-center justify-center space-x-1">
+                        {renderStars(testimonials[currentTestimonial].rating)}
+                      </div>
                     </div>
-                    <button
-                      onClick={nextTestimonial}
-                      className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110 shadow-lg"
-                      aria-label="Next testimonial"
-                    >
-                      <ChevronRight className="h-6 w-6 text-white" />
-                    </button>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+                    <div className="flex items-center justify-center space-x-6 mt-8">
+                      <button
+                        onClick={prevTestimonial}
+                        className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110 shadow-lg"
+                        aria-label="Previous testimonial"
+                      >
+                        <ChevronLeft className="h-6 w-6 text-white" />
+                      </button>
+                      <div className="flex space-x-2">
+                        {testimonials.map((_, index) => (
+                          <button
+                            key={index}
+                            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                              index === currentTestimonial ? "bg-white" : "bg-white/40"
+                            }`}
+                            onClick={() => setCurrentTestimonial(index)}
+                          />
+                        ))}
+                      </div>
+                      <button
+                        onClick={nextTestimonial}
+                        className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110 shadow-lg"
+                        aria-label="Next testimonial"
+                      >
+                        <ChevronRight className="h-6 w-6 text-white" />
+                      </button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            ) : (
+              <div className="text-center text-gray-500">
+                <p>No testimonials available at the moment.</p>
+              </div>
+            )}
           </div>
         </div>
       </section>
 
+      {/* Location Section */}
       <section className="bg-white py-20 px-6 relative overflow-hidden">
-  {/* Background Pattern Removed for Clean White */}
-  <div className="max-w-6xl mx-auto relative z-10">
-    {/* Header */}
-    <div className="text-center mb-16">
-      <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-        Our <span className="text-teal-600">Location</span>
-      </h2>
-      <div className="w-24 h-1 bg-gradient-to-r from-teal-400 to-blue-400 mx-auto mt-6 rounded-full"></div>
-    </div>
+        {/* Background Pattern Removed for Clean White */}
+        <div className="max-w-6xl mx-auto relative z-10">
+          {/* Header */}
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Our <span className="text-teal-600">Location</span>
+            </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-teal-400 to-blue-400 mx-auto mt-6 rounded-full"></div>
+          </div>
 
-    {/* Map Container */}
-    <div className="bg-gradient-to-br from-slate-100 to-slate-200 p-6 rounded-3xl shadow-2xl border border-teal-400/20 relative overflow-hidden group">
-      {/* Animated Border */}
-      <div
-        className="absolute inset-0 bg-gradient-to-r from-teal-400 via-blue-400 to-teal-400 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{ padding: "2px" }}
-      >
-        <div className="bg-white rounded-3xl h-full w-full"></div>
-      </div>
+          {/* Map Container */}
+          <div className="bg-gradient-to-br from-slate-100 to-slate-200 p-6 rounded-3xl shadow-2xl border border-teal-400/20 relative overflow-hidden group">
+            {/* Animated Border */}
+            <div
+              className="absolute inset-0 bg-gradient-to-r from-teal-400 via-blue-400 to-teal-400 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              style={{ padding: "2px" }}
+            >
+              <div className="bg-white rounded-3xl h-full w-full"></div>
+            </div>
 
-      <div className="relative z-10">
-        <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl overflow-hidden shadow-inner border border-slate-300 group-hover:shadow-teal-400/20 group-hover:shadow-2xl transition-all duration-500">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d220.83391289495006!2d85.31452701679683!3d27.675803989387717!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1736a7e1d95f%3A0x562d6d11b052b9fe!2sSmile%20by%20Dr%20Kareen%20-%20Dental%20Clinic!5e0!3m2!1sne!2snp!4v1754719856531!5m2!1sne!2snp"
-            width="100%"
-            height="425px" // Smaller height
-            style={{
-              border: 0,
-              filter: "brightness(0.95) contrast(1.05) saturate(1.05)",
-            }}
-            allowFullScreen={true}
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            className="transition-all duration-500 group-hover:scale-[1.02] group-hover:brightness-105"
-          />
+            <div className="relative z-10">
+              <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl overflow-hidden shadow-inner border border-slate-300 group-hover:shadow-teal-400/20 group-hover:shadow-2xl transition-all duration-500">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d220.83391289495006!2d85.31452701679683!3d27.675803989387717!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1736a7e1d95f%3A0x562d6d11b052b9fe!2sSmile%20by%20Dr%20Kareen%20-%20Dental%20Clinic!5e0!3m2!1sne!2snp!4v1754719856531!5m2!1sne!2snp"
+                  width="100%"
+                  height="425px" // Smaller height
+                  style={{
+                    border: 0,
+                    filter: "brightness(0.95) contrast(1.05) saturate(1.05)",
+                  }}
+                  allowFullScreen={true}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="transition-all duration-500 group-hover:scale-[1.02] group-hover:brightness-105"
+                />
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
 
       <Footer />
       {/* Scroll to Top Button */}
