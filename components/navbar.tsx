@@ -180,12 +180,12 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
                           {/* Added Blogs link to About Us dropdown */}
                           <NavigationMenuLink asChild>
                             <Link
-                              href="/blogs"
+                              href="/why-us"
                               className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-3 lg:p-4 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none"
                             >
-                              <div className="text-sm font-medium leading-none group-hover:underline">Blogs</div>
+                              <div className="text-sm font-medium leading-none group-hover:underline">Why Us</div>
                               <div className="line-clamp-2 text-xs lg:text-sm leading-snug text-muted-foreground">
-                                Read our latest dental health articles
+                                Discover what makes us different
                               </div>
                             </Link>
                           </NavigationMenuLink>
@@ -195,10 +195,10 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
                   </NavigationMenuList>
                 </NavigationMenu>
                 <Link
-                  href="/why-us"
+                  href="/blogs"
                   className={`${getTextClasses(isHomePage, scrolled)} transition-all duration-300 font-medium relative group text-base lg:text-lg tracking-wide`}
                 >
-                  Why Us
+                  Blogs
                   <span
                     className={`absolute -bottom-1 left-0 w-0 h-0.5 ${getUnderlineClasses(isHomePage, scrolled)} transition-all duration-300 group-hover:w-full rounded-full`}
                   ></span>
@@ -376,11 +376,11 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
                   </Link>
                   {/* Added Blogs link to mobile About Us section */}
                   <Link
-                    href="/blogs"
+                    href="/why-us"
                     onClick={handleMobileLinkClick}
                     className={`${isTablet ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : getMobileSubTextClasses(isHomePage, scrolled)} transition-colors text-base px-8 py-3 block`}
                   >
-                    Blogs
+                    Why Us
                   </Link>
                 </div>
               </div>
@@ -416,11 +416,11 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
 
               {/* Why Us */}
               <Link
-                href="/why-us"
+                href="/blogs"
                 onClick={handleMobileLinkClick}
                 className={`${isMenuOpen ? "text-teal-700 hover:text-teal-600 hover:bg-teal-50" : getMobileTextClasses(isHomePage, scrolled)} transition-colors font-medium text-xl px-6 py-4 border-b ${isMenuOpen ? "border-teal-100" : getMobileBorderClasses(isHomePage, scrolled)}`}
               >
-                Why Us
+                Blogs
               </Link>
 
               {/* Gallery */}
