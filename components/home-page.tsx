@@ -165,25 +165,6 @@ export default function HomePage() {
   const [isVisible, setIsVisible] = useState(false)
   const [loading, setLoading] = useState(true)
 
-  const scrollToTop = () => {
-    try {
-      window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: "smooth",
-      })
-      setTimeout(() => {
-        document.documentElement.scrollTop = 0
-        document.body.scrollTop = 0
-        window.pageYOffset = 0
-      }, 100)
-    } catch (error) {
-      document.documentElement.scrollTop = 0
-      document.body.scrollTop = 0
-      window.scrollTo(0, 0)
-    }
-  }
-
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
@@ -236,8 +217,64 @@ export default function HomePage() {
   }, [])
 
   const handleScroll = useCallback(() => {
-    // Scroll handling logic can be added here
+    const windowScrollY = window.scrollY || window.pageYOffset
+    const documentScrollTop = document.documentElement.scrollTop
+    const bodyScrollTop = document.body.scrollTop
+
+    // Use the maximum of all scroll positions
+    const scrollTop = Math.max(windowScrollY, documentScrollTop, bodyScrollTop)
+
+    if (scrollTop > 100) {
+      setIsVisible(true)
+    } else {
+      setIsVisible(false)
+    }
   }, [])
+  useEffect(() => {
+    const addScrollListeners = () => {
+      window.addEventListener("scroll", handleScroll, { passive: true })
+      document.addEventListener("scroll", handleScroll, { passive: true })
+      document.body.addEventListener("scroll", handleScroll, { passive: true })
+    }
+
+    const removeScrollListeners = () => {
+      window.removeEventListener("scroll", handleScroll)
+      document.removeEventListener("scroll", handleScroll)
+      document.body.removeEventListener("scroll", handleScroll)
+    }
+
+    addScrollListeners()
+
+    // Check initial position
+    handleScroll()
+
+    return () => {
+      removeScrollListeners()
+    }
+  }, [handleScroll])
+const scrollToTop = () => {
+  // Try multiple scroll methods for better compatibility
+  try {
+    // Method 1: Smooth scroll
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    })
+
+    // Method 2: Fallback for browsers that don't support smooth scroll
+    setTimeout(() => {
+      document.documentElement.scrollTop = 0
+      document.body.scrollTop = 0
+      window.pageYOffset = 0
+    }, 100)
+  } catch (error) {
+    // Method 3: Instant scroll fallback
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+    window.scrollTo(0, 0)
+  }
+}
 
   useEffect(() => {
     if (testimonials.length === 0) return
@@ -441,9 +478,8 @@ export default function HomePage() {
             {topServices.map((_, index) => (
               <button
                 key={index}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  index === currentService ? "bg-teal-600" : "bg-gray-300"
-                }`}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentService ? "bg-teal-600" : "bg-gray-300"
+                  }`}
                 onClick={() => setCurrentService(index)}
               />
             ))}
@@ -714,9 +750,8 @@ export default function HomePage() {
                         {testimonials.map((_, index) => (
                           <button
                             key={index}
-                            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                              index === currentTestimonial ? "bg-white" : "bg-white/40"
-                            }`}
+                            className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentTestimonial ? "bg-white" : "bg-white/40"
+                              }`}
                             onClick={() => setCurrentTestimonial(index)}
                           />
                         ))}
@@ -785,7 +820,6 @@ export default function HomePage() {
       </section>
 
       <Footer />
-      {/* Scroll to Top Button */}
       {isVisible && (
         <button
           onClick={scrollToTop}
@@ -795,6 +829,7 @@ export default function HomePage() {
           <ArrowUp className="h-5 w-5" />
         </button>
       )}
+
     </div>
   )
 }

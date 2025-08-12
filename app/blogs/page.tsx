@@ -1,12 +1,12 @@
 "use client"
 
-import { useState, useEffect } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Calendar, User, ArrowRight, ArrowUp } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
+import { useCallback, useEffect, useState } from "react"
 
 interface Blog {
   id: number
@@ -26,20 +26,46 @@ export default function BlogsPage() {
   const [loading, setLoading] = useState(true)
   const [isVisible, setIsVisible] = useState(false)
 
+
+  const handleScroll = useCallback(() => {
+    const windowScrollY = window.scrollY || window.pageYOffset
+    const documentScrollTop = document.documentElement.scrollTop
+    const bodyScrollTop = document.body.scrollTop
+
+    // Use the maximum of all scroll positions
+    const scrollTop = Math.max(windowScrollY, documentScrollTop, bodyScrollTop)
+
+    if (scrollTop > 100) {
+      setIsVisible(true)
+    } else {
+      setIsVisible(false)
+    }
+  }, [])
+
   useEffect(() => {
     fetchBlogs()
 
-    const handleScroll = () => {
-      if (window.scrollY > 100) {
-        setIsVisible(true)
-      } else {
-        setIsVisible(false)
-      }
+    const addScrollListeners = () => {
+      window.addEventListener("scroll", handleScroll, { passive: true })
+      document.addEventListener("scroll", handleScroll, { passive: true })
+      document.body.addEventListener("scroll", handleScroll, { passive: true })
     }
 
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+    const removeScrollListeners = () => {
+      window.removeEventListener("scroll", handleScroll)
+      document.removeEventListener("scroll", handleScroll)
+      document.body.removeEventListener("scroll", handleScroll)
+    }
+
+    addScrollListeners()
+
+    // Check initial position
+    handleScroll()
+
+    return () => {
+      removeScrollListeners()
+    }
+  }, [handleScroll])
 
   const fetchBlogs = async () => {
     try {
@@ -66,10 +92,27 @@ export default function BlogsPage() {
   }
 
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    })
+    // Try multiple scroll methods for better compatibility
+    try {
+      // Method 1: Smooth scroll
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      })
+
+      // Method 2: Fallback for browsers that don't support smooth scroll
+      setTimeout(() => {
+        document.documentElement.scrollTop = 0
+        document.body.scrollTop = 0
+        window.pageYOffset = 0
+      }, 100)
+    } catch (error) {
+      // Method 3: Instant scroll fallback
+      document.documentElement.scrollTop = 0
+      document.body.scrollTop = 0
+      window.scrollTo(0, 0)
+    }
   }
 
   return (
