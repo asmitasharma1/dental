@@ -22,8 +22,8 @@ export default function Footer() {
                 />
               </Link>
             </div>
-            <p className="text-gray-300 text-lg leading-relaxed max-w-md mx-auto lg:mx-0 lg:max-w-md">
-              Your trusted dental care partner in Lalitpur. We're committed to providing exceptional dental services
+            <p className="text-gray-300 text-lg leading-relaxed max-w-md mx-auto lg:mx-0 lg:max-w-md text-justify">
+              Your trusted dental care partner in Nepal. We're committed to providing exceptional dental services
               with a personal touch.
             </p>
           </div>

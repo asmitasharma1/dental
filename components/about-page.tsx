@@ -141,7 +141,7 @@ export default function AboutPage() {
           <h1 className="text-5xl lg:text-6xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 bg-clip-text text-transparent">
             About Our Clinic
           </h1>
-          <p className="text-xl text-gray-600 leading-relaxed">
+          <p className="text-xl text-gray-600 leading-relaxed text-justify">
             Dr. Kareen's Dental Clinic in Lalitpur is a state-of-the-art facility dedicated to providing
             comprehensive dental care with the latest technology and a patient-centered approach.
           </p>
