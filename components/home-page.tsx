@@ -314,6 +314,15 @@ export default function HomePage() {
       <Star key={i} className={`h-4 w-4 ${i < rating ? "text-yellow-400 fill-current" : "text-gray-300"}`} />
     ))
   }
+  const getDisplayedTestimonials = () => {
+    const displayed = [];
+    for (let i = 0; i < 3; i++) {
+      const index = (currentTestimonial + i) % testimonials.length;
+      displayed.push(testimonials[index]);
+    }
+    return displayed;
+  };
+
 
   return (
     <div className="min-h-screen relative">
@@ -709,6 +718,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
       <section className="py-24 relative bg-white">
         <div className="absolute inset-0 bg-gradient-to-br from-gray-50/90 to-teal-50/90 backdrop-blur-sm"></div>
         <div className="relative z-10">
@@ -726,70 +736,68 @@ export default function HomePage() {
                 <p className="text-gray-500 mt-2">Loading testimonials...</p>
               </div>
             ) : testimonials.length > 0 ? (
-              <div className="relative max-w-4xl mx-auto">
-                <Card className="bg-gradient-to-br from-teal-600 to-gray-700 text-white p-8 rounded-3xl shadow-2xl">
-                  <CardContent className="p-0 text-center">
-                    <Quote className="h-12 w-12 mx-auto mb-6 opacity-80" />
-                    <p className="text-xl mb-6 leading-relaxed">{testimonials[currentTestimonial].quote}</p>
-                    <div className="space-y-3">
-                      <p className="font-bold text-lg">{testimonials[currentTestimonial].name}</p>
-                      <p className="text-gray-200">{testimonials[currentTestimonial].service}</p>
-                      <div className="flex items-center justify-center space-x-1">
-                        {renderStars(testimonials[currentTestimonial].rating)}
+              <div className="relative max-w-6xl mx-auto flex items-center">
+                <button
+                  onClick={prevTestimonial}
+                  className="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center hover:bg-teal-700 transition-all duration-300 hover:scale-110 shadow-lg mr-4"
+                  aria-label="Previous testimonials"
+                >
+                  <ChevronLeft className="h-6 w-6 text-white" />
+                </button>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 flex-grow">
+                  {getDisplayedTestimonials().map((testimonial, index) => (
+                    <div
+                      key={index}
+                      className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300"
+                    >
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center space-x-1">
+                          {renderStars(testimonial.rating)}
+                        </div>
+                        <Quote className="h-6 w-6 text-teal-600 opacity-80" />
+                      </div>
+                      <p className="text-gray-700 text-base leading-relaxed mb-4 line-clamp-4">
+                        {testimonial.quote}
+                      </p>
+                      <div className="border-t border-gray-200 pt-4">
+                        <p className="font-bold text-gray-900">{testimonial.name}</p>
+                        <p className="text-gray-500 text-sm">{testimonial.service}</p>
                       </div>
                     </div>
-                    <div className="flex items-center justify-center space-x-6 mt-8">
-                      <button
-                        onClick={prevTestimonial}
-                        className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110 shadow-lg"
-                        aria-label="Previous testimonial"
-                      >
-                        <ChevronLeft className="h-6 w-6 text-white" />
-                      </button>
-                      <div className="flex space-x-2">
-                        {testimonials.map((_, index) => (
-                          <button
-                            key={index}
-                            className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentTestimonial ? "bg-white" : "bg-white/40"
-                              }`}
-                            onClick={() => setCurrentTestimonial(index)}
-                          />
-                        ))}
-                      </div>
-                      <button
-                        onClick={nextTestimonial}
-                        className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110 shadow-lg"
-                        aria-label="Next testimonial"
-                      >
-                        <ChevronRight className="h-6 w-6 text-white" />
-                      </button>
-                    </div>
-                  </CardContent>
-                </Card>
+                  ))}
+                </div>
+                <button
+                  onClick={nextTestimonial}
+                  className="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center hover:bg-teal-700 transition-all duration-300 hover:scale-110 shadow-lg ml-4"
+                  aria-label="Next testimonials"
+                >
+                  <ChevronRight className="h-6 w-6 text-white" />
+                </button>
               </div>
             ) : (
               <div className="text-center text-gray-500">
                 <p>No testimonials available at the moment.</p>
               </div>
             )}
-          </div>
-          <div className="text-center mt-8">
-            <a
-              href="https://www.google.com/search?sca_esv=4978fba7b0bac1f0&rlz=1C1CHBD_enNP958NP958&biw=1536&bih=730&sxsrf=AE3TifPVUO1oRlbNP78cpFRRaK4onb_07w:1755073144495&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-EwZWVuYW0g8KF2vPu6clfA4Tc01fZMFebuAK3ewteCeJdi93Q--PKbfuKh7rd07C4XQp7o8Av51vqilN609w1zKXmLHbGIi09AdzJYdAYX-UNB49pKWx_i_pSu36LwV_o1fQkb0%3D&q=Smile+by+Dr+Kareen+-+Dental+Clinic+Reviews&sa=X&ved=2ahUKEwi0nNT6rIePAxXv4DgGHTQyEg0Q0bkNegQIHxAE"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center px-6 py-3 bg-teal-700 text-white font-medium rounded-lg hover:bg-teal-800 transition-colors shadow-md"
-            >
-              <img
-                src="https://www.google.com/favicon.ico"
-                alt="Google Logo"
-                className="h-5 mr-2"
-              />
-              More on Google Reviews
-            </a>
+            <div className="text-center mt-8">
+              <a
+                href="https://www.google.com/search?sca_esv=4978fba7b0bac1f0&rlz=1C1CHBD_enNP958NP958&biw=1536&bih=730&sxsrf=AE3TifPVUO1oRlbNP78cpFRRaK4onb_07w:1755073144495&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-EwZWVuYW0g8KF2vPu6clfA4Tc01fZMFebuAK3ewteCeJdi93Q--PKbfuKh7rd07C4XQp7o8Av51vqilN609w1zKXmLHbGIi09AdzJYdAYX-UNB49pKWx_i_pSu36LwV_o1fQkb0%3D&q=Smile+by+Dr+Kareen+-+Dental+Clinic+Reviews&sa=X&ved=2ahUKEwi0nNT6rIePAxXv4DgGHTQyEg0Q0bkNegQIHxAE"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center px-6 py-3 bg-teal-700 text-white font-medium rounded-lg hover:bg-teal-800 transition-colors shadow-md"
+              >
+                <img
+                  src="https://www.google.com/favicon.ico"
+                  alt="Google Logo"
+                  className="h-5 mr-2"
+                />
+                More on Google Reviews
+              </a>
+            </div>
           </div>
         </div>
       </section>
+
 
       {/* Location Section */}
       <section className="bg-white py-20 px-6 relative overflow-hidden">
