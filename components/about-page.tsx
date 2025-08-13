@@ -197,6 +197,8 @@ export default function AboutPage() {
           alt="Dr. Kareen's Clinic Interior"
           width={500}
           height={600}
+          placeholder="blur"
+          blurDataURL="/images/MPS__3-small.webp" 
           className="rounded-1xl shadow-2xl relative z-10 hover:scale-105 transition-transform duration-500"
         />
       </div>

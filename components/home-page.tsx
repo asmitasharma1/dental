@@ -11,6 +11,7 @@ import {
   Heart,
   Clock,
   Shield,
+  Phone,
   Award,
   Users,
   ChevronRight,
@@ -690,9 +691,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      {/* Why Choose Us Section */}
-      <section className="py-24 relative bg-white">
-        <div className="absolute inset-0 bg-white/90 backdrop-blur-sm"></div>
+
+      <section className="py-24 relative bg-[radial-gradient(circle_at_center,#f7fdfd_0%,#e8f6f6_50%,#f0fcfc_100%)]">
         <div className="relative z-10">
           <div className="container mx-auto px-4 relative z-10">
             <div className="text-center mb-12">
@@ -729,7 +729,7 @@ export default function HomePage() {
                 </div>
               </div>
               <div className="flex justify-center items-center">
-              <video
+                <video
                   className="w-full max-w-[400px] h-[500px] md:h-[500px] rounded-2xl shadow-lg object-cover"
                   controls
                   preload="metadata"
@@ -820,6 +820,31 @@ export default function HomePage() {
                 More on Google Reviews
               </a>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-12 relative bg-teal-800 text-white">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold mb-4">Get Your FREE Dental Consultation Today</h2>
+          <p className="text-lg mb-6">Achieve a healthy, confident smile with our expert team. Schedule your free consultation today to discuss your dental needs.</p>
+          <div className="flex justify-center items-center space-x-4">
+            <a
+              href="tel:+977-9851359775"
+              className="flex items-center gap-2 px-6 py-3 bg-teal-700 rounded-full text-base font-semibold hover:bg-teal-750 transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1"
+            >
+              <Phone className="h-4 w-4" />
+              Call: +977-9851359775
+            </a>
+            <a
+              href="https://wa.me/9851359775"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-3 bg-white text-teal-900 rounded-full text-base font-semibold hover:bg-teal-100 transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1"
+            >
+              <MessageCircle className="h-4 w-4" />
+              Message on WhatsApp
+            </a>
           </div>
         </div>
       </section>
