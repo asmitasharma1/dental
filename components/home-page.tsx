@@ -252,29 +252,29 @@ export default function HomePage() {
       removeScrollListeners()
     }
   }, [handleScroll])
-const scrollToTop = () => {
-  // Try multiple scroll methods for better compatibility
-  try {
-    // Method 1: Smooth scroll
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "smooth",
-    })
+  const scrollToTop = () => {
+    // Try multiple scroll methods for better compatibility
+    try {
+      // Method 1: Smooth scroll
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      })
 
-    // Method 2: Fallback for browsers that don't support smooth scroll
-    setTimeout(() => {
+      // Method 2: Fallback for browsers that don't support smooth scroll
+      setTimeout(() => {
+        document.documentElement.scrollTop = 0
+        document.body.scrollTop = 0
+        window.pageYOffset = 0
+      }, 100)
+    } catch (error) {
+      // Method 3: Instant scroll fallback
       document.documentElement.scrollTop = 0
       document.body.scrollTop = 0
-      window.pageYOffset = 0
-    }, 100)
-  } catch (error) {
-    // Method 3: Instant scroll fallback
-    document.documentElement.scrollTop = 0
-    document.body.scrollTop = 0
-    window.scrollTo(0, 0)
+      window.scrollTo(0, 0)
+    }
   }
-}
 
   useEffect(() => {
     if (testimonials.length === 0) return
@@ -772,6 +772,21 @@ const scrollToTop = () => {
                 <p>No testimonials available at the moment.</p>
               </div>
             )}
+          </div>
+          <div className="text-center mt-8">
+            <a
+              href="https://www.google.com/search?sca_esv=4978fba7b0bac1f0&rlz=1C1CHBD_enNP958NP958&biw=1536&bih=730&sxsrf=AE3TifPVUO1oRlbNP78cpFRRaK4onb_07w:1755073144495&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-EwZWVuYW0g8KF2vPu6clfA4Tc01fZMFebuAK3ewteCeJdi93Q--PKbfuKh7rd07C4XQp7o8Av51vqilN609w1zKXmLHbGIi09AdzJYdAYX-UNB49pKWx_i_pSu36LwV_o1fQkb0%3D&q=Smile+by+Dr+Kareen+-+Dental+Clinic+Reviews&sa=X&ved=2ahUKEwi0nNT6rIePAxXv4DgGHTQyEg0Q0bkNegQIHxAE"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-6 py-3 bg-teal-700 text-white font-medium rounded-lg hover:bg-teal-800 transition-colors shadow-md"
+            >
+              <img
+                src="https://www.google.com/favicon.ico"
+                alt="Google Logo"
+                className="h-5 mr-2"
+              />
+              More on Google Reviews
+            </a>
           </div>
         </div>
       </section>
