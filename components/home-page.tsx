@@ -746,83 +746,85 @@ export default function HomePage() {
       </section>
 
       <section className="py-24 relative bg-white">
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-50/90 to-teal-50/90 backdrop-blur-sm"></div>
-        <div className="relative z-10">
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 bg-clip-text text-transparent mb-6">
-                What Our Patients Say
-              </h2>
-              <div className="w-24 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto"></div>
-            </div>
+  <div className="absolute inset-0 bg-gradient-to-br from-gray-50/90 to-teal-50/90 backdrop-blur-sm"></div>
+  <div className="relative z-10">
+    <div className="container mx-auto px-4 relative z-10">
+      <div className="text-center mb-16">
+        <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 bg-clip-text text-transparent mb-6">
+          What Our Patients Say
+        </h2>
+        <div className="w-24 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto"></div>
+      </div>
 
-            {loading ? (
-              <div className="text-center">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600 mx-auto"></div>
-                <p className="text-gray-500 mt-2">Loading testimonials...</p>
-              </div>
-            ) : testimonials.length > 0 ? (
-              <div className="relative max-w-6xl mx-auto flex items-center">
-                <button
-                  onClick={prevTestimonial}
-                  className="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center hover:bg-teal-700 transition-all duration-300 hover:scale-110 shadow-lg mr-4"
-                  aria-label="Previous testimonials"
-                >
-                  <ChevronLeft className="h-6 w-6 text-white" />
-                </button>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 flex-grow">
-                  {getDisplayedTestimonials().map((testimonial, index) => (
-                    <div
-                      key={index}
-                      className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300"
-                    >
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center space-x-1">
-                          {renderStars(testimonial.rating)}
-                        </div>
-                        <Quote className="h-6 w-6 text-teal-600 opacity-80" />
-                      </div>
-                      <p className="text-gray-700 text-base leading-relaxed mb-4 line-clamp-4">
-                        {testimonial.quote}
-                      </p>
-                      <div className="border-t border-gray-200 pt-4">
-                        <p className="font-bold text-gray-900">{testimonial.name}</p>
-                        <p className="text-gray-500 text-sm text-justify">{testimonial.service}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <button
-                  onClick={nextTestimonial}
-                  className="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center hover:bg-teal-700 transition-all duration-300 hover:scale-110 shadow-lg ml-4"
-                  aria-label="Next testimonials"
-                >
-                  <ChevronRight className="h-6 w-6 text-white" />
-                </button>
-              </div>
-            ) : (
-              <div className="text-center text-gray-500">
-                <p>No testimonials available at the moment.</p>
-              </div>
-            )}
-            <div className="text-center mt-8">
-              <a
-                href="https://www.google.com/search?sca_esv=4978fba7b0bac1f0&rlz=1C1CHBD_enNP958NP958&biw=1536&bih=730&sxsrf=AE3TifPVUO1oRlbNP78cpFRRaK4onb_07w:1755073144495&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-EwZWVuYW0g8KF2vPu6clfA4Tc01fZMFebuAK3ewteCeJdi93Q--PKbfuKh7rd07C4XQp7o8Av51vqilN609w1zKXmLHbGIi09AdzJYdAYX-UNB49pKWx_i_pSu36LwV_o1fQkb0%3D&q=Smile+by+Dr+Kareen+-+Dental+Clinic+Reviews&sa=X&ved=2ahUKEwi0nNT6rIePAxXv4DgGHTQyEg0Q0bkNegQIHxAE"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center px-6 py-3 bg-teal-700 text-white font-medium rounded-lg hover:bg-teal-800 transition-colors shadow-md"
-              >
-                <img
-                  src="https://www.google.com/favicon.ico"
-                  alt="Google Logo"
-                  className="h-5 mr-2"
-                />
-                More on Google Reviews
-              </a>
-            </div>
-          </div>
+      {loading ? (
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600 mx-auto"></div>
+          <p className="text-gray-500 mt-2">Loading testimonials...</p>
         </div>
-      </section>
+      ) : testimonials.length > 0 ? (
+        <div className="relative max-w-6xl mx-auto flex items-center">
+          <button
+            onClick={prevTestimonial}
+            className="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center hover:bg-teal-700 transition-all duration-300 hover:scale-110 shadow-lg mr-4"
+            aria-label="Previous testimonials"
+          >
+            <ChevronLeft className="h-6 w-6 text-white" />
+          </button>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 flex-grow">
+            {getDisplayedTestimonials().map((testimonial, index) => (
+              <div
+                key={index}
+                className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300 flex flex-col h-full"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center space-x-1">
+                    {renderStars(testimonial.rating)}
+                  </div>
+                  <Quote className="h-6 w-6 text-teal-600 opacity-80" />
+                </div>
+                <div className="flex-grow">
+                  <p className="text-gray-700 text-base leading-relaxed mb-4 line-clamp-4">
+                    {testimonial.quote}
+                  </p>
+                </div>
+                <div className="border-t border-gray-200 pt-4 mt-auto">
+                  <p className="font-bold text-gray-900">{testimonial.name}</p>
+                  <p className="text-gray-500 text-sm text-justify">{testimonial.service}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <button
+            onClick={nextTestimonial}
+            className="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center hover:bg-teal-700 transition-all duration-300 hover:scale-110 shadow-lg ml-4"
+            aria-label="Next testimonials"
+          >
+            <ChevronRight className="h-6 w-6 text-white" />
+          </button>
+        </div>
+      ) : (
+        <div className="text-center text-gray-500">
+          <p>No testimonials available at the moment.</p>
+        </div>
+      )}
+      <div className="text-center mt-8">
+        <a
+          href="https://www.google.com/search?sca_esv=4978fba7b0bac1f0&rlz=1C1CHBD_enNP958NP958&biw=1536&bih=730&sxsrf=AE3TifPVUO1oRlbNP78cpFRRaK4onb_07w:1755073144495&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-EwZWVuYW0g8KF2vPu6clfA4Tc01fZMFebuAK3ewteCeJdi93Q--PKbfuKh7rd07C4XQp7o8Av51vqilN609w1zKXmLHbGIi09AdzJYdAYX-UNB49pKWx_i_pSu36LwV_o1fQkb0%3D&q=Smile+by+Dr+Kareen+-+Dental+Clinic+Reviews&sa=X&ved=2ahUKEwi0nNT6rIePAxXv4DgGHTQyEg0Q0bkNegQIHxAE"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center px-6 py-3 bg-teal-700 text-white font-medium rounded-lg hover:bg-teal-800 transition-colors shadow-md"
+        >
+          <img
+            src="https://www.google.com/favicon.ico"
+            alt="Google Logo"
+            className="h-5 mr-2"
+          />
+          More on Google Reviews
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
 
       <section className="py-12 relative bg-teal-800 text-white">
         <div className="container mx-auto px-4 text-center">
