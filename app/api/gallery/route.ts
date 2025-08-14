@@ -6,7 +6,7 @@ import { query } from "@/lib/db"
 import { unlink } from "fs/promises"
 
 // Valid categories for the gallery
-const VALID_CATEGORIES = ["Clinic Interior", "Equipment", "Treatment Rooms", "Procedures"]
+const VALID_CATEGORIES = ["Clinic Interior", "Equipment", "Treatment Rooms", "Procedures", "Opening Day", "Non Profit Camp", "Doctor"]
 
 export async function GET(request: NextRequest) {
   try {
