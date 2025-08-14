@@ -161,9 +161,7 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
                               className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-3 lg:p-4 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none"
                             >
                               <div className="text-sm font-medium leading-none group-hover:underline">Our Clinic</div>
-                              <div className="line-clamp-2 text-xs lg:text-sm leading-snug text-muted-foreground">
-                                Learn about our state-of-the-art facility
-                              </div>
+                              
                             </Link>
                           </NavigationMenuLink>
                           <NavigationMenuLink asChild>
@@ -172,9 +170,7 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
                               className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-3 lg:p-4 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none"
                             >
                               <div className="text-sm font-medium leading-none group-hover:underline">Our Doctors</div>
-                              <div className="line-clamp-2 text-xs lg:text-sm leading-snug text-muted-foreground">
-                                Meet our experienced dental professionals
-                              </div>
+                              
                             </Link>
                           </NavigationMenuLink>
                           {/* Added Blogs link to About Us dropdown */}
@@ -184,9 +180,7 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
                               className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-3 lg:p-4 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none"
                             >
                               <div className="text-sm font-medium leading-none group-hover:underline">Why Us</div>
-                              <div className="line-clamp-2 text-xs lg:text-sm leading-snug text-muted-foreground">
-                                Discover what makes us different
-                              </div>
+                              
                             </Link>
                           </NavigationMenuLink>
                         </div>
@@ -296,7 +290,7 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
                     size="lg"
                     className="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 rounded-full px-4 lg:px-6 py-2 lg:py-3 font-semibold text-sm lg:text-base"
                   >
-                    Book Now
+                    Contact Us
                   </Button>
                 </Link>
               </div>
@@ -436,7 +430,7 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
               <div className="px-6 pt-6">
                 <Link href="/book-now" onClick={handleMobileLinkClick}>
                   <Button className="w-full bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white rounded-full py-4 font-semibold text-lg">
-                    Book Now
+                    Contact                   
                   </Button>
                 </Link>
               </div>

@@ -66,7 +66,7 @@ const whyUsReasons = [
 ]
 
 const achievements = [
-  { number: "500+", label: "Happy Patients", icon: Users },
+  { number: "5000+", label: "Happy Patients", icon: Users },
   { number: "10+", label: "Years Experience", icon: Award },
   { number: "100%", label: "Safe Procedures", icon: Shield },
   { number: "4.9/5", label: "Patient Rating", icon: Star },
