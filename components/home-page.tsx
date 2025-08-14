@@ -736,6 +736,7 @@ export default function HomePage() {
                   preload="metadata"
                   playsInline
                   muted
+                  autoPlay
                 >
                   <source src="/images/video.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
