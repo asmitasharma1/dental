@@ -243,6 +243,17 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
                           )}
                           <NavigationMenuLink asChild>
                             <Link
+                              href="/pricing"
+                              className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-3 lg:p-4 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none border-t border-gray-100"
+                            >
+                              <div className="text-sm font-medium leading-none group-hover:underline">Pricing</div>
+                              <div className="line-clamp-2 text-xs lg:text-sm leading-snug text-muted-foreground">
+                                Transparent pricing for all services
+                              </div>
+                            </Link>
+                          </NavigationMenuLink>
+                          <NavigationMenuLink asChild>
+                            <Link
                               href="/services/restorative-dentistry/faq"
                               className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-3 lg:p-4 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none border-t border-gray-100 mt-2"
                             >
@@ -252,6 +263,7 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
                               </div>
                             </Link>
                           </NavigationMenuLink>
+                          
                         </div>
                       </NavigationMenuContent>
                     </NavigationMenuItem>
@@ -409,6 +421,13 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
                     className={`${isTablet ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : getMobileSubTextClasses(isHomePage, scrolled)} transition-colors text-base px-8 py-3 block`}
                   >
                     FAQs
+                  </Link>
+                  <Link
+                    href="/pricing"
+                    onClick={handleMobileLinkClick}
+                    className={`${isTablet ? "text-teal-600 hover:text-teal-500 hover:bg-teal-50" : getMobileSubTextClasses(isHomePage, scrolled)} transition-colors text-base px-8 py-3 block`}
+                  >
+                    Pricing
                   </Link>
                 </div>
               </div>
