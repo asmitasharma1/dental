@@ -45,7 +45,23 @@ const beforeAfterCases: BeforeAfterCase[] = [
     category: "Restorative Dentistry",
     beforeImage: "/images/before1.webp",
     afterImage: "/images/after1.webp",
-    description: "Full tooth replacement with natural-looking dental implants"
+    description: "Orthodontic evaluation showing natural teeth alignment and gum health assessment"
+  },
+  {
+    id: 2,
+    title: "Dental Implant Restoration",
+    category: "Restorative Dentistry",
+    beforeImage: "/images/before2.webp",
+    afterImage: "/images/after2.webp",
+    description: "Orthodontic evaluation showing natural teeth alignment and gum health assessment"
+  },
+  {
+    id: 2,
+    title: "Dental Implant Restoration",
+    category: "Restorative Dentistry",
+    beforeImage: "/images/before3.webp",
+    afterImage: "/images/after3.webp",
+    description: "Orthodontic assessment showing misaligned bite and gum condition for treatment planning"
   }
 ]
 
