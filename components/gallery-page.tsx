@@ -15,7 +15,7 @@ interface GalleryImage {
   category: string
 }
 
-const categories = ["All", "Clinic Interior", "Equipment", "Treatment Rooms", "Procedures"]
+const categories = ["All", "Clinic Interior", "Equipment", "Treatment Rooms", "Procedures", "Opening Day", "Non Profit Camp", "Doctor"]
 
 export default function GalleryPage() {
   const [images, setImages] = useState<GalleryImage[]>([])
