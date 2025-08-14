@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { ArrowRight, ChevronLeft, ChevronRight, ArrowUp, } from "lucide-react"
+import { ArrowRight, ChevronLeft, ChevronRight, ArrowUp } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import Navbar from "@/components/navbar"
@@ -20,10 +20,41 @@ interface Service {
   is_active: boolean
 }
 
+interface BeforeAfterCase {
+  id: number
+  title: string
+  category: string
+  beforeImage: string
+  afterImage: string
+  description: string
+}
+
+// Before/After cases data
+const beforeAfterCases: BeforeAfterCase[] = [
+  {
+    id: 1,
+    title: "Professional Teeth Whitening",
+    category: "Cosmetic Dentistry",
+    beforeImage: "/images/before.jpg",
+    afterImage: "/images/after.jpg",
+    description: "Complete smile transformation with professional whitening treatment"
+  },
+  {
+    id: 2,
+    title: "Dental Implant Restoration",
+    category: "Restorative Dentistry",
+    beforeImage: "/images/before1.webp",
+    afterImage: "/images/after1.webp",
+    description: "Full tooth replacement with natural-looking dental implants"
+  }
+]
+
 export default function ServicesPage() {
   const [services, setServices] = useState<Service[]>([])
   const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
+  const [currentCaseIndex, setCurrentCaseIndex] = useState(0)
+  const [showAfter, setShowAfter] = useState(false)
   const servicesPerPage = 6
   const [isVisible, setIsVisible] = useState(false)
 
@@ -32,14 +63,19 @@ export default function ServicesPage() {
   const startIndex = (currentPage - 1) * servicesPerPage
   const currentServices = services.slice(startIndex, startIndex + servicesPerPage)
 
-  const beforeAfterImages = {
-    before: "/images/before.jpg",
-    after: "/images/after.jpg",
-    title: "Complete Smile Transformation",
-  }
+  const currentCase = beforeAfterCases[currentCaseIndex]
 
   useEffect(() => {
     fetchServices()
+  }, [])
+
+  // Auto-switch between before/after every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShowAfter(prev => !prev)
+    }, 3000)
+
+    return () => clearInterval(interval)
   }, [])
 
   const fetchServices = async () => {
@@ -57,43 +93,45 @@ export default function ServicesPage() {
       setLoading(false)
     }
   }
-   const handleScroll = useCallback(() => {
-      const windowScrollY = window.scrollY || window.pageYOffset
-      const documentScrollTop = document.documentElement.scrollTop
-      const bodyScrollTop = document.body.scrollTop
-  
-      // Use the maximum of all scroll positions
-      const scrollTop = Math.max(windowScrollY, documentScrollTop, bodyScrollTop)
-  
-      if (scrollTop > 100) {
-        setIsVisible(true)
-      } else {
-        setIsVisible(false)
-      }
-    }, [])
-  
-    useEffect(() => {
-      const addScrollListeners = () => {
-        window.addEventListener("scroll", handleScroll, { passive: true })
-        document.addEventListener("scroll", handleScroll, { passive: true })
-        document.body.addEventListener("scroll", handleScroll, { passive: true })
-      }
-  
-      const removeScrollListeners = () => {
-        window.removeEventListener("scroll", handleScroll)
-        document.removeEventListener("scroll", handleScroll)
-        document.body.removeEventListener("scroll", handleScroll)
-      }
-  
-      addScrollListeners()
-  
-      // Check initial position
-      handleScroll()
-  
-      return () => {
-        removeScrollListeners()
-      }
-    }, [handleScroll])
+
+  const handleScroll = useCallback(() => {
+    const windowScrollY = window.scrollY || window.pageYOffset
+    const documentScrollTop = document.documentElement.scrollTop
+    const bodyScrollTop = document.body.scrollTop
+
+    // Use the maximum of all scroll positions
+    const scrollTop = Math.max(windowScrollY, documentScrollTop, bodyScrollTop)
+
+    if (scrollTop > 100) {
+      setIsVisible(true)
+    } else {
+      setIsVisible(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    const addScrollListeners = () => {
+      window.addEventListener("scroll", handleScroll, { passive: true })
+      document.addEventListener("scroll", handleScroll, { passive: true })
+      document.body.addEventListener("scroll", handleScroll, { passive: true })
+    }
+
+    const removeScrollListeners = () => {
+      window.removeEventListener("scroll", handleScroll)
+      document.removeEventListener("scroll", handleScroll)
+      document.body.removeEventListener("scroll", handleScroll)
+    }
+
+    addScrollListeners()
+
+    // Check initial position
+    handleScroll()
+
+    return () => {
+      removeScrollListeners()
+    }
+  }, [handleScroll])
+
   const scrollToTop = () => {
     // Try multiple scroll methods for better compatibility
     try {
@@ -118,11 +156,25 @@ export default function ServicesPage() {
     }
   }
 
+  const goToPrevCase = () => {
+    setCurrentCaseIndex(prev => prev === 0 ? beforeAfterCases.length - 1 : prev - 1)
+    setShowAfter(false)
+  }
+
+  const goToNextCase = () => {
+    setCurrentCaseIndex(prev => prev === beforeAfterCases.length - 1 ? 0 : prev + 1)
+    setShowAfter(false)
+  }
+
+  const toggleBeforeAfter = () => {
+    setShowAfter(prev => !prev)
+  }
+
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
 
-      {/* Hero Section with Interactive Slider */}
+      {/* Hero Section with Interactive Before/After Slider */}
       <section className="py-24 bg-gradient-to-br from-teal-50 via-white to-cyan-50 relative overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
@@ -135,37 +187,85 @@ export default function ServicesPage() {
             <div className="w-32 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto mt-8"></div>
           </div>
 
-          {/* Before/After Comparison */}
+          {/* Enhanced Before/After Comparison with Navigation */}
           <div className="max-w-4xl mx-auto">
-            <h3 className="text-3xl font-bold text-center mb-8 text-gray-900">Professional Teeth Whitening Results</h3>
+            <h3 className="text-3xl font-bold text-center mb-8 text-gray-900">
+              {currentCase.title} Results
+            </h3>
             <div className="relative bg-white rounded-3xl shadow-2xl overflow-hidden">
+              {/* Navigation Arrows */}
+              <button
+                onClick={goToPrevCase}
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+                aria-label="Previous case"
+              >
+                <ChevronLeft className="h-6 w-6" />
+              </button>
+              
+              <button
+                onClick={goToNextCase}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+                aria-label="Next case"
+              >
+                <ChevronRight className="h-6 w-6" />
+              </button>
+
               <div className="grid md:grid-cols-2">
-                <div className="relative h-80">
+                <div className="relative h-80 cursor-pointer" onClick={toggleBeforeAfter}>
                   <Image
-                    src={beforeAfterImages.before || "/placeholder.svg"}
-                    alt="Before Teeth Whitening Treatment"
+                    src={currentCase.beforeImage || "/placeholder.svg"}
+                    alt={`Before ${currentCase.title} Treatment`}
                     fill
-                    className="object-cover"
+                    className={`object-cover transition-opacity duration-500 ${showAfter ? 'opacity-50' : 'opacity-100'}`}
                   />
-                  <div className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                  <div className={`absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium transition-all duration-300 ${showAfter ? 'opacity-50' : 'opacity-100'}`}>
                     Before
                   </div>
                 </div>
-                <div className="relative h-80">
+                <div className="relative h-80 cursor-pointer" onClick={toggleBeforeAfter}>
                   <Image
-                    src={beforeAfterImages.after || "/placeholder.svg"}
-                    alt="After Teeth Whitening Treatment"
+                    src={currentCase.afterImage || "/placeholder.svg"}
+                    alt={`After ${currentCase.title} Treatment`}
                     fill
-                    className="object-cover"
+                    className={`object-cover transition-opacity duration-500 ${showAfter ? 'opacity-100' : 'opacity-50'}`}
                   />
-                  <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                  <div className={`absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium transition-all duration-300 ${showAfter ? 'opacity-100' : 'opacity-50'}`}>
                     After
                   </div>
                 </div>
               </div>
-              <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 bg-white/90 backdrop-blur-sm rounded-full px-6 py-2">
-                <p className="text-gray-800 font-medium">{beforeAfterImages.title}</p>
+
+              {/* Case Information */}
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white/95 backdrop-blur-sm rounded-2xl px-6 py-3 max-w-md">
+                <p className="text-gray-800 font-medium text-center mb-1">{currentCase.title}</p>
+                <p className="text-teal-600 text-sm text-center font-medium">{currentCase.category}</p>
               </div>
+
+              {/* Case Navigation Dots */}
+              <div className="absolute top-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                {beforeAfterCases.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      setCurrentCaseIndex(index)
+                      setShowAfter(false)
+                    }}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      index === currentCaseIndex 
+                        ? 'bg-teal-600 scale-125' 
+                        : 'bg-white/60 hover:bg-white/80'
+                    }`}
+                    aria-label={`Case ${index + 1}`}
+                  />
+                ))}
+              </div>             
+            </div>
+
+            {/* Case Description */}
+            <div className="text-center mt-6">
+              <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+                {currentCase.description}
+              </p>
             </div>
           </div>
         </div>
@@ -222,7 +322,6 @@ export default function ServicesPage() {
                       </div>
                     </CardContent>
                   </Card>
-
                 ))}
               </div>
 
@@ -269,15 +368,14 @@ export default function ServicesPage() {
 
       <Footer />
       {isVisible && (
-          <button
-            onClick={scrollToTop}
-            className="fixed bottom-6 right-6 z-[9999] bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 border-2 border-white/20"
-            aria-label="Scroll to top"
-          >
-            <ArrowUp className="h-5 w-5" />
-          </button>
-        )}
-        
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 z-[9999] bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 border-2 border-white/20"
+          aria-label="Scroll to top"
+        >
+          <ArrowUp className="h-5 w-5" />
+        </button>
+      )}
     </div>
   )
 }

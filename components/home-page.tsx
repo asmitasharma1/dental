@@ -85,7 +85,7 @@ const whyUsReasons = [
   },
 ]
 const achievements = [
-  { number: "500+", label: "Happy Patients", icon: Users },
+  { number: "5000+", label: "Happy Patients", icon: Users },
   { number: "10+", label: "Years Experience", icon: Award },
   { number: "100%", label: "Safe Procedures", icon: Shield },
   { number: "4.9/5", label: "Patient Rating", icon: Star },
@@ -378,13 +378,14 @@ export default function HomePage() {
             <MessageCircle className="h-5 w-5 md:h-6 md:w-6 text-teal-600" />
           </a>
           <a
-            href="mailto:smilebydrkareen@gmail.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur-sm shadow-lg rounded-full flex items-center justify-center hover:bg-teal-50 transition-all duration-300 hover:scale-105 md:hover:scale-110"
-          >
-            <Mail className="h-5 w-5 md:h-6 md:w-6 text-teal-600" />
-          </a>
+  href="https://mail.google.com/mail/?view=cm&to=smilebydrkareen@gmail.com"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur-sm shadow-lg rounded-full flex items-center justify-center hover:bg-teal-50 transition-all duration-300 hover:scale-105 md:hover:scale-110"
+>
+  <Mail className="h-5 w-5 md:h-6 md:w-6 text-teal-600" />
+</a>
+
         </div>
         {/* Decorative Elements */}
         <div className="absolute top-10 left-10 w-8 h-10 bg-white/20 rounded-t-full rounded-b-sm transform rotate-12 blur-sm animate-pulse"></div>
