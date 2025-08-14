@@ -191,3 +191,24 @@
   }
 }
 
+
+/* Ensure proper formatting for HTML content */
+.html-content {
+  text-align: justify; /* Justify text as requested */
+}
+
+.html-content p {
+  margin-bottom: 1rem; /* Space between paragraphs */
+}
+
+.html-content ul,
+.html-content ol {
+  list-style-type: disc; /* Ensure bullet points for unordered lists */
+  margin-left: 1.5rem; /* Indent lists */
+  margin-bottom: 1rem; /* Space below lists */
+}
+
+.html-content li {
+  margin-bottom: 0.5rem; /* Space between list items */
+  display: list-item; /* Ensure list items render as block elements */
+}

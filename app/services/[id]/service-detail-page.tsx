@@ -1,75 +1,115 @@
-"use client"
+"use client";
 
-import { useState, useEffect, useCallback } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { ArrowLeft, Calendar, DollarSign, Timer, HelpCircle, AlertTriangle, Clock, Heart, ArrowUp } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
-import Navbar from "@/components/navbar"
-import Footer from "@/components/footer"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { useState, useEffect, useCallback } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { ArrowLeft, Calendar, DollarSign, Timer, HelpCircle, AlertTriangle, Clock, Heart, ArrowUp } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import HTMLParser from "html-react-parser";
 
 interface Service {
-  id: number
-  title: string
-  description: string
-  category: string
-  price: number
-  duration: string
-  image_url: string
-  why_use_service: string
-  what_if_not_used: string
-  before_appointment: string
-  after_service: string
-  is_active: boolean
+  id: number;
+  title: string;
+  description: string;
+  category: string;
+  price: number;
+  duration: string;
+  image_url: string;
+  why_use_service: string;
+  what_if_not_used: string;
+  before_appointment: string;
+  after_service: string;
+  is_active: boolean;
 }
 
 interface ServiceDetailPageProps {
-  serviceId: string
+  serviceId: string;
 }
 
+// Function to convert plain text to HTML
+const convertPlainTextToHtml = (text: string): string => {
+  if (!text) return "<p>No content available.</p>";
+
+  // Split by single line breaks
+  const lines = text.split("\n").map(line => line.trim()).filter(line => line.length > 0);
+
+  let htmlContent = "";
+  let inList = false;
+
+  lines.forEach((line, index) => {
+    // Check if the line is a bullet point (starts with "- " or "* ")
+    if (line.match(/^\s*[-*]\s/)) {
+      if (!inList) {
+        // Start a new unordered list
+        htmlContent += "<ul>";
+        inList = true;
+      }
+      // Add list item
+      htmlContent += `<li>${line.replace(/^\s*[-*]\s/, "").trim()}</li>`;
+    } else {
+      // Close the list if we were in one
+      if (inList) {
+        htmlContent += "</ul>";
+        inList = false;
+      }
+      // Add paragraph
+      htmlContent += `<p>${line}</p>`;
+    }
+
+    // Close the list at the end if still open
+    if (inList && index === lines.length - 1) {
+      htmlContent += "</ul>";
+    }
+  });
+
+  return htmlContent;
+};
+
 export default function ServiceDetailPage({ serviceId }: ServiceDetailPageProps) {
-  const [service, setService] = useState<Service | null>(null)
-  const [relatedServices, setRelatedServices] = useState<Service[]>([])
-  const [loading, setLoading] = useState(true)
-  const [isVisible, setIsVisible] = useState(false)
+  const [service, setService] = useState<Service | null>(null);
+  const [relatedServices, setRelatedServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
 
   // Add scroll detection logic
   const handleScroll = useCallback(() => {
-    const windowScrollY = window.scrollY || window.pageYOffset
-    const documentScrollTop = document.documentElement.scrollTop
-    const bodyScrollTop = document.body.scrollTop
-    const scrollTop = Math.max(windowScrollY, documentScrollTop, bodyScrollTop)
+    const windowScrollY = window.scrollY || window.pageYOffset;
+    const documentScrollTop = document.documentElement.scrollTop;
+    const bodyScrollTop = document.body.scrollTop;
+    const scrollTop = Math.max(windowScrollY, documentScrollTop, bodyScrollTop);
 
     if (scrollTop > 100) {
-      setIsVisible(true)
+      setIsVisible(true);
     } else {
-      setIsVisible(false)
+      setIsVisible(false);
     }
-  }, [])
+  }, []);
 
   // Add useEffect to set up scroll listeners
   useEffect(() => {
     const addScrollListeners = () => {
-      window.addEventListener("scroll", handleScroll, { passive: true })
-      document.addEventListener("scroll", handleScroll, { passive: true })
-      document.body.addEventListener("scroll", handleScroll, { passive: true })
-    }
+      window.addEventListener("scroll", handleScroll, { passive: true });
+      document.addEventListener("scroll", handleScroll, { passive: true });
+      document.body.addEventListener("scroll", handleScroll, { passive: true });
+    };
 
     const removeScrollListeners = () => {
-      window.removeEventListener("scroll", handleScroll)
-      document.removeEventListener("scroll", handleScroll)
-      document.body.removeEventListener("scroll", handleScroll)
-    }
+      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("scroll", handleScroll);
+      document.body.removeEventListener("scroll", handleScroll);
+    };
 
-    addScrollListeners()
-    handleScroll()
+    addScrollListeners();
+    handleScroll();
 
     return () => {
-      removeScrollListeners()
-    }
-  }, [handleScroll])
+      removeScrollListeners();
+    };
+  }, [handleScroll]);
 
   const scrollToTop = () => {
     try {
@@ -77,57 +117,57 @@ export default function ServiceDetailPage({ serviceId }: ServiceDetailPageProps)
         top: 0,
         left: 0,
         behavior: "smooth",
-      })
+      });
 
       setTimeout(() => {
-        document.documentElement.scrollTop = 0
-        document.body.scrollTop = 0
-        window.pageYOffset = 0
-      }, 100)
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        window.pageYOffset = 0;
+      }, 100);
     } catch (error) {
-      document.documentElement.scrollTop = 0
-      document.body.scrollTop = 0
-      window.scrollTo(0, 0)
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      window.scrollTo(0, 0);
     }
-  }
+  };
 
   useEffect(() => {
     if (serviceId) {
-      fetchService()
-      fetchRelatedServices()
+      fetchService();
+      fetchRelatedServices();
     }
-  }, [serviceId])
+  }, [serviceId]);
 
   const fetchService = async () => {
     try {
-      const response = await fetch(`/api/services/${serviceId}`)
+      const response = await fetch(`/api/services/${serviceId}`);
       if (response.ok) {
-        const data = await response.json()
-        setService(data)
+        const data = await response.json();
+        setService(data);
       } else {
-        console.error("Failed to fetch service")
+        console.error("Failed to fetch service");
       }
     } catch (error) {
-      console.error("Error fetching service:", error)
+      console.error("Error fetching service:", error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const fetchRelatedServices = async () => {
     try {
-      const response = await fetch("/api/services")
+      const response = await fetch("/api/services");
       if (response.ok) {
-        const data = await response.json()
+        const data = await response.json();
         // Get 3 random services excluding current one
-        const filtered = data.filter((s: Service) => s.id !== Number.parseInt(serviceId))
-        const shuffled = filtered.sort(() => 0.5 - Math.random())
-        setRelatedServices(shuffled.slice(0, 3))
+        const filtered = data.filter((s: Service) => s.id !== Number.parseInt(serviceId));
+        const shuffled = filtered.sort(() => 0.5 - Math.random());
+        setRelatedServices(shuffled.slice(0, 3));
       }
     } catch (error) {
-      console.error("Error fetching related services:", error)
+      console.error("Error fetching related services:", error);
     }
-  }
+  };
 
   if (loading) {
     return (
@@ -135,7 +175,7 @@ export default function ServiceDetailPage({ serviceId }: ServiceDetailPageProps)
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600"></div>
         <p className="ml-4 text-gray-600">Loading service details...</p>
       </div>
-    )
+    );
   }
 
   if (!service) {
@@ -148,7 +188,7 @@ export default function ServiceDetailPage({ serviceId }: ServiceDetailPageProps)
           </Link>
         </div>
       </div>
-    )
+    );
   }
 
   const qaItems = [
@@ -184,10 +224,30 @@ export default function ServiceDetailPage({ serviceId }: ServiceDetailPageProps)
       color: "text-green-600",
       bgColor: "bg-green-100",
     },
-  ]
+  ];
 
   return (
     <div className="min-h-screen bg-white">
+      <style jsx>{`
+        .html-content {
+          text-align: justify;
+        }
+        .html-content p {
+          margin-bottom: 1rem;
+        }
+        .html-content ul,
+        .html-content ol {
+          list-style-type: disc;
+          margin-left: 1.5rem;
+          margin-bottom: 1rem;
+          padding-left: 0;
+        }
+        .html-content li {
+          margin-bottom: 0.5rem;
+          display: list-item;
+          padding-left: 0.5rem;
+        }
+      `}</style>
       <Navbar />
 
       {/* Service Detail Hero */}
@@ -259,7 +319,7 @@ export default function ServiceDetailPage({ serviceId }: ServiceDetailPageProps)
             </div>
             <Accordion type="single" collapsible className="space-y-4">
               {qaItems.map((item) => {
-                const IconComponent = item.icon
+                const IconComponent = item.icon;
                 return (
                   <AccordionItem
                     key={item.id}
@@ -276,13 +336,19 @@ export default function ServiceDetailPage({ serviceId }: ServiceDetailPageProps)
                     </AccordionTrigger>
                     <AccordionContent className="pt-4 pb-2">
                       <div className="ml-14">
-                        <p className="text-gray-600 leading-relaxed">
-                          {item.answer || "Information not available. Please contact us for more details."}
-                        </p>
+                        {item.answer ? (
+                          <div className="text-gray-600 leading-relaxed html-content">
+                            {HTMLParser(convertPlainTextToHtml(item.answer))}
+                          </div>
+                        ) : (
+                          <p className="text-gray-600 leading-relaxed">
+                            Information not available. Please contact us for more details.
+                          </p>
+                        )}
                       </div>
                     </AccordionContent>
                   </AccordionItem>
-                )
+                );
               })}
             </Accordion>
           </div>
@@ -344,5 +410,5 @@ export default function ServiceDetailPage({ serviceId }: ServiceDetailPageProps)
         </button>
       )}
     </div>
-  )
+  );
 }

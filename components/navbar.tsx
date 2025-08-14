@@ -25,6 +25,16 @@ import {
   getMobileSubTextClasses,
 } from "@/utils"
 
+// CSS to balance dropdown arrow spacing
+const navTriggerStyles = `
+  .nav-trigger {
+    padding-right: 0.5rem; /* Reduce padding to offset arrow width */
+  }
+  .nav-trigger::after {
+    margin-left: 0.25rem; /* Fine-tune arrow spacing */
+  }
+`
+
 export default function Navbar({ isHomePage = false }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [services, setServices] = useState<Service[]>([])
@@ -129,13 +139,14 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
 
   return (
     <header className={getNavbarClasses(isHomePage, scrolled)}>
+      <style>{navTriggerStyles}</style>
       <div className="relative z-10">
         <div className="container mx-auto px-3 sm:px-4 lg:px-6 xl:px-8 py-4 sm:py-5">
           <div className="relative flex items-center justify-between">
             {/* Desktop Navigation - Hidden on tablets and mobile */}
             <nav className="hidden xl:flex items-center justify-between w-full relative">
               {/* Left Side Menu (3 items) */}
-              <div className="flex items-center space-x-8 2xl:space-x-12">
+              <div className="flex items-center space-x-8 lg:space-x-10 2xl:space-x-12">
                 <Link
                   href="/"
                   className={`${getTextClasses(isHomePage, scrolled)} transition-all duration-300 font-medium relative group text-base lg:text-lg tracking-wide`}
@@ -149,38 +160,34 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
                   <NavigationMenuList>
                     <NavigationMenuItem>
                       <NavigationMenuTrigger
-                        className={`${getTextClasses(isHomePage, scrolled)} transition-all duration-300 font-medium text-base lg:text-lg tracking-wide bg-transparent`}
+                        className={`${getTextClasses(isHomePage, scrolled)} nav-trigger transition-all duration-300 font-medium text-base lg:text-lg tracking-wide bg-transparent`}
                       >
                         About Us
                       </NavigationMenuTrigger>
                       <NavigationMenuContent>
-                        <div className="grid w-[280px] lg:w-[320px] p-4 bg-white shadow-md">
+                        <div className="grid w-[150px] lg:w-[180px] p-4 bg-white shadow-md">
                           <NavigationMenuLink asChild>
                             <Link
                               href="/about"
-                              className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-3 lg:p-4 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none"
+                              className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-3 lg:p-4 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none border-b border-gray-100"
                             >
                               <div className="text-sm font-medium leading-none group-hover:underline">Our Clinic</div>
-                              
                             </Link>
                           </NavigationMenuLink>
                           <NavigationMenuLink asChild>
                             <Link
                               href="/about#doctors"
-                              className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-3 lg:p-4 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none"
+                              className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-3 lg:p-4 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none border-b border-gray-100"
                             >
                               <div className="text-sm font-medium leading-none group-hover:underline">Our Doctors</div>
-                              
                             </Link>
                           </NavigationMenuLink>
-                          {/* Added Blogs link to About Us dropdown */}
                           <NavigationMenuLink asChild>
                             <Link
                               href="/why-us"
                               className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-3 lg:p-4 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none"
                             >
                               <div className="text-sm font-medium leading-none group-hover:underline">Why Us</div>
-                              
                             </Link>
                           </NavigationMenuLink>
                         </div>
@@ -188,36 +195,11 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
                     </NavigationMenuItem>
                   </NavigationMenuList>
                 </NavigationMenu>
-                <Link
-                  href="/blogs"
-                  className={`${getTextClasses(isHomePage, scrolled)} transition-all duration-300 font-medium relative group text-base lg:text-lg tracking-wide`}
-                >
-                  Blogs
-                  <span
-                    className={`absolute -bottom-1 left-0 w-0 h-0.5 ${getUnderlineClasses(isHomePage, scrolled)} transition-all duration-300 group-hover:w-full rounded-full`}
-                  ></span>
-                </Link>
-              </div>
-
-              {/* Centered Logo - Absolutely positioned to center of screen */}
-              <Link href="/" className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center">
-                <Image
-                  src="/images/logo.png"
-                  alt="Smile by Dr. Kareen Logo"
-                  width={100}
-                  height={100}
-                  className="cursor-pointer drop-shadow-lg transition-transform duration-300 hover:scale-105 lg:w-[100px] lg:h-[100px]"
-                  priority
-                />
-              </Link>
-
-              {/* Right Side Menu (3 items) */}
-              <div className="flex items-center space-x-6 lg:space-x-8 2xl:space-x-12">
                 <NavigationMenu>
                   <NavigationMenuList>
                     <NavigationMenuItem>
                       <NavigationMenuTrigger
-                        className={`${getTextClasses(isHomePage, scrolled)} transition-all duration-300 font-medium text-base lg:text-lg tracking-wide bg-transparent`}
+                        className={`${getTextClasses(isHomePage, scrolled)} nav-trigger transition-all duration-300 font-medium text-base lg:text-lg tracking-wide bg-transparent`}
                       >
                         Service
                       </NavigationMenuTrigger>
@@ -234,7 +216,6 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
                               </div>
                             </Link>
                           </NavigationMenuLink>
-                          {/* Services from Database */}
                           {servicesLoading ? (
                             <div className="p-4 text-center text-sm text-gray-500">Loading services...</div>
                           ) : (
@@ -276,6 +257,31 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
                     </NavigationMenuItem>
                   </NavigationMenuList>
                 </NavigationMenu>
+              </div>
+
+              {/* Centered Logo - Absolutely positioned to center of screen */}
+              <Link href="/" className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center">
+                <Image
+                  src="/images/logo.png"
+                  alt="Smile by Dr. Kareen Logo"
+                  width={100}
+                  height={100}
+                  className="cursor-pointer drop-shadow-lg transition-transform duration-300 hover:scale-105 lg:w-[100px] lg:h-[100px]"
+                  priority
+                />
+              </Link>
+
+              {/* Right Side Menu (3 items) */}
+              <div className="flex items-center space-x-10 lg:space-x-12 2xl:space-x-14">
+                <Link
+                  href="/blogs"
+                  className={`${getTextClasses(isHomePage, scrolled)} transition-all duration-300 font-medium relative group text-base lg:text-lg tracking-wide`}
+                >
+                  Blogs
+                  <span
+                    className={`absolute -bottom-1 left-0 w-0 h-0.5 ${getUnderlineClasses(isHomePage, scrolled)} transition-all duration-300 group-hover:w-full rounded-full`}
+                  ></span>
+                </Link>
                 <Link
                   href="/gallery"
                   className={`${getTextClasses(isHomePage, scrolled)} transition-all duration-300 font-medium relative group text-base lg:text-lg tracking-wide`}
@@ -368,7 +374,6 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
                   >
                     Our Doctors
                   </Link>
-                  {/* Added Blogs link to mobile About Us section */}
                   <Link
                     href="/why-us"
                     onClick={handleMobileLinkClick}
@@ -408,7 +413,7 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
                 </div>
               </div>
 
-              {/* Why Us */}
+              {/* Blogs */}
               <Link
                 href="/blogs"
                 onClick={handleMobileLinkClick}
@@ -430,7 +435,7 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
               <div className="px-6 pt-6">
                 <Link href="/book-now" onClick={handleMobileLinkClick}>
                   <Button className="w-full bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white rounded-full py-4 font-semibold text-lg">
-                    Contact                   
+                    Contact
                   </Button>
                 </Link>
               </div>
