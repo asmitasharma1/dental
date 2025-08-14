@@ -32,38 +32,39 @@ interface BeforeAfterCase {
 // Before/After cases data
 const beforeAfterCases: BeforeAfterCase[] = [
   {
-    id: 1,
-    title: "Professional Teeth Whitening",
-    category: "Cosmetic Dentistry",
-    beforeImage: "/images/before.jpg",
-    afterImage: "/images/after.jpg",
-    description: "Complete smile transformation with professional whitening treatment"
+    "id": 1,
+    "title": "Professional Teeth Whitening",
+    "category": "Cosmetic Dentistry",
+    "beforeImage": "/images/before.jpg",
+    "afterImage": "/images/after.jpg",
+    "description": "Complete smile transformation with professional whitening treatment"
   },
   {
-    id: 2,
-    title: "Dental Implant Restoration",
-    category: "Restorative Dentistry",
-    beforeImage: "/images/before1.webp",
-    afterImage: "/images/after1.webp",
-    description: "Orthodontic evaluation showing natural teeth alignment and gum health assessment"
+    "id": 2,
+    "title": "Dental Implant Restoration",
+    "category": "Restorative Dentistry",
+    "beforeImage": "/images/before1.webp",
+    "afterImage": "/images/after1.webp",
+    "description": "Full tooth replacement with natural-looking dental implants"
   },
   {
-    id: 2,
-    title: "Dental Implant Restoration",
-    category: "Restorative Dentistry",
-    beforeImage: "/images/before2.webp",
-    afterImage: "/images/after2.webp",
-    description: "Orthodontic evaluation showing natural teeth alignment and gum health assessment"
+    "id": 3,
+    "title": "Orthodontic Evaluation",
+    "category": "Orthodontics",
+    "beforeImage": "/images/before2.webp",
+    "afterImage": "/images/after2.webp",
+    "description": "Orthodontic evaluation showing natural teeth alignment and gum health assessment"
   },
   {
-    id: 2,
-    title: "Dental Implant Restoration",
-    category: "Restorative Dentistry",
-    beforeImage: "/images/before3.webp",
-    afterImage: "/images/after3.webp",
-    description: "Orthodontic assessment showing misaligned bite and gum condition for treatment planning"
+    "id": 4,
+    "title": "Bite Correction Treatment",
+    "category": "Orthodontics",
+    "beforeImage": "/images/before3.webp",
+    "afterImage": "/images/after3.webp",
+    "description": "Orthodontic assessment showing misaligned bite and gum condition for treatment planning"
   }
 ]
+
 
 export default function ServicesPage() {
   const [services, setServices] = useState<Service[]>([])
