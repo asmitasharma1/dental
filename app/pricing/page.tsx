@@ -85,6 +85,22 @@ export default function PricingPage() {
     }
   }
 
+  const scrollToCategories = () => {
+    const categoriesSection = document.getElementById("categories-section")
+    if (categoriesSection) {
+      const offsetTop = categoriesSection.offsetTop - 120 // Account for fixed navbar spacing
+      window.scrollTo({
+        top: offsetTop,
+        behavior: "smooth",
+      })
+    }
+  }
+
+  const handleCategoryClick = (categoryId: string) => {
+    setActiveCategory(categoryId)
+    scrollToCategories()
+  }
+
   const pricingCategories: PricingCategory[] = [
     {
       id: "diagnosis",
@@ -249,7 +265,7 @@ export default function PricingPage() {
           name: "Metal Braces (Non-extraction)",
           price: "Rs. 70,000",
           description: "Traditional metal braces without extractions",
-          features: ["Free retainers included", "4 tooth extractions included"],
+          features: ["4 tooth extractions included"],
         },
         {
           name: "Metal Braces (Extraction case)",
@@ -267,7 +283,7 @@ export default function PricingPage() {
           name: "Self Ligating Braces (Extraction case)",
           price: "Rs. 90,000",
           description: "Self-ligating braces with extractions",
-          features: ["Free retainers included", "4 tooth extractions included"],
+          features: ["4 tooth extractions included"],
         },
         {
           name: "Ceramic Braces (Non-extraction)",
@@ -280,13 +296,13 @@ export default function PricingPage() {
           name: "Ceramic Braces (Extraction)",
           price: "Rs. 1,30,000",
           description: "Ceramic braces with extractions",
-          features: ["Free retainers included", "4 tooth extractions included"],
+          features: ["4 tooth extractions included"],
         },
         {
           name: "Aligners",
           price: "Rs. 1,50,000 - 2,00,000",
           description: "Clear aligner treatment",
-          features: ["Free retainers included", "4 tooth extractions included"],
+          features: ["4 tooth extractions included"],
         },
       ],
     },
@@ -557,14 +573,14 @@ export default function PricingPage() {
       </section>
 
       {/* Category Navigation */}
-      <section className="py-4 bg-white border-b border-gray-100 sticky top-0 z-40">
+      <section className="py-4 bg-white border-b border-gray-100 sticky top-16 z-40">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap justify-center gap-2">
             {categoryNavigation.map((category) => (
               <Button
                 key={category.id}
                 variant={activeCategory === category.id ? "default" : "outline"}
-                onClick={() => setActiveCategory(category.id)}
+                onClick={() => handleCategoryClick(category.id)}
                 className={`rounded-full px-4 py-2 text-sm ${
                   activeCategory === category.id
                     ? "bg-teal-600 hover:bg-teal-700 text-white"
@@ -578,7 +594,7 @@ export default function PricingPage() {
         </div>
       </section>
 
-      <section className="py-16 bg-gray-50">
+      <section id="categories-section" className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           {pricingCategories.map((category) => (
             <div
