@@ -277,7 +277,7 @@ export default function PricingPage() {
           name: "Self Ligating Braces (Non-extraction)",
           price: "Rs. 80,000",
           description: "Advanced self-ligating system",
-          features: ["Free retainers included", "4 tooth extractions included"],
+          features: ["4 tooth extractions included"],
         },
         {
           name: "Self Ligating Braces (Extraction case)",
@@ -289,7 +289,7 @@ export default function PricingPage() {
           name: "Ceramic Braces (Non-extraction)",
           price: "Rs. 1,20,000",
           description: "Tooth-colored ceramic braces",
-          features: ["Free retainers included", "4 tooth extractions included"],
+          features: ["4 tooth extractions included"],
           popular: true,
         },
         {
@@ -561,27 +561,19 @@ export default function PricingPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Navbar />
+      <div className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
+        <Navbar />
+      </div>
 
-      <section className="pt-16 pb-4 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-">
-            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Our Pricing</h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Transparent pricing for all our dental services</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Category Navigation */}
-      <section className="py-4 bg-white border-b border-gray-100 sticky top-16 z-40">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-wrap justify-center gap-2">
+     <section className="bg-white/65 backdrop-blur-sm border-b border-gray-100 sticky top-[56px] sm:top-[20px] z-40 shadow-sm mt-4 sm:mt-0">
+        <div className="container mx-auto px-2 sm:px-4 py-2 sm:py-3">
+          <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 max-w-5xl mx-auto">
             {categoryNavigation.map((category) => (
               <Button
                 key={category.id}
                 variant={activeCategory === category.id ? "default" : "outline"}
                 onClick={() => handleCategoryClick(category.id)}
-                className={`rounded-full px-4 py-2 text-sm ${
+                className={`rounded-full px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium whitespace-nowrap min-w-fit ${
                   activeCategory === category.id
                     ? "bg-teal-600 hover:bg-teal-700 text-white"
                     : "hover:bg-teal-50 hover:text-teal-600"
@@ -594,7 +586,16 @@ export default function PricingPage() {
         </div>
       </section>
 
-      <section id="categories-section" className="py-16 bg-gray-50">
+      <section className="bg-white pt-12 sm:pt-16 md:pt-20 lg:pt-24 pb-8 sm:pb-12 md:pb-16 lg:pb-20 px-8 sm:px-12 md:px-16 lg:px-20">
+        <div className="container mx-auto px-2 sm:px-4">
+          <div className="text-center mb-6 sm:mb-8">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">Our Pricing</h1>
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-2">Transparent pricing for all our dental services</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="categories-section" className="py-8 bg-gray-50">
         <div className="container mx-auto px-4">
           {pricingCategories.map((category) => (
             <div
