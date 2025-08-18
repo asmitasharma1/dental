@@ -95,12 +95,12 @@ const achievements = [
 ]
 
 
-  const handleWhatsAppClick = () => {
-    const phoneNumber = "9803062084" // Replace with your actual WhatsApp number
-    const message = "Hi! I'm interested in your dental products and the 20% off offer."
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
-    window.open(whatsappUrl, "_blank")
-  }
+const handleWhatsAppClick = () => {
+  const phoneNumber = "9803062084" // Replace with your actual WhatsApp number
+  const message = "Hi! I'm interested in your dental products and the 20% off offer."
+  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
+  window.open(whatsappUrl, "_blank")
+}
 
 
 const topServices = [
@@ -397,8 +397,8 @@ export default function HomePage() {
             rel="noopener noreferrer"
             className="w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur-sm shadow-lg rounded-full flex items-center justify-center hover:bg-teal-50 transition-all duration-300 hover:scale-105 md:hover:scale-110"
           >
-  <Mail className="h-5 w-5 md:h-6 md:w-6 text-teal-600" />
-</a>
+            <Mail className="h-5 w-5 md:h-6 md:w-6 text-teal-600" />
+          </a>
 
         </div>
         {/* Decorative Elements */}
@@ -760,171 +760,191 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      <section className="py-1 relative bg-gradient-to-b from-white to-teal-50">
+        {/* Subtle Wave SVG */}
+        <div className="absolute top-0 left-0 w-full overflow-hidden leading-none">
+          <svg
+            className="relative block w-full h-16 text-teal-100"
+            viewBox="0 0 1440 120"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-36.93,206.8-37.5C438.64,36.13,512,60.83,583.68,74.67c67.93,13,134.83,8.88,200.33-5.17,54.41-11.66,110.21-36.46,158-28C1280,48.67,1440,0,1440,0H0Z"
+              fill="currentColor"
+              opacity="0.3"
+            />
+          </svg>
+        </div>
 
-     {/* Banner */}
-      <section className="py-1 relative bg-white">
-        <section className="relative bg-white border border-gray-200 rounded-2xl mx-4 my-10 shadow-md hover:shadow-xl transition-all duration-300">
-        <div className="relative z-10 px-8 py-12">
-          <div className="grid lg:grid-cols-2 gap-10 items-center">
-            
-            {/* Left Content */}
-            <div className="space-y-6 mx-0 md:mx-20">
-              <div className="flex items-center gap-2">
-                <span className="inline-flex items-center bg-teal-600 text-white px-3 py-1 text-sm font-semibold rounded-full shadow-sm">
-                  <ShoppingCart className="w-4 h-4 mr-1" />
-                  Dental Products
-                </span>
-              </div>
-
-              <div className="space-y-4">
-                <h1 className="text-4xl lg:text-5xl font-bold leading-tight text-gray-900">
-                  Exclusive Dental Products
-                  <span className="block text-5xl lg:text-6xl text-teal-600">Available</span>
-                </h1>
-
-                <p className="text-lg text-gray-600">
-                  Explore high-quality dental care essentials like floss, toothbrush, toothpaste, and more.
-                </p>
-
-                <div className="flex flex-wrap items-center gap-2 text-teal-700">
-                  <span className="text-sm">Order instantly via</span>
-                  <span className="border border-teal-500 text-teal-700 font-bold text-sm px-2 py-1 rounded-md">
-                    WhatsApp
+        <section
+          className="relative bg-gradient-to-br from-white to-teal-50 border border-teal-100 rounded-2xl mx-4 my-10 shadow-md hover:shadow-xl transition-all duration-300"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M30 10c-5.5 0-10 4.5-10 10s4.5 10 10 10c2.5 0 4.8-0.9 6.6-2.4L40 34c0 2.2-1.8 4-4 4H24c-2.2 0-4-1.8-4-4v-8c0-2.2 1.8-4 4-4h12c2.2 0 4 1.8 4 4l-3.4 6.4C38.8 31.9 41 28.2 41 24c0-7.7-6.3-14-14-14z' fill='%2395f3d9' fill-opacity='0.1'/%3E%3C/svg%3E")`,
+            backgroundRepeat: 'repeat',
+            backgroundSize: '60px 60px',
+          }}
+        >
+          <div className="relative z-10 px-8 py-10">
+            <div className="grid lg:grid-cols-2 gap-10 items-center">
+              {/* Left Content - Wider Container, Shifted Right */}
+              <div className="space-y-8 mx-0 md:mx-36 lg:mx-48 md:w-3/4 lg:w-4/5">
+                <div className="flex items-center gap-2">
+                  <span className="inline-flex items-center bg-teal-600 text-white px-3 py-1 text-sm font-semibold rounded-full shadow-sm">
+                    <ShoppingCart className="w-4 h-4 mr-1" />
+                    Dental Products
                   </span>
                 </div>
+
+                <div className="space-y-6">
+                  <h1 className="text-4xl lg:text-5xl font-bold leading-tight text-gray-900">
+                    Exclusive Dental Products
+                    <span className="block text-5xl lg:text-6xl text-teal-600">Available</span>
+                  </h1>
+
+                  <p className="text-lg text-gray-600">
+                    Explore high-quality dental care essentials like floss, toothbrush, toothpaste, and more.
+                  </p>
+
+                  <div className="flex flex-wrap items-center gap-2 text-teal-700">
+                    <span className="text-sm">Order instantly via</span>
+                    <span className="border border-teal-500 text-teal-700 font-bold text-sm px-2 py-1 rounded-md">
+                      WhatsApp
+                    </span>
+                  </div>
+                </div>
+
+                <a
+                  href={`https://wa.me/9851359775?text=${encodeURIComponent(
+                    "Hi! I'm interested in your dental care products."
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button className="bg-teal-600 hover:bg-teal-700 text-white px-7 py-3 my-6 text-base font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+                    <ShoppingCart className="w-5 h-5 mr-2" />
+                    Order Now
+                  </Button>
+                </a>
               </div>
 
-              <a
-                href={`https://wa.me/9851359775?text=${encodeURIComponent(
-                  "Hi! I'm interested in your dental care products."
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Button className="bg-teal-600 hover:bg-teal-700 text-white px-7 py-3 my-6 text-base font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
-                  <ShoppingCart className="w-5 h-5 mr-2" />
-                  Order Now
-                </Button>
-              </a>
-            </div>
+              {/* Right Product Display - Larger Image */}
+              <div className="flex justify-center lg:justify-end">
+                <div className="relative max-w-sm w-full">
+                  <div className="relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+                    <img
+                      src="/images/product1.webp"
+                      alt="Dental Products"
+                      className="w-full h-80 object-contain rounded-lg"
+                    />
 
-            {/* Right Product Display */}
-            <div className="flex justify-center lg:justify-end">
-              <div className="relative max-w-sm w-full">
-                <div className="relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300">
-                  <img
-                    src="/images/product1.webp" // <-- Just one fixed image
-                    alt="Dental Products"
-                    className="w-full h-56 object-contain rounded-lg"
-                  />
-
-                  <div className="absolute bottom-3 left-3 bg-gray-50 px-4 py-1 rounded-full text-xs font-semibold text-teal-800 shadow-sm">
-                    Premium Quality
+                    <div className="absolute bottom-3 left-3 bg-gray-50 px-4 py-1 rounded-full text-xs font-semibold text-teal-800 shadow-sm">
+                      Premium Quality
+                    </div>
                   </div>
-                </div>
 
-                {/* Floating product cards */}
-                <div className="bg-white rounded-xl p-3 shadow-md hover:shadow-lg transform rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-300 absolute -top-6 -left-6">
-                  <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center mb-2 shadow-sm">
-                    <Star className="w-4 h-4 text-teal-600" />
+                  {/* Floating product cards */}
+                  <div className="bg-white rounded-xl p-3 shadow-md hover:shadow-lg transform rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-300 absolute -top-6 -left-6">
+                    <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center mb-2 shadow-sm">
+                      <Star className="w-4 h-4 text-teal-600" />
+                    </div>
+                    <div className="text-xs font-bold text-gray-900">5★ Rated</div>
                   </div>
-                  <div className="text-xs font-bold text-gray-900">5★ Rated</div>
-                </div>
 
-                <div className="bg-white rounded-xl p-3 shadow-md hover:shadow-lg transform -rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-300 absolute -bottom-6 -right-6">
-                  <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center mb-2 shadow-sm">
-                    <Zap className="w-4 h-4 text-teal-600" />
+                  <div className="bg-white rounded-xl p-3 shadow-md hover:shadow-lg transform -rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-300 absolute -bottom-6 -right-6">
+                    <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center mb-2 shadow-sm">
+                      <Zap className="w-4 h-4 text-teal-600" />
+                    </div>
+                    <div className="text-xs font-bold text-gray-900">Fast Delivery</div>
                   </div>
-                  <div className="text-xs font-bold text-gray-900">Fast Delivery</div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </section>
       </section>
-      </section>
+
 
 
       <section className="py-24 relative bg-white">
-  <div className="absolute inset-0 bg-gradient-to-br from-gray-50/90 to-teal-50/90 backdrop-blur-sm"></div>
-  <div className="relative z-10">
-    <div className="container mx-auto px-4 relative z-10">
-      <div className="text-center mb-16">
-        <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 bg-clip-text text-transparent mb-6">
-          What Our Patients Say
-        </h2>
-        <div className="w-24 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto"></div>
-      </div>
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-50/90 to-teal-50/90 backdrop-blur-sm"></div>
+        <div className="relative z-10">
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 bg-clip-text text-transparent mb-6">
+                What Our Patients Say
+              </h2>
+              <div className="w-24 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto"></div>
+            </div>
 
-      {loading ? (
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600 mx-auto"></div>
-          <p className="text-gray-500 mt-2">Loading testimonials...</p>
-        </div>
-      ) : testimonials.length > 0 ? (
-        <div className="relative max-w-6xl mx-auto flex items-center">
-          <button
-            onClick={prevTestimonial}
-            className="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center hover:bg-teal-700 transition-all duration-300 hover:scale-110 shadow-lg mr-4"
-            aria-label="Previous testimonials"
-          >
-            <ChevronLeft className="h-6 w-6 text-white" />
-          </button>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 flex-grow">
-            {getDisplayedTestimonials().map((testimonial, index) => (
-              <div
-                key={index}
-                className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300 flex flex-col h-full"
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center space-x-1">
-                    {renderStars(testimonial.rating)}
-                  </div>
-                  <Quote className="h-6 w-6 text-teal-600 opacity-80" />
-                </div>
-                <div className="flex-grow">
-                  <p className="text-gray-700 text-base leading-relaxed mb-4 line-clamp-4">
-                    {testimonial.quote}
-                  </p>
-                </div>
-                <div className="border-t border-gray-200 pt-4 mt-auto">
-                  <p className="font-bold text-gray-900">{testimonial.name}</p>
-                  <p className="text-gray-500 text-sm text-justify">{testimonial.service}</p>
-                </div>
+            {loading ? (
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600 mx-auto"></div>
+                <p className="text-gray-500 mt-2">Loading testimonials...</p>
               </div>
-            ))}
+            ) : testimonials.length > 0 ? (
+              <div className="relative max-w-6xl mx-auto flex items-center">
+                <button
+                  onClick={prevTestimonial}
+                  className="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center hover:bg-teal-700 transition-all duration-300 hover:scale-110 shadow-lg mr-4"
+                  aria-label="Previous testimonials"
+                >
+                  <ChevronLeft className="h-6 w-6 text-white" />
+                </button>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 flex-grow">
+                  {getDisplayedTestimonials().map((testimonial, index) => (
+                    <div
+                      key={index}
+                      className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300 flex flex-col h-full"
+                    >
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center space-x-1">
+                          {renderStars(testimonial.rating)}
+                        </div>
+                        <Quote className="h-6 w-6 text-teal-600 opacity-80" />
+                      </div>
+                      <div className="flex-grow">
+                        <p className="text-gray-700 text-base leading-relaxed mb-4 line-clamp-4">
+                          {testimonial.quote}
+                        </p>
+                      </div>
+                      <div className="border-t border-gray-200 pt-4 mt-auto">
+                        <p className="font-bold text-gray-900">{testimonial.name}</p>
+                        <p className="text-gray-500 text-sm text-justify">{testimonial.service}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <button
+                  onClick={nextTestimonial}
+                  className="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center hover:bg-teal-700 transition-all duration-300 hover:scale-110 shadow-lg ml-4"
+                  aria-label="Next testimonials"
+                >
+                  <ChevronRight className="h-6 w-6 text-white" />
+                </button>
+              </div>
+            ) : (
+              <div className="text-center text-gray-500">
+                <p>No testimonials available at the moment.</p>
+              </div>
+            )}
+            <div className="text-center mt-8">
+              <a
+                href="https://www.google.com/search?sca_esv=4978fba7b0bac1f0&rlz=1C1CHBD_enNP958NP958&biw=1536&bih=730&sxsrf=AE3TifPVUO1oRlbNP78cpFRRaK4onb_07w:1755073144495&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-EwZWVuYW0g8KF2vPu6clfA4Tc01fZMFebuAK3ewteCeJdi93Q--PKbfuKh7rd07C4XQp7o8Av51vqilN609w1zKXmLHbGIi09AdzJYdAYX-UNB49pKWx_i_pSu36LwV_o1fQkb0%3D&q=Smile+by+Dr+Kareen+-+Dental+Clinic+Reviews&sa=X&ved=2ahUKEwi0nNT6rIePAxXv4DgGHTQyEg0Q0bkNegQIHxAE"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center px-6 py-3 bg-teal-700 text-white font-medium rounded-lg hover:bg-teal-800 transition-colors shadow-md"
+              >
+                <img
+                  src="https://www.google.com/favicon.ico"
+                  alt="Google Logo"
+                  className="h-5 mr-2"
+                />
+                More on Google Reviews
+              </a>
+            </div>
           </div>
-          <button
-            onClick={nextTestimonial}
-            className="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center hover:bg-teal-700 transition-all duration-300 hover:scale-110 shadow-lg ml-4"
-            aria-label="Next testimonials"
-          >
-            <ChevronRight className="h-6 w-6 text-white" />
-          </button>
         </div>
-      ) : (
-        <div className="text-center text-gray-500">
-          <p>No testimonials available at the moment.</p>
-        </div>
-      )}
-      <div className="text-center mt-8">
-        <a
-          href="https://www.google.com/search?sca_esv=4978fba7b0bac1f0&rlz=1C1CHBD_enNP958NP958&biw=1536&bih=730&sxsrf=AE3TifPVUO1oRlbNP78cpFRRaK4onb_07w:1755073144495&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-EwZWVuYW0g8KF2vPu6clfA4Tc01fZMFebuAK3ewteCeJdi93Q--PKbfuKh7rd07C4XQp7o8Av51vqilN609w1zKXmLHbGIi09AdzJYdAYX-UNB49pKWx_i_pSu36LwV_o1fQkb0%3D&q=Smile+by+Dr+Kareen+-+Dental+Clinic+Reviews&sa=X&ved=2ahUKEwi0nNT6rIePAxXv4DgGHTQyEg0Q0bkNegQIHxAE"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center px-6 py-3 bg-teal-700 text-white font-medium rounded-lg hover:bg-teal-800 transition-colors shadow-md"
-        >
-          <img
-            src="https://www.google.com/favicon.ico"
-            alt="Google Logo"
-            className="h-5 mr-2"
-          />
-          More on Google Reviews
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
 
       <section className="py-12 relative bg-teal-800 text-white">
         <div className="container mx-auto px-4 text-center">
