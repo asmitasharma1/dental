@@ -263,7 +263,7 @@ export default function WhyUsSection() {
             <div className="relative flex justify-center">
               <div className="absolute inset-0 bg-gradient-to-br from-teal-200/30 to-cyan-200/30 rounded-3xl blur-2xl transform rotate-6"></div>
               <Image
-                src="/images/whyus.webp"
+                src="/images/why.webp"
                 alt="Happy patients at Dr. Kareen's Clinic"
                 width={500}
                 height={600}
