@@ -1,5 +1,6 @@
 "use client"
 import { useState, useEffect, useCallback } from "react"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import {
@@ -26,6 +27,8 @@ import {
   CreditCard,
   ArrowUp,
   Calendar,
+  ShoppingCart,
+  Zap,
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -90,6 +93,16 @@ const achievements = [
   { number: "100%", label: "Safe Procedures", icon: Shield },
   { number: "4.9/5", label: "Patient Rating", icon: Star },
 ]
+
+
+  const handleWhatsAppClick = () => {
+    const phoneNumber = "9803062084" // Replace with your actual WhatsApp number
+    const message = "Hi! I'm interested in your dental products and the 20% off offer."
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
+    window.open(whatsappUrl, "_blank")
+  }
+
+
 const topServices = [
   {
     title: "Professional Teeth Cleaning & Scaling",
@@ -159,6 +172,7 @@ const missionValues = [
 //     service: "Restorative Dentistry",
 //   },
 // ]
+
 export default function HomePage() {
   const [currentService, setCurrentService] = useState(0)
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
@@ -746,6 +760,90 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+     {/* Banner */}
+      <section className="py-1 relative bg-white">
+        <section className="relative bg-white border border-gray-200 rounded-2xl mx-4 my-10 shadow-md hover:shadow-xl transition-all duration-300">
+        <div className="relative z-10 px-8 py-12">
+          <div className="grid lg:grid-cols-2 gap-10 items-center">
+            
+            {/* Left Content */}
+            <div className="space-y-6 mx-0 md:mx-20">
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center bg-teal-600 text-white px-3 py-1 text-sm font-semibold rounded-full shadow-sm">
+                  <ShoppingCart className="w-4 h-4 mr-1" />
+                  Dental Products
+                </span>
+              </div>
+
+              <div className="space-y-4">
+                <h1 className="text-4xl lg:text-5xl font-bold leading-tight text-gray-900">
+                  Exclusive Dental Products
+                  <span className="block text-5xl lg:text-6xl text-teal-600">Available</span>
+                </h1>
+
+                <p className="text-lg text-gray-600">
+                  Explore high-quality dental care essentials like floss, toothbrush, toothpaste, and more.
+                </p>
+
+                <div className="flex flex-wrap items-center gap-2 text-teal-700">
+                  <span className="text-sm">Order instantly via</span>
+                  <span className="border border-teal-500 text-teal-700 font-bold text-sm px-2 py-1 rounded-md">
+                    WhatsApp
+                  </span>
+                </div>
+              </div>
+
+              <a
+                href={`https://wa.me/9851359775?text=${encodeURIComponent(
+                  "Hi! I'm interested in your dental care products."
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button className="bg-teal-600 hover:bg-teal-700 text-white px-7 py-3 my-6 text-base font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+                  <ShoppingCart className="w-5 h-5 mr-2" />
+                  Order Now
+                </Button>
+              </a>
+            </div>
+
+            {/* Right Product Display */}
+            <div className="flex justify-center lg:justify-end">
+              <div className="relative max-w-sm w-full">
+                <div className="relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+                  <img
+                    src="/images/product1.webp" // <-- Just one fixed image
+                    alt="Dental Products"
+                    className="w-full h-56 object-contain rounded-lg"
+                  />
+
+                  <div className="absolute bottom-3 left-3 bg-gray-50 px-4 py-1 rounded-full text-xs font-semibold text-teal-800 shadow-sm">
+                    Premium Quality
+                  </div>
+                </div>
+
+                {/* Floating product cards */}
+                <div className="bg-white rounded-xl p-3 shadow-md hover:shadow-lg transform rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-300 absolute -top-6 -left-6">
+                  <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center mb-2 shadow-sm">
+                    <Star className="w-4 h-4 text-teal-600" />
+                  </div>
+                  <div className="text-xs font-bold text-gray-900">5★ Rated</div>
+                </div>
+
+                <div className="bg-white rounded-xl p-3 shadow-md hover:shadow-lg transform -rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-300 absolute -bottom-6 -right-6">
+                  <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center mb-2 shadow-sm">
+                    <Zap className="w-4 h-4 text-teal-600" />
+                  </div>
+                  <div className="text-xs font-bold text-gray-900">Fast Delivery</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      </section>
+
 
       <section className="py-24 relative bg-white">
   <div className="absolute inset-0 bg-gradient-to-br from-gray-50/90 to-teal-50/90 backdrop-blur-sm"></div>
