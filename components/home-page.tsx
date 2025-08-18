@@ -789,55 +789,55 @@ export default function HomePage() {
           <div className="relative z-10 px-8 py-10">
             <div className="grid lg:grid-cols-2 gap-10 items-center">
               {/* Left Content - Wider Container, Shifted Right */}
-              <div className="space-y-8 mx-0 md:mx-36 lg:mx-48 md:w-3/4 lg:w-4/5">
-                <div className="flex items-center gap-2">
-                  <span className="inline-flex items-center bg-teal-600 text-white px-3 py-1 text-sm font-semibold rounded-full shadow-sm">
-                    <ShoppingCart className="w-4 h-4 mr-1" />
-                    Dental Products
-                  </span>
-                </div>
+              <div className="space-y-8 mx-auto md:mx-36 lg:mx-48 md:w-3/4 lg:w-4/5 text-center md:text-left">
+  <div className="flex items-center justify-center md:justify-start gap-2">
+    <span className="inline-flex items-center bg-teal-600 text-white px-3 py-1 text-sm font-semibold rounded-full shadow-sm">
+      <ShoppingCart className="w-4 h-4 mr-1" />
+      Dental Products
+    </span>
+  </div>
 
-                <div className="space-y-6">
-                  <h1 className="text-4xl lg:text-5xl font-bold leading-tight text-gray-900">
-                    Exclusive Dental Products
-                    <span className="block text-5xl lg:text-6xl text-teal-600">Available</span>
-                  </h1>
+  <div className="space-y-6">
+    <h1 className="text-4xl lg:text-5xl font-bold leading-tight text-gray-900">
+      Exclusive Dental Products
+      <span className="block text-5xl lg:text-6xl text-teal-600">Available</span>
+    </h1>
 
-                  <p className="text-lg text-gray-600">
-                    Explore high-quality dental care essentials like floss, toothbrush, toothpaste, and more.
-                  </p>
+    <p className="text-lg text-gray-600">
+      Explore high-quality dental care essentials like floss, toothbrush, toothpaste, and more.
+    </p>
 
-                  <div className="flex flex-wrap items-center gap-2 text-teal-700">
-                    <span className="text-sm">Order instantly via</span>
-                    <span className="border border-teal-500 text-teal-700 font-bold text-sm px-2 py-1 rounded-md">
-                      WhatsApp
-                    </span>
-                  </div>
-                </div>
+    <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 text-teal-700">
+      <span className="text-sm">Order instantly via</span>
+      <span className="border border-teal-500 text-teal-700 font-bold text-sm px-2 py-1 rounded-md">
+        WhatsApp
+      </span>
+    </div>
+  </div>
 
-                <div className="flex flex-wrap items-center gap-4">
-                  <a
-                    href={`https://wa.me/9851359775?text=${encodeURIComponent(
-                      "Hi! I'm interested in your dental care products."
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Button className="bg-teal-600 hover:bg-teal-700 text-white px-7 py-3 text-base font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
-                      <ShoppingCart className="w-5 h-5 mr-2" />
-                      Order Now
-                    </Button>
-                  </a>
-                  <Link href="/gallery?category=Products">
-                    <Button
-                      variant="outline"
-                      className="border-teal-600 text-teal-600 hover:bg-teal-50 px-7 py-3 text-base font-semibold rounded-full shadow-md hover:shadow-lg transition-all duration-300"
-                    >
-                      View More Products
-                    </Button>
-                  </Link>
-                </div>
-              </div>
+  <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
+    <a
+      href={`https://wa.me/9851359775?text=${encodeURIComponent(
+        "Hi! I'm interested in your dental care products."
+      )}`}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <Button className="bg-teal-600 hover:bg-teal-700 text-white px-7 py-3 text-base font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+        <ShoppingCart className="w-5 h-5 mr-2" />
+        Order Now
+      </Button>
+    </a>
+    <Link href="/gallery?category=Products">
+      <Button
+        variant="outline"
+        className="border-teal-600 text-teal-600 hover:bg-teal-50 px-7 py-3 text-base font-semibold rounded-full shadow-md hover:shadow-lg transition-all duration-300"
+      >
+        View More Products
+      </Button>
+    </Link>
+  </div>
+</div>
 
               {/* Right Product Display - Larger Image */}
               <div className="flex justify-center lg:justify-end">
