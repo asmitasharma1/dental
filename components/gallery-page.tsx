@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
-import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -16,6 +15,11 @@ interface GalleryImage {
   category: string;
 }
 
+interface GalleryProps {
+  selectedCategory: string;
+  setSelectedCategory: (category: string) => void;
+}
+
 const categories = [
   "All",
   "Clinic Interior",
@@ -28,23 +32,13 @@ const categories = [
   "Products",
 ];
 
-export default function GalleryPage() {
-  const searchParams = useSearchParams();
+export default function Gallery({ selectedCategory, setSelectedCategory }: GalleryProps) {
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState("All");
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [imageLoadStates, setImageLoadStates] = useState<Record<number, boolean>>({});
   const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    // Check for category query parameter on page load
-    const category = searchParams.get("category");
-    if (category && categories.includes(category)) {
-      setSelectedCategory(category);
-    }
-  }, [searchParams]);
 
   useEffect(() => {
     fetchImages();
