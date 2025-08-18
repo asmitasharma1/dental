@@ -22,7 +22,7 @@ interface GalleryImage {
   created_at: string
 }
 
-const categories = ["All", "Clinic Interior", "Equipment", "Treatment Rooms", "Procedures", "Opening Day", "Non Profit Camp", "Doctor"]
+const categories = ["All", "Clinic Interior", "Equipment", "Treatment Rooms", "Procedures", "Opening Day", "Non Profit Camp", "Doctor","Products"]
 
 export default function AdminGallery() {
   const [images, setImages] = useState<GalleryImage[]>([])

@@ -760,6 +760,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+
       <section className="py-1 relative bg-gradient-to-b from-white to-teal-50">
         {/* Subtle Wave SVG */}
         <div className="absolute top-0 left-0 w-full overflow-hidden leading-none">
@@ -813,18 +815,28 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <a
-                  href={`https://wa.me/9851359775?text=${encodeURIComponent(
-                    "Hi! I'm interested in your dental care products."
-                  )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Button className="bg-teal-600 hover:bg-teal-700 text-white px-7 py-3 my-6 text-base font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
-                    <ShoppingCart className="w-5 h-5 mr-2" />
-                    Order Now
-                  </Button>
-                </a>
+                <div className="flex flex-wrap items-center gap-4">
+                  <a
+                    href={`https://wa.me/9851359775?text=${encodeURIComponent(
+                      "Hi! I'm interested in your dental care products."
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button className="bg-teal-600 hover:bg-teal-700 text-white px-7 py-3 text-base font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+                      <ShoppingCart className="w-5 h-5 mr-2" />
+                      Order Now
+                    </Button>
+                  </a>
+                  <Link href="/gallery?category=Products">
+                    <Button
+                      variant="outline"
+                      className="border-teal-600 text-teal-600 hover:bg-teal-50 px-7 py-3 text-base font-semibold rounded-full shadow-md hover:shadow-lg transition-all duration-300"
+                    >
+                      View More Products
+                    </Button>
+                  </Link>
+                </div>
               </div>
 
               {/* Right Product Display - Larger Image */}
@@ -864,8 +876,7 @@ export default function HomePage() {
       </section>
 
 
-
-      <section className="py-24 relative bg-white">
+      <section className="py-24 relative bg-white mt-0">
         <div className="absolute inset-0 bg-gradient-to-br from-gray-50/90 to-teal-50/90 backdrop-blur-sm"></div>
         <div className="relative z-10">
           <div className="container mx-auto px-4 relative z-10">

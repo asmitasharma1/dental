@@ -1,158 +1,170 @@
-"use client"
-import { useState, useEffect, useCallback } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Dialog, DialogContent } from "@/components/ui/dialog"
-import { X, ChevronLeft, ChevronRight, ArrowUp, } from "lucide-react"
-import Image from "next/image"
-import Navbar from "@/components/navbar"
-import Footer from "@/components/footer"
+"use client";
+import { useState, useEffect, useCallback } from "react";
+import { useSearchParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { X, ChevronLeft, ChevronRight, ArrowUp } from "lucide-react";
+import Image from "next/image";
+import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
 
 interface GalleryImage {
-  id: number
-  src: string
-  alt: string
-  category: string
+  id: number;
+  src: string;
+  alt: string;
+  category: string;
 }
 
-const categories = ["All", "Clinic Interior", "Equipment", "Treatment Rooms", "Procedures", "Opening Day", "Non Profit Camp", "Doctor"]
+const categories = [
+  "All",
+  "Clinic Interior",
+  "Equipment",
+  "Treatment Rooms",
+  "Procedures",
+  "Opening Day",
+  "Non Profit Camp",
+  "Doctor",
+  "Products",
+];
 
 export default function GalleryPage() {
-  const [images, setImages] = useState<GalleryImage[]>([])
-  const [loading, setLoading] = useState(true)
-  const [selectedCategory, setSelectedCategory] = useState("All")
-  const [lightboxOpen, setLightboxOpen] = useState(false)
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
-  const [imageLoadStates, setImageLoadStates] = useState<Record<number, boolean>>({})
-  const [isVisible, setIsVisible] = useState(false)
-
+  const searchParams = useSearchParams();
+  const [images, setImages] = useState<GalleryImage[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [imageLoadStates, setImageLoadStates] = useState<Record<number, boolean>>({});
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    fetchImages()
-  }, [])
+    // Check for category query parameter on page load
+    const category = searchParams.get("category");
+    if (category && categories.includes(category)) {
+      setSelectedCategory(category);
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    fetchImages();
+  }, []);
 
   const fetchImages = async () => {
     try {
-      const response = await fetch("/api/gallery")
+      const response = await fetch("/api/gallery");
       if (response.ok) {
-        const data: GalleryImage[] = await response.json()
-        setImages(data)
+        const data: GalleryImage[] = await response.json();
+        setImages(data);
       }
     } catch (error) {
-      console.error("Error fetching images:", error)
+      console.error("Error fetching images:", error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
-  const filteredImages = images.filter((image) => selectedCategory === "All" || image.category === selectedCategory)
+  const filteredImages = images.filter(
+    (image) => selectedCategory === "All" || image.category === selectedCategory
+  );
 
   const openLightbox = (index: number) => {
-    setCurrentImageIndex(index)
-    setLightboxOpen(true)
-  }
+    setCurrentImageIndex(index);
+    setLightboxOpen(true);
+  };
 
   const closeLightbox = () => {
-    setLightboxOpen(false)
-  }
+    setLightboxOpen(false);
+  };
 
   const showNextImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % filteredImages.length)
-  }
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % filteredImages.length);
+  };
 
   const showPrevImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + filteredImages.length) % filteredImages.length)
-  }
+    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + filteredImages.length) % filteredImages.length);
+  };
 
   const handleImageLoad = (imageId: number) => {
-    setImageLoadStates((prev) => ({ ...prev, [imageId]: true }))
-  }
+    setImageLoadStates((prev) => ({ ...prev, [imageId]: true }));
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: globalThis.KeyboardEvent) => {
-      if (!lightboxOpen) return
+      if (!lightboxOpen) return;
       if (e.key === "ArrowRight") {
-        showNextImage()
+        showNextImage();
       } else if (e.key === "ArrowLeft") {
-        showPrevImage()
+        showPrevImage();
       } else if (e.key === "Escape") {
-        closeLightbox()
+        closeLightbox();
       }
-    }
+    };
 
     if (lightboxOpen) {
-      window.addEventListener("keydown", handleKeyDown)
+      window.addEventListener("keydown", handleKeyDown);
       return () => {
-        window.removeEventListener("keydown", handleKeyDown)
-      }
+        window.removeEventListener("keydown", handleKeyDown);
+      };
     }
-  }, [lightboxOpen, filteredImages.length])
+  }, [lightboxOpen, filteredImages.length]);
 
-   const handleScroll = useCallback(() => {
-      const windowScrollY = window.scrollY || window.pageYOffset
-      const documentScrollTop = document.documentElement.scrollTop
-      const bodyScrollTop = document.body.scrollTop
-  
-      // Use the maximum of all scroll positions
-      const scrollTop = Math.max(windowScrollY, documentScrollTop, bodyScrollTop)
-  
-      if (scrollTop > 100) {
-        setIsVisible(true)
-      } else {
-        setIsVisible(false)
-      }
-    }, [])
-  
-    useEffect(() => {
-      const addScrollListeners = () => {
-        window.addEventListener("scroll", handleScroll, { passive: true })
-        document.addEventListener("scroll", handleScroll, { passive: true })
-        document.body.addEventListener("scroll", handleScroll, { passive: true })
-      }
-  
-      const removeScrollListeners = () => {
-        window.removeEventListener("scroll", handleScroll)
-        document.removeEventListener("scroll", handleScroll)
-        document.body.removeEventListener("scroll", handleScroll)
-      }
-  
-      addScrollListeners()
-  
-      // Check initial position
-      handleScroll()
-  
-      return () => {
-        removeScrollListeners()
-      }
-    }, [handleScroll])
+  const handleScroll = useCallback(() => {
+    const windowScrollY = window.scrollY || window.pageYOffset;
+    const documentScrollTop = document.documentElement.scrollTop;
+    const bodyScrollTop = document.body.scrollTop;
+
+    const scrollTop = Math.max(windowScrollY, documentScrollTop, bodyScrollTop);
+
+    if (scrollTop > 100) {
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    const addScrollListeners = () => {
+      window.addEventListener("scroll", handleScroll, { passive: true });
+      document.addEventListener("scroll", handleScroll, { passive: true });
+      document.body.addEventListener("scroll", handleScroll, { passive: true });
+    };
+
+    const removeScrollListeners = () => {
+      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("scroll", handleScroll);
+      document.body.removeEventListener("scroll", handleScroll);
+    };
+
+    addScrollListeners();
+    handleScroll();
+
+    return () => {
+      removeScrollListeners();
+    };
+  }, [handleScroll]);
 
   const scrollToTop = () => {
-    // Try multiple scroll methods for better compatibility
     try {
-      // Method 1: Smooth scroll
       window.scrollTo({
         top: 0,
         left: 0,
         behavior: "smooth",
-      })
+      });
 
-      // Method 2: Fallback for browsers that don't support smooth scroll
       setTimeout(() => {
-        document.documentElement.scrollTop = 0
-        document.body.scrollTop = 0
-        window.pageYOffset = 0
-      }, 100)
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        window.pageYOffset = 0;
+      }, 100);
     } catch (error) {
-      // Method 3: Instant scroll fallback
-      document.documentElement.scrollTop = 0
-      document.body.scrollTop = 0
-      window.scrollTo(0, 0)
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      window.scrollTo(0, 0);
     }
-  }
-
+  };
 
   return (
-
     <div className="min-h-screen bg-white">
       <section className="py-24 bg-gradient-to-br from-teal-50 via-white to-cyan-50 relative overflow-hidden">
         <Navbar />
@@ -202,7 +214,6 @@ export default function GalleryPage() {
                 >
                   <CardContent className="p-0">
                     <div className="relative aspect-[5/4] overflow-hidden bg-gray-100">
-                      {/* Loading skeleton */}
                       {!imageLoadStates[image.id] && (
                         <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
                           <div className="text-gray-400 text-sm">Loading...</div>
@@ -213,11 +224,12 @@ export default function GalleryPage() {
                         src={image.src || "/placeholder.svg?height=400&width=500&query=gallery image"}
                         alt={image.alt}
                         fill
-                        className={`object-cover group-hover:scale-105 transition-transform duration-300 ${imageLoadStates[image.id] ? "opacity-100" : "opacity-0"
-                          }`}
+                        className={`object-cover group-hover:scale-105 transition-transform duration-300 ${
+                          imageLoadStates[image.id] ? "opacity-100" : "opacity-0"
+                        }`}
                         sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                         quality={75}
-                        loading= "lazy"
+                        loading="lazy"
                         onLoad={() => handleImageLoad(image.id)}
                         placeholder="blur"
                         blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
@@ -234,7 +246,6 @@ export default function GalleryPage() {
           )}
         </main>
 
-        {/* Lightbox Modal */}
         <Dialog open={lightboxOpen} onOpenChange={setLightboxOpen}>
           <DialogContent className="max-w-5xl h-[90vh] p-0 bg-transparent border-none shadow-none flex items-center justify-center">
             {filteredImages.length > 0 && (
@@ -289,7 +300,6 @@ export default function GalleryPage() {
                 </div>
               </div>
             )}
-
           </DialogContent>
         </Dialog>
       </section>
@@ -297,15 +307,14 @@ export default function GalleryPage() {
       <Footer />
 
       {isVisible && (
-          <button
-            onClick={scrollToTop}
-            className="fixed bottom-6 right-6 z-[9999] bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 border-2 border-white/20"
-            aria-label="Scroll to top"
-          >
-            <ArrowUp className="h-5 w-5" />
-          </button>
-        )}
-    </div >
-
-  )
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 z-[9999] bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 border-2 border-white/20"
+          aria-label="Scroll to top"
+        >
+          <ArrowUp className="h-5 w-5" />
+        </button>
+      )}
+    </div>
+  );
 }

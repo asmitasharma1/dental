@@ -4,7 +4,7 @@ import { unlink } from "fs/promises"
 import path from "path"
 import { query } from "@/lib/db"
 
-const VALID_CATEGORIES = ["Clinic Interior", "Equipment", "Treatment Rooms", "Procedures", "Opening Day", "Non Profit Camp", "Doctor"]
+const VALID_CATEGORIES = ["Clinic Interior", "Equipment", "Treatment Rooms", "Procedures", "Opening Day", "Non Profit Camp", "Doctor", "Products"]
 
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
   try {
