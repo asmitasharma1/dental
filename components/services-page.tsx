@@ -72,7 +72,7 @@ export default function ServicesPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const [currentCaseIndex, setCurrentCaseIndex] = useState(0)
   const [showAfter, setShowAfter] = useState(false)
-  const servicesPerPage = 6
+  const servicesPerPage = 9
   const [isVisible, setIsVisible] = useState(false)
 
   // Calculate pagination
