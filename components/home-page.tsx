@@ -1249,7 +1249,7 @@ const [selectedImage, setSelectedImage] = useState<ProductImage | null>(null);
         close
       </div>
       <div className="sm:hidden">
-        {zoomLevel > 1 ? "Drag to pan • " : ""}Swipe • Pinch to zoom
+        {zoomLevel > 1 ? "Drag to pan • " : ""}
       </div>
     </div>
   </div>
