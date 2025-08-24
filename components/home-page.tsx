@@ -29,6 +29,11 @@ import {
   Calendar,
   ShoppingCart,
   Zap,
+  ZoomOut,
+  ZoomIn,
+  RotateCcw,
+  X,
+  RotateCw,
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -43,6 +48,16 @@ interface Testimonial {
   rating: number
   is_active: boolean
   created_at: string
+}
+
+type ProductImage = {
+  src: string;
+  alt: string;
+};
+
+interface VisibleImage extends ProductImage {
+  position: number;
+  index: number;
 }
 
 const whyUsReasons = [
@@ -179,7 +194,17 @@ export default function HomePage() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([])
   const [isVisible, setIsVisible] = useState(false)
   const [loading, setLoading] = useState(true)
-  const [currentProductImage, setCurrentProductImage] = useState(0)
+  const [currentProductImage, setCurrentProductImage] = useState(0);
+const [selectedImage, setSelectedImage] = useState<ProductImage | null>(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [zoomLevel, setZoomLevel] = useState(1);
+  const [rotation, setRotation] = useState(0);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [imagePosition, setImagePosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [touchStart, setTouchStart] = useState({ x: 0, y: 0 });
+  const [touchDistance, setTouchDistance] = useState(0);
+  const [initialZoom, setInitialZoom] = useState(1);
 
 
     const productImages = [
@@ -362,22 +387,185 @@ export default function HomePage() {
     return displayed;
   };
 
-  useEffect(() => {
-  const interval = setInterval(() => {
-    setCurrentProductImage((prev) => (prev + 1) % productImages.length);
-  }, 3000);
+    useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentProductImage((prev) => (prev + 1) % productImages.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [productImages.length]);
 
-  return () => clearInterval(interval);
-}, [productImages.length]);
-
-  const getVisibleProductImages = () => {
-    const visible = []
+  const getVisibleProductImages = (): VisibleImage[] => {
+    const images: VisibleImage[] = [];
     for (let i = -1; i <= 1; i++) {
-      const index = (currentProductImage + i + productImages.length) % productImages.length
-      visible.push({ ...productImages[index], position: i })
+      const index = (currentProductImage + i + productImages.length) % productImages.length;
+      images.push({
+        ...productImages[index],
+        position: i,
+        index: index
+      });
     }
-    return visible
+    return images;
   };
+
+  const openImageModal = (image: ProductImage, index: number) => {
+    setSelectedImage(image);
+    setSelectedImageIndex(index);
+    setZoomLevel(1);
+    setRotation(0);
+    setImagePosition({ x: 0, y: 0 });
+  };
+
+  const closeImageModal = () => {
+    setSelectedImage(null);
+    setSelectedImageIndex(0);
+    setZoomLevel(1);
+    setRotation(0);
+    setImagePosition({ x: 0, y: 0 });
+  };
+
+  const navigateToNextImage = () => {
+    const nextIndex = (selectedImageIndex + 1) % productImages.length;
+    setSelectedImageIndex(nextIndex);
+    setSelectedImage(productImages[nextIndex]);
+    setZoomLevel(1);
+    setRotation(0);
+    setImagePosition({ x: 0, y: 0 });
+  };
+
+  const navigateToPreviousImage = () => {
+    const prevIndex = (selectedImageIndex - 1 + productImages.length) % productImages.length;
+    setSelectedImageIndex(prevIndex);
+    setSelectedImage(productImages[prevIndex]);
+    setZoomLevel(1);
+    setRotation(0);
+    setImagePosition({ x: 0, y: 0 });
+  };
+
+  const handleZoomIn = () => {
+    setZoomLevel(prev => Math.min(prev + 0.5, 5));
+  };
+
+  const handleZoomOut = () => {
+    setZoomLevel(prev => Math.max(prev - 0.5, 0.5));
+  };
+
+  const handleRotate = () => {
+    setRotation(prev => prev + 90);
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (zoomLevel > 1) {
+      setIsDragging(true);
+      setDragStart({
+        x: e.clientX - imagePosition.x,
+        y: e.clientY - imagePosition.y
+      });
+    }
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (isDragging && zoomLevel > 1) {
+      setImagePosition({
+        x: e.clientX - dragStart.x,
+        y: e.clientY - dragStart.y
+      });
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  // Touch event handlers for mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (e.touches.length === 1) {
+      // Single touch - start dragging
+      if (zoomLevel > 1) {
+        setIsDragging(true);
+        setTouchStart({
+          x: e.touches[0].clientX - imagePosition.x,
+          y: e.touches[0].clientY - imagePosition.y
+        });
+      }
+    } else if (e.touches.length === 2) {
+      // Two finger touch - start pinch zoom
+      const touch1 = e.touches[0];
+      const touch2 = e.touches[1];
+      const distance = Math.sqrt(
+        Math.pow(touch1.clientX - touch2.clientX, 2) +
+        Math.pow(touch1.clientY - touch2.clientY, 2)
+      );
+      setTouchDistance(distance);
+      setInitialZoom(zoomLevel);
+      setIsDragging(false);
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    e.preventDefault(); // Prevent scrolling
+    
+    if (e.touches.length === 1 && isDragging && zoomLevel > 1) {
+      // Single touch - drag
+      setImagePosition({
+        x: e.touches[0].clientX - touchStart.x,
+        y: e.touches[0].clientY - touchStart.y
+      });
+    } else if (e.touches.length === 2) {
+      // Two finger touch - pinch zoom
+      const touch1 = e.touches[0];
+      const touch2 = e.touches[1];
+      const distance = Math.sqrt(
+        Math.pow(touch1.clientX - touch2.clientX, 2) +
+        Math.pow(touch1.clientY - touch2.clientY, 2)
+      );
+      
+      if (touchDistance > 0) {
+        const scale = distance / touchDistance;
+        const newZoom = Math.max(0.5, Math.min(5, initialZoom * scale));
+        setZoomLevel(newZoom);
+      }
+    }
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (e.touches.length === 0) {
+      setIsDragging(false);
+      setTouchDistance(0);
+    }
+  };
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (!selectedImage) return;
+      
+      switch (e.key) {
+        case 'Escape':
+          closeImageModal();
+          break;
+        case 'ArrowLeft':
+          navigateToPreviousImage();
+          break;
+        case 'ArrowRight':
+          navigateToNextImage();
+          break;
+        case '+':
+        case '=':
+          handleZoomIn();
+          break;
+        case '-':
+          handleZoomOut();
+          break;
+        case 'r':
+        case 'R':
+          handleRotate();
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [selectedImage, selectedImageIndex]);
 
 
   return (
@@ -819,148 +1007,240 @@ export default function HomePage() {
           </svg>
         </div>
 
-           <section
-      className="relative bg-gradient-to-br from-white to-teal-50 border border-teal-100 rounded-2xl mx-4 my-10 shadow-md hover:shadow-xl transition-all duration-300"
-      style={{
-        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M30 10c-5.5 0-10 4.5-10 10s4.5 10 10 10c2.5 0 4.8-0.9 6.6-2.4L40 34c0 2.2-1.8 4-4 4H24c-2.2 0-4-1.8-4-4v-8c0-2.2 1.8-4 4-4h12c2.2 0 4 1.8 4 4l-3.4 6.4C38.8 31.9 41 28.2 41 24c0-7.7-6.3-14-14-14z' fill='%2395f3d9' fill-opacity='0.1'/%3E%3C/svg%3E")`,
-        backgroundRepeat: 'repeat',
-        backgroundSize: '60px 60px',
-      }}
-    >
-      <div className="relative z-10 px-8 py-10">
-        <div className="grid lg:grid-cols-2 gap-10 items-center">
-          {/* Left Content */}
-          <div className="space-y-8 mx-auto md:mx-36 lg:mx-48 md:w-3/4 lg:w-4/5 text-center md:text-left">
-            <div className="flex items-center justify-center md:justify-start gap-2">
-              <span className="inline-flex items-center bg-teal-600 text-white px-3 py-1 text-sm font-semibold rounded-full shadow-sm">
-                <ShoppingCart className="w-4 h-4 mr-1" />
-                Dental Products
-              </span>
-            </div>
+        <section
+          className="relative bg-gradient-to-br from-white to-teal-50 border border-teal-100 rounded-2xl mx-4 my-10 shadow-md hover:shadow-xl transition-all duration-300"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M30 10c-5.5 0-10 4.5-10 10s4.5 10 10 10c2.5 0 4.8-0.9 6.6-2.4L40 34c0 2.2-1.8 4-4 4H24c-2.2 0-4-1.8-4-4v-8c0-2.2 1.8-4 4-4h12c2.2 0 4 1.8 4 4l-3.4 6.4C38.8 31.9 41 28.2 41 24c0-7.7-6.3-14-14-14z' fill='%2395f3d9' fill-opacity='0.1'/%3E%3C/svg%3E")`,
+            backgroundRepeat: 'repeat',
+            backgroundSize: '60px 60px',
+          }}
+        >
+          <div className="relative z-10 px-8 py-10">
+            <div className="grid lg:grid-cols-2 gap-10 items-center">
+              {/* Left Content */}
+              <div className="space-y-8 mx-auto md:mx-36 lg:mx-48 md:w-3/4 lg:w-4/5 text-center md:text-left">
+                <div className="flex items-center justify-center md:justify-start gap-2">
+                  <span className="inline-flex items-center bg-teal-600 text-white px-3 py-1 text-sm font-semibold rounded-full shadow-sm">
+                    <ShoppingCart className="w-4 h-4 mr-1" />
+                    Dental Products
+                  </span>
+                </div>
 
-            <div className="space-y-6">
-              <h1 className="text-4xl lg:text-5xl font-bold leading-tight text-gray-900">
-                Exclusive Dental Products
-                <span className="block text-5xl lg:text-6xl text-teal-600">Available</span>
-              </h1>
+                <div className="space-y-6">
+                  <h1 className="text-4xl lg:text-5xl font-bold leading-tight text-gray-900">
+                    Exclusive Dental Products
+                    <span className="block text-5xl lg:text-6xl text-teal-600">Available</span>
+                  </h1>
 
-              <p className="text-lg text-gray-600">
-                Explore high-quality dental care essentials like floss, toothbrush, toothpaste, and more.
-              </p>
+                  <p className="text-lg text-gray-600">
+                    Explore high-quality dental care essentials like floss, toothbrush, toothpaste, and more.
+                  </p>
 
-              <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 text-teal-700">
-                <span className="text-sm">Order instantly via</span>
-                <span className="border border-teal-500 text-teal-700 font-bold text-sm px-2 py-1 rounded-md">
-                  WhatsApp
-                </span>
+                  <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 text-teal-700">
+                    <span className="text-sm">Order instantly via</span>
+                    <span className="border border-teal-500 text-teal-700 font-bold text-sm px-2 py-1 rounded-md">
+                      WhatsApp
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
+                  <a
+                    href={`https://wa.me/9851359775?text=${encodeURIComponent(
+                      "Hi! I'm interested in your dental care products.",
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button className="bg-teal-600 hover:bg-teal-700 text-white px-7 py-3 text-base font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+                      <ShoppingCart className="w-5 h-5 mr-2" />
+                      Order Now
+                    </Button>
+                  </a>
+                  <Button
+                    variant="outline"
+                    className="border-teal-600 text-teal-600 hover:bg-teal-50 px-7 py-3 text-base font-semibold rounded-full shadow-md hover:shadow-lg transition-all duration-300 bg-transparent"
+                  >
+                    View More Products
+                  </Button>
+                </div>
+              </div>
+
+              {/* Right Content - Image Carousel */}
+              <div className="flex justify-center lg:justify-end">
+                <div className="relative max-w-lg w-full">
+                  {/* Main carousel container */}
+                  <div className="relative h-96 overflow-hidden rounded-2xl">
+                    {/* Image stack */}
+                    <div className="relative w-full h-full flex items-center justify-center">
+                      {getVisibleProductImages().map((image, index) => {
+                        const { position } = image;
+                        const isCenter = position === 0;
+                        const isLeft = position === -1;
+                        const isRight = position === 1;
+
+                        return (
+                          <div
+                            key={`${currentProductImage}-${index}`}
+                            className={`absolute transition-all duration-500 ease-in-out cursor-pointer ${
+                              isCenter
+                                ? "z-30 scale-100 opacity-100 translate-x-0"
+                                : isLeft
+                                  ? "z-20 scale-75 opacity-60 -translate-x-32"
+                                  : "z-20 scale-75 opacity-60 translate-x-32"
+                            }`}
+                            style={{
+                              width: isCenter ? "280px" : "200px",
+                              height: isCenter ? "320px" : "240px",
+                            }}
+                            onClick={() => openImageModal(image, image.index)}
+                          >
+                            <div className="relative bg-white rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 h-full">
+                              <img
+                                src={image.src || "/placeholder.svg"}
+                                alt={image.alt}
+                                className="w-full h-full object-contain rounded-lg"
+                              />
+
+                              {isCenter && (
+                                <div className="absolute bottom-3 left-3 bg-gray-50 px-4 py-1 rounded-full text-xs font-semibold text-teal-800 shadow-sm">
+                                  Premium Quality
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Navigation dots */}
+                  <div className="flex justify-center space-x-2 mt-6">
+                    {[0, 1, 2].map((dotIndex) => (
+                      <button
+                        key={dotIndex}
+                        className={`w-2 h-2 rounded-full transition-all duration-300 hover:scale-110 ${
+                          dotIndex === (currentProductImage % 3) ? "bg-teal-600 w-6" : "bg-gray-300"
+                        }`}
+                        onClick={() => setCurrentProductImage(dotIndex)}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Floating product cards */}
+                  <div className="bg-white rounded-xl p-3 shadow-md hover:shadow-lg transform rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-300 absolute -top-6 -left-6">
+                    <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center mb-2 shadow-sm">
+                      <Star className="w-4 h-4 text-teal-600" />
+                    </div>
+                    <div className="text-xs font-bold text-gray-900">5★ Rated</div>
+                  </div>
+
+                  <div className="bg-white rounded-xl p-3 shadow-md hover:shadow-lg transform -rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-300 absolute -bottom-6 -right-6">
+                    <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center mb-2 shadow-sm">
+                      <Zap className="w-4 h-4 text-teal-600" />
+                    </div>
+                    <div className="text-xs font-bold text-gray-900">Fast Delivery</div>
+                  </div>
+                </div>
               </div>
             </div>
+          </div>
+        </section>
+      </section>
 
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
-              <a
-                href={`https://wa.me/9851359775?text=${encodeURIComponent(
-                  "Hi! I'm interested in your dental care products.",
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Button className="bg-teal-600 hover:bg-teal-700 text-white px-7 py-3 text-base font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
-                  <ShoppingCart className="w-5 h-5 mr-2" />
-                  Order Now
-                </Button>
-              </a>
-              <Link href="/gallery?category=Products">
-                <Button
-                  variant="outline"
-                  className="border-teal-600 text-teal-600 hover:bg-teal-50 px-7 py-3 text-base font-semibold rounded-full shadow-md hover:shadow-lg transition-all duration-300 bg-transparent"
-                >
-                  View More Products
-                </Button>
-              </Link>
+      {/* Full-screen Image Modal */}
+      {selectedImage && (
+        <div className="fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center">
+          {/* Close button */}
+          <button
+            onClick={closeImageModal}
+            className="absolute top-2 right-2 sm:top-4 sm:right-4 z-60 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 rounded-full transition-all duration-200"
+          >
+            <X className="w-5 h-5 sm:w-6 sm:h-6" />
+          </button>
+
+          {/* Navigation buttons */}
+          <button
+            onClick={navigateToPreviousImage}
+            className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 z-60 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 sm:p-3 rounded-full transition-all duration-200"
+          >
+            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+          </button>
+          
+          <button
+            onClick={navigateToNextImage}
+            className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 z-60 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 sm:p-3 rounded-full transition-all duration-200"
+          >
+            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+          </button>
+
+          {/* Control panel - responsive layout */}
+          <div className="absolute top-2 left-2 sm:top-4 sm:left-4 z-60 flex flex-wrap gap-1 sm:gap-2">
+            <button
+              onClick={handleZoomOut}
+              className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-1.5 sm:p-2 rounded-full transition-all duration-200"
+              disabled={zoomLevel <= 0.5}
+            >
+              <ZoomOut className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
+            <button
+              onClick={handleZoomIn}
+              className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-1.5 sm:p-2 rounded-full transition-all duration-200"
+              disabled={zoomLevel >= 5}
+            >
+              <ZoomIn className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
+            <button
+              onClick={handleRotate}
+              className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-1.5 sm:p-2 rounded-full transition-all duration-200"
+            >
+              <RotateCw className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
+            <div className="bg-white bg-opacity-20 text-white px-2 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm">
+              {Math.round(zoomLevel * 100)}%
             </div>
           </div>
 
-          {/* Right Content - Image Carousel */}
-          <div className="flex justify-center lg:justify-end">
-            <div className="relative max-w-lg w-full">
-              {/* Main carousel container */}
-              <div className="relative h-96 overflow-hidden rounded-2xl">
-                {/* Image stack */}
-                <div className="relative w-full h-full flex items-center justify-center">
-                  {getVisibleProductImages().map((image, index) => {
-                    const { position } = image
-                    const isCenter = position === 0
-                    const isLeft = position === -1
-                    const isRight = position === 1
+          {/* Image container with touch support */}
+          <div 
+            className="w-full h-full flex items-center justify-center overflow-hidden cursor-move touch-none"
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            <img
+              src={selectedImage.src}
+              alt={selectedImage.alt}
+              className="max-w-none transition-transform duration-200 select-none max-h-full max-w-full object-contain"
+              style={{
+                transform: `scale(${zoomLevel}) rotate(${rotation}deg) translate(${imagePosition.x / zoomLevel}px, ${imagePosition.y / zoomLevel}px)`,
+                cursor: zoomLevel > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default'
+              }}
+              draggable={false}
+            />
+          </div>
 
-                    return (
-                      <div
-                        key={`${currentProductImage}-${index}`}
-                        className={`absolute transition-all duration-500 ease-in-out ${
-                          isCenter
-                            ? "z-30 scale-100 opacity-100 translate-x-0"
-                            : isLeft
-                              ? "z-20 scale-75 opacity-60 -translate-x-32"
-                              : "z-20 scale-75 opacity-60 translate-x-32"
-                        }`}
-                        style={{
-                          width: isCenter ? "280px" : "200px",
-                          height: isCenter ? "320px" : "240px",
-                        }}
-                      >
-                        <div className="relative bg-white rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 h-full">
-                          <img
-                            src={image.src || "/placeholder.svg"}
-                            alt={image.alt}
-                            className="w-full h-full object-contain rounded-lg"
-                          />
+          {/* Image info and navigation indicators */}
+          <div className="absolute bottom-2 left-2 sm:bottom-4 sm:left-4 z-60 bg-white bg-opacity-20 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm">
+            <div>{selectedImage.alt}</div>
+            <div className="text-xs opacity-75">{selectedImageIndex + 1} / {productImages.length}</div>
+          </div>
 
-                          {isCenter && (
-                            <div className="absolute bottom-3 left-3 bg-gray-50 px-4 py-1 rounded-full text-xs font-semibold text-teal-800 shadow-sm">
-                              Premium Quality
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
-
-              {/* Navigation dots - Only 3 dots */}
-              {/* Navigation dots - Only 3 dots */}
-<div className="flex justify-center space-x-2 mt-6">
-  {[0, 1, 2].map((dotIndex) => (
-    <button
-      key={dotIndex}
-      className={`w-2 h-2 rounded-full transition-all duration-300 hover:scale-110 ${
-        dotIndex === (currentProductImage % 3) ? "bg-teal-600 w-6" : "bg-gray-300"
-      }`}
-      onClick={() => setCurrentProductImage(dotIndex)}
-    />
-  ))}
-</div>
-
-              {/* Floating product cards */}
-              <div className="bg-white rounded-xl p-3 shadow-md hover:shadow-lg transform rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-300 absolute -top-6 -left-6">
-                <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center mb-2 shadow-sm">
-                  <Star className="w-4 h-4 text-teal-600" />
-                </div>
-                <div className="text-xs font-bold text-gray-900">5★ Rated</div>
-              </div>
-
-              <div className="bg-white rounded-xl p-3 shadow-md hover:shadow-lg transform -rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-300 absolute -bottom-6 -right-6">
-                <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center mb-2 shadow-sm">
-                  <Zap className="w-4 h-4 text-teal-600" />
-                </div>
-                <div className="text-xs font-bold text-gray-900">Fast Delivery</div>
-              </div>
+          {/* Instructions - responsive */}
+          <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 z-60 bg-white bg-opacity-20 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm">
+            <div className="hidden sm:block">
+              {zoomLevel > 1 ? 'Drag to pan • ' : ''}Use arrows or swipe • ESC to close
+            </div>
+            <div className="sm:hidden">
+              {zoomLevel > 1 ? 'Drag to pan • ' : ''}Swipe • Pinch to zoom
             </div>
           </div>
         </div>
-      </div>
-    </section>
-      </section>
+      )}
 
 
       <section className="py-24 relative bg-white mt-0">
