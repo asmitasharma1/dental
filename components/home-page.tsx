@@ -992,255 +992,271 @@ const [selectedImage, setSelectedImage] = useState<ProductImage | null>(null);
 
 
       <section className="py-1 relative bg-gradient-to-b from-white to-teal-50">
-        {/* Subtle Wave SVG */}
-        <div className="absolute top-0 left-0 w-full overflow-hidden leading-none">
-          <svg
-            className="relative block w-full h-16 text-teal-100"
-            viewBox="0 0 1440 120"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-36.93,206.8-37.5C438.64,36.13,512,60.83,583.68,74.67c67.93,13,134.83,8.88,200.33-5.17,54.41-11.66,110.21-36.46,158-28C1280,48.67,1440,0,1440,0H0Z"
-              fill="currentColor"
-              opacity="0.3"
-            />
-          </svg>
+  {/* Subtle Wave SVG */}
+  <div className="absolute top-0 left-0 w-full overflow-hidden leading-none">
+    <svg
+      className="relative block w-full h-16 text-teal-100"
+      viewBox="0 0 1440 120"
+      preserveAspectRatio="none"
+    >
+      <path
+        d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-36.93,206.8-37.5C438.64,36.13,512,60.83,583.68,74.67c67.93,13,134.83,8.88,200.33-5.17,54.41-11.66,110.21-36.46,158-28C1280,48.67,1440,0,1440,0H0Z"
+        fill="currentColor"
+        opacity="0.3"
+      />
+    </svg>
+  </div>
+
+  <section
+    className="relative bg-gradient-to-br from-white to-teal-50 border border-teal-100 rounded-2xl mx-4 my-10 shadow-md hover:shadow-xl transition-all duration-300"
+    style={{
+      backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M30 10c-5.5 0-10 4.5-10 10s4.5 10 10 10c2.5 0 4.8-0.9 6.6-2.4L40 34c0 2.2-1.8 4-4 4H24c-2.2 0-4-1.8-4-4v-8c0-2.2 1.8-4 4-4h12c2.2 0 4 1.8 4 4l-3.4 6.4C38.8 31.9 41 28.2 41 24c0-7.7-6.3-14-14-14z' fill='%2395f3d9' fill-opacity='0.1'/%3E%3C/svg%3E")`,
+      backgroundRepeat: "repeat",
+      backgroundSize: "60px 60px",
+    }}
+  >
+    <div className="relative z-10 px-8 py-10">
+      <div className="grid lg:grid-cols-2 gap-10 items-center">
+        {/* Left Content */}
+        <div className="space-y-8 mx-auto md:mx-36 lg:mx-48 md:w-3/4 lg:w-4/5 text-center md:text-left">
+          <div className="flex items-center justify-center md:justify-start gap-2">
+            <span className="inline-flex items-center bg-teal-600 text-white px-3 py-1 text-sm font-semibold rounded-full shadow-sm">
+              <ShoppingCart className="w-4 h-4 mr-1" />
+              Dental Products
+            </span>
+          </div>
+
+          <div className="space-y-6">
+            <h1 className="text-4xl lg:text-5xl font-bold leading-tight text-gray-900">
+              Exclusive Dental Products
+              <span className="block text-5xl lg:text-6xl text-teal-600">
+                Available
+              </span>
+            </h1>
+
+            <p className="text-lg text-gray-600">
+              Explore high-quality dental care essentials like floss,
+              toothbrush, toothpaste, and more.
+            </p>
+
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 text-teal-700">
+              <span className="text-sm">Order instantly via</span>
+              <span className="border border-teal-500 text-teal-700 font-bold text-sm px-2 py-1 rounded-md">
+                WhatsApp
+              </span>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
+            <a
+              href={`https://wa.me/9851359775?text=${encodeURIComponent(
+                "Hi! I'm interested in your dental care products."
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button className="bg-teal-600 hover:bg-teal-700 text-white px-7 py-3 text-base font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+                <ShoppingCart className="w-5 h-5 mr-2" />
+                Order Now
+              </Button>
+            </a>
+            <Button
+              variant="outline"
+              className="border-teal-600 text-teal-600 hover:bg-teal-50 px-7 py-3 text-base font-semibold rounded-full shadow-md hover:shadow-lg transition-all duration-300 bg-transparent"
+            >
+              View More Products
+            </Button>
+          </div>
         </div>
 
-        <section
-          className="relative bg-gradient-to-br from-white to-teal-50 border border-teal-100 rounded-2xl mx-4 my-10 shadow-md hover:shadow-xl transition-all duration-300"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M30 10c-5.5 0-10 4.5-10 10s4.5 10 10 10c2.5 0 4.8-0.9 6.6-2.4L40 34c0 2.2-1.8 4-4 4H24c-2.2 0-4-1.8-4-4v-8c0-2.2 1.8-4 4-4h12c2.2 0 4 1.8 4 4l-3.4 6.4C38.8 31.9 41 28.2 41 24c0-7.7-6.3-14-14-14z' fill='%2395f3d9' fill-opacity='0.1'/%3E%3C/svg%3E")`,
-            backgroundRepeat: 'repeat',
-            backgroundSize: '60px 60px',
-          }}
-        >
-          <div className="relative z-10 px-8 py-10">
-            <div className="grid lg:grid-cols-2 gap-10 items-center">
-              {/* Left Content */}
-              <div className="space-y-8 mx-auto md:mx-36 lg:mx-48 md:w-3/4 lg:w-4/5 text-center md:text-left">
-                <div className="flex items-center justify-center md:justify-start gap-2">
-                  <span className="inline-flex items-center bg-teal-600 text-white px-3 py-1 text-sm font-semibold rounded-full shadow-sm">
-                    <ShoppingCart className="w-4 h-4 mr-1" />
-                    Dental Products
-                  </span>
-                </div>
+        {/* Right Content - Image Carousel */}
+        <div className="flex justify-center lg:justify-end">
+          <div className="relative max-w-lg w-full">
+            {/* Main carousel container */}
+            <div className="relative h-96 overflow-hidden rounded-2xl">
+              {/* Image stack */}
+              <div className="relative w-full h-full flex items-center justify-center">
+                {getVisibleProductImages().map((image, index) => {
+                  const { position } = image;
+                  const isCenter = position === 0;
+                  const isLeft = position === -1;
+                  const isRight = position === 1;
 
-                <div className="space-y-6">
-                  <h1 className="text-4xl lg:text-5xl font-bold leading-tight text-gray-900">
-                    Exclusive Dental Products
-                    <span className="block text-5xl lg:text-6xl text-teal-600">Available</span>
-                  </h1>
+                  return (
+                    <div
+                      key={`${currentProductImage}-${index}`}
+                      className={`absolute transition-all duration-500 ease-in-out cursor-pointer ${
+                        isCenter
+                          ? "z-30 scale-100 opacity-100 translate-x-0"
+                          : isLeft
+                          ? "z-20 scale-75 opacity-60 -translate-x-32"
+                          : "z-20 scale-75 opacity-60 translate-x-32"
+                      }`}
+                      style={{
+                        width: isCenter ? "280px" : "200px",
+                        height: isCenter ? "320px" : "240px",
+                      }}
+                      onClick={() => openImageModal(image, image.index)}
+                    >
+                      <div className="relative bg-white rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 h-full">
+                        <img
+                          src={image.src || "/placeholder.svg"}
+                          alt={image.alt}
+                          className="w-full h-full object-contain rounded-lg"
+                        />
 
-                  <p className="text-lg text-gray-600">
-                    Explore high-quality dental care essentials like floss, toothbrush, toothpaste, and more.
-                  </p>
-
-                  <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 text-teal-700">
-                    <span className="text-sm">Order instantly via</span>
-                    <span className="border border-teal-500 text-teal-700 font-bold text-sm px-2 py-1 rounded-md">
-                      WhatsApp
-                    </span>
-                  </div>
-                </div>
-
-                <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
-                  <a
-                    href={`https://wa.me/9851359775?text=${encodeURIComponent(
-                      "Hi! I'm interested in your dental care products.",
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Button className="bg-teal-600 hover:bg-teal-700 text-white px-7 py-3 text-base font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
-                      <ShoppingCart className="w-5 h-5 mr-2" />
-                      Order Now
-                    </Button>
-                  </a>
-                  <Button
-                    variant="outline"
-                    className="border-teal-600 text-teal-600 hover:bg-teal-50 px-7 py-3 text-base font-semibold rounded-full shadow-md hover:shadow-lg transition-all duration-300 bg-transparent"
-                  >
-                    View More Products
-                  </Button>
-                </div>
-              </div>
-
-              {/* Right Content - Image Carousel */}
-              <div className="flex justify-center lg:justify-end">
-                <div className="relative max-w-lg w-full">
-                  {/* Main carousel container */}
-                  <div className="relative h-96 overflow-hidden rounded-2xl">
-                    {/* Image stack */}
-                    <div className="relative w-full h-full flex items-center justify-center">
-                      {getVisibleProductImages().map((image, index) => {
-                        const { position } = image;
-                        const isCenter = position === 0;
-                        const isLeft = position === -1;
-                        const isRight = position === 1;
-
-                        return (
-                          <div
-                            key={`${currentProductImage}-${index}`}
-                            className={`absolute transition-all duration-500 ease-in-out cursor-pointer ${
-                              isCenter
-                                ? "z-30 scale-100 opacity-100 translate-x-0"
-                                : isLeft
-                                  ? "z-20 scale-75 opacity-60 -translate-x-32"
-                                  : "z-20 scale-75 opacity-60 translate-x-32"
-                            }`}
-                            style={{
-                              width: isCenter ? "280px" : "200px",
-                              height: isCenter ? "320px" : "240px",
-                            }}
-                            onClick={() => openImageModal(image, image.index)}
-                          >
-                            <div className="relative bg-white rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 h-full">
-                              <img
-                                src={image.src || "/placeholder.svg"}
-                                alt={image.alt}
-                                className="w-full h-full object-contain rounded-lg"
-                              />
-
-                              {isCenter && (
-                                <div className="absolute bottom-3 left-3 bg-gray-50 px-4 py-1 rounded-full text-xs font-semibold text-teal-800 shadow-sm">
-                                  Premium Quality
-                                </div>
-                              )}
-                            </div>
+                        {isCenter && (
+                          <div className="absolute bottom-3 left-3 bg-gray-50 px-4 py-1 rounded-full text-xs font-semibold text-teal-800 shadow-sm">
+                            Premium Quality
                           </div>
-                        );
-                      })}
+                        )}
+                      </div>
                     </div>
-                  </div>
+                  );
+                })}
+              </div>
+            </div>
 
-                  {/* Navigation dots */}
-                  <div className="flex justify-center space-x-2 mt-6">
-                    {[0, 1, 2].map((dotIndex) => (
-                      <button
-                        key={dotIndex}
-                        className={`w-2 h-2 rounded-full transition-all duration-300 hover:scale-110 ${
-                          dotIndex === (currentProductImage % 3) ? "bg-teal-600 w-6" : "bg-gray-300"
-                        }`}
-                        onClick={() => setCurrentProductImage(dotIndex)}
-                      />
-                    ))}
-                  </div>
+            {/* Navigation dots */}
+            <div className="flex justify-center space-x-2 mt-6">
+              {[0, 1, 2].map((dotIndex) => (
+                <button
+                  key={dotIndex}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 hover:scale-110 ${
+                    dotIndex === currentProductImage % 3
+                      ? "bg-teal-600 w-6"
+                      : "bg-gray-300"
+                  }`}
+                  onClick={() => setCurrentProductImage(dotIndex)}
+                />
+              ))}
+            </div>
 
-                  {/* Floating product cards */}
-                  <div className="bg-white rounded-xl p-3 shadow-md hover:shadow-lg transform rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-300 absolute -top-6 -left-6">
-                    <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center mb-2 shadow-sm">
-                      <Star className="w-4 h-4 text-teal-600" />
-                    </div>
-                    <div className="text-xs font-bold text-gray-900">5★ Rated</div>
-                  </div>
+            {/* Floating product cards */}
+            <div className="bg-white rounded-xl p-3 shadow-md hover:shadow-lg transform rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-300 absolute -top-6 -left-6">
+              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center mb-2 shadow-sm">
+                <Star className="w-4 h-4 text-teal-600" />
+              </div>
+              <div className="text-xs font-bold text-gray-900">5★ Rated</div>
+            </div>
 
-                  <div className="bg-white rounded-xl p-3 shadow-md hover:shadow-lg transform -rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-300 absolute -bottom-6 -right-6">
-                    <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center mb-2 shadow-sm">
-                      <Zap className="w-4 h-4 text-teal-600" />
-                    </div>
-                    <div className="text-xs font-bold text-gray-900">Fast Delivery</div>
-                  </div>
-                </div>
+            <div className="bg-white rounded-xl p-3 shadow-md hover:shadow-lg transform -rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-300 absolute -bottom-6 -right-6">
+              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center mb-2 shadow-sm">
+                <Zap className="w-4 h-4 text-teal-600" />
+              </div>
+              <div className="text-xs font-bold text-gray-900">
+                Fast Delivery
               </div>
             </div>
           </div>
-        </section>
-      </section>
-
-      {/* Full-screen Image Modal */}
-      {selectedImage && (
-        <div className="fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center">
-          {/* Close button */}
-          <button
-            onClick={closeImageModal}
-            className="absolute top-2 right-2 sm:top-4 sm:right-4 z-60 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 rounded-full transition-all duration-200"
-          >
-            <X className="w-5 h-5 sm:w-6 sm:h-6" />
-          </button>
-
-          {/* Navigation buttons */}
-          <button
-            onClick={navigateToPreviousImage}
-            className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 z-60 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 sm:p-3 rounded-full transition-all duration-200"
-          >
-            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
-          </button>
-          
-          <button
-            onClick={navigateToNextImage}
-            className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 z-60 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 sm:p-3 rounded-full transition-all duration-200"
-          >
-            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
-          </button>
-
-          {/* Control panel - responsive layout */}
-          <div className="absolute top-2 left-2 sm:top-4 sm:left-4 z-60 flex flex-wrap gap-1 sm:gap-2">
-            <button
-              onClick={handleZoomOut}
-              className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-1.5 sm:p-2 rounded-full transition-all duration-200"
-              disabled={zoomLevel <= 0.5}
-            >
-              <ZoomOut className="w-4 h-4 sm:w-5 sm:h-5" />
-            </button>
-            <button
-              onClick={handleZoomIn}
-              className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-1.5 sm:p-2 rounded-full transition-all duration-200"
-              disabled={zoomLevel >= 5}
-            >
-              <ZoomIn className="w-4 h-4 sm:w-5 sm:h-5" />
-            </button>
-            <button
-              onClick={handleRotate}
-              className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-1.5 sm:p-2 rounded-full transition-all duration-200"
-            >
-              <RotateCw className="w-4 h-4 sm:w-5 sm:h-5" />
-            </button>
-            <div className="bg-white bg-opacity-20 text-white px-2 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm">
-              {Math.round(zoomLevel * 100)}%
-            </div>
-          </div>
-
-          {/* Image container with touch support */}
-          <div 
-            className="w-full h-full flex items-center justify-center overflow-hidden cursor-move touch-none"
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUp}
-            onMouseLeave={handleMouseUp}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-          >
-            <img
-              src={selectedImage.src}
-              alt={selectedImage.alt}
-              className="max-w-none transition-transform duration-200 select-none max-h-full max-w-full object-contain"
-              style={{
-                transform: `scale(${zoomLevel}) rotate(${rotation}deg) translate(${imagePosition.x / zoomLevel}px, ${imagePosition.y / zoomLevel}px)`,
-                cursor: zoomLevel > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default'
-              }}
-              draggable={false}
-            />
-          </div>
-
-          {/* Image info and navigation indicators */}
-          <div className="absolute bottom-2 left-2 sm:bottom-4 sm:left-4 z-60 bg-white bg-opacity-20 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm">
-            <div>{selectedImage.alt}</div>
-            <div className="text-xs opacity-75">{selectedImageIndex + 1} / {productImages.length}</div>
-          </div>
-
-          {/* Instructions - responsive */}
-          <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 z-60 bg-white bg-opacity-20 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm">
-            <div className="hidden sm:block">
-              {zoomLevel > 1 ? 'Drag to pan • ' : ''}Use arrows or swipe • ESC to close
-            </div>
-            <div className="sm:hidden">
-              {zoomLevel > 1 ? 'Drag to pan • ' : ''}Swipe • Pinch to zoom
-            </div>
-          </div>
         </div>
-      )}
+      </div>
+    </div>
+  </section>
+</section>
+
+{/* Full-screen Image Modal */}
+{selectedImage && (
+  <div className="fixed inset-0 bg-black bg-opacity-95 z-[9990] flex items-center justify-center p-4">
+    {/* Close button */}
+    <button
+      onClick={closeImageModal}
+      className="absolute top-4 right-4 z-[9999] bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 rounded-full transition-all duration-200"
+    >
+      <X className="w-6 h-6" />
+    </button>
+
+    {/* Navigation buttons */}
+    <button
+      onClick={navigateToPreviousImage}
+      className="absolute left-4 top-1/2 transform -translate-y-1/2 z-[9999] bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-3 rounded-full transition-all duration-200"
+    >
+      <ChevronLeft className="w-6 h-6" />
+    </button>
+
+    <button
+      onClick={navigateToNextImage}
+      className="absolute right-4 top-1/2 transform -translate-y-1/2 z-[9999] bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-3 rounded-full transition-all duration-200"
+    >
+      <ChevronRight className="w-6 h-6" />
+    </button>
+
+    {/* Control panel */}
+    <div className="absolute top-4 left-4 z-[9999] flex flex-wrap gap-2">
+      <button
+        onClick={handleZoomOut}
+        className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 rounded-full transition-all duration-200"
+        disabled={zoomLevel <= 0.5}
+      >
+        <ZoomOut className="w-5 h-5" />
+      </button>
+      <button
+        onClick={handleZoomIn}
+        className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 rounded-full transition-all duration-200"
+        disabled={zoomLevel >= 5}
+      >
+        <ZoomIn className="w-5 h-5" />
+      </button>
+      <button
+        onClick={handleRotate}
+        className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 rounded-full transition-all duration-200"
+      >
+        <RotateCw className="w-5 h-5" />
+      </button>
+      <div className="bg-white bg-opacity-20 text-white px-3 py-2 rounded-full text-xs sm:text-sm">
+        {Math.round(zoomLevel * 100)}%
+      </div>
+    </div>
+
+    {/* Image container */}
+    <div
+      className="w-full h-full flex items-center justify-center overflow-hidden cursor-move touch-none"
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
+      <img
+        src={selectedImage.src}
+        alt={selectedImage.alt}
+        className="max-w-full max-h-full object-contain transition-transform duration-200 select-none z-10 pointer-events-none"
+        style={{
+          transform: `scale(${zoomLevel}) rotate(${rotation}deg) translate(${
+            imagePosition.x / zoomLevel
+          }px, ${imagePosition.y / zoomLevel}px)`,
+          cursor:
+            zoomLevel > 1 ? (isDragging ? "grabbing" : "grab") : "default",
+        }}
+        draggable={false}
+      />
+    </div>
+
+    {/* Image info */}
+    <div className="absolute bottom-4 left-4 z-[9999] bg-white bg-opacity-20 text-white px-4 py-2 rounded-full text-xs sm:text-sm">
+      <div>{selectedImage.alt}</div>
+      <div className="text-xs opacity-75">
+        {selectedImageIndex + 1} / {productImages.length}
+      </div>
+    </div>
+
+    {/* Instructions */}
+    <div className="absolute bottom-4 right-4 z-[9999] bg-white bg-opacity-20 text-white px-4 py-2 rounded-full text-xs sm:text-sm">
+      <div className="hidden sm:block">
+        {zoomLevel > 1 ? "Drag to pan • " : ""}Use arrows or swipe • ESC to
+        close
+      </div>
+      <div className="sm:hidden">
+        {zoomLevel > 1 ? "Drag to pan • " : ""}Swipe • Pinch to zoom
+      </div>
+    </div>
+  </div>
+)}
+
+
+
 
 
       <section className="py-24 relative bg-white mt-0">
