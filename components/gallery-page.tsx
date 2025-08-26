@@ -217,7 +217,12 @@ export default function Gallery({ selectedCategory, setSelectedCategory }: Galle
                   onClick={() => openLightbox(index)}
                 >
                   <CardContent className="p-0">
-                    <div className="relative aspect-[5/4] overflow-hidden bg-gray-100">
+                    {/* ✅ Taller height for Products */}
+                    <div
+                      className={`relative overflow-hidden bg-gray-100 ${
+                        image.category === "Products" ? "aspect-[4/5]" : "aspect-[5/4]"
+                      }`}
+                    >
                       {!imageLoadStates[image.id] && (
                         <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
                           <div className="text-gray-400 text-sm">Loading...</div>
@@ -236,7 +241,7 @@ export default function Gallery({ selectedCategory, setSelectedCategory }: Galle
                         loading="lazy"
                         onLoad={() => handleImageLoad(image.id)}
                         placeholder="blur"
-                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                        blurDataURL="data:image/jpeg;base64,/9j/..."
                       />
 
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
