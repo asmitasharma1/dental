@@ -168,25 +168,6 @@ const missionValues = [
     iconColor: "text-gray-700",
   },
 ]
-// const testimonials = [
-//   {
-//     quote:
-//       "Dr. Kareen and her team provided exceptional care during my dental implant procedure. The results exceeded my expectations!",
-//     name: "Priya Shrestha",
-//     service: "Dental Implants",
-//   },
-//   {
-//     quote: "My children love coming here! The pediatric dentistry team makes every visit comfortable and fun for kids.",
-//     name: "Yogyata Neupane",
-//     service: "Pediatric Dentistry",
-//   },
-//   {
-//     quote:
-//       "The restorative work done on my teeth was amazing. I can smile confidently again thanks to Dr. Kareen's expertise.",
-//     name: "Sahas Maharjan",
-//     service: "Restorative Dentistry",
-//   },
-// ]
 
 export default function HomePage() {
   const [currentService, setCurrentService] = useState(0)
@@ -195,7 +176,7 @@ export default function HomePage() {
   const [isVisible, setIsVisible] = useState(false)
   const [loading, setLoading] = useState(true)
   const [currentProductImage, setCurrentProductImage] = useState(0);
-const [selectedImage, setSelectedImage] = useState<ProductImage | null>(null);
+  const [selectedImage, setSelectedImage] = useState<ProductImage | null>(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [zoomLevel, setZoomLevel] = useState(1);
   const [rotation, setRotation] = useState(0);
@@ -207,7 +188,7 @@ const [selectedImage, setSelectedImage] = useState<ProductImage | null>(null);
   const [initialZoom, setInitialZoom] = useState(1);
 
 
-    const productImages = [
+  const productImages = [
     { src: "/images/p1.webp", alt: "Dental Products" },
     { src: "/images/p2.webp", alt: "Dental Products" },
     { src: "/images/p3.webp", alt: "Dental Products" },
@@ -224,10 +205,7 @@ const [selectedImage, setSelectedImage] = useState<ProductImage | null>(null);
     { src: "/images/p14.webp", alt: "Dental Products" },
     { src: "/images/p15.webp", alt: "Dental Products" },
     { src: "/images/p16.webp", alt: "Dental Products" },
-
-    
   ]
-
 
   useEffect(() => {
     const fetchTestimonials = async () => {
@@ -347,13 +325,8 @@ const [selectedImage, setSelectedImage] = useState<ProductImage | null>(null);
       setCurrentService((prev) => (prev + 1) % topServices.length)
     }, 8000)
 
-    const testimonialInterval = setInterval(() => {
-      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
-    }, 10000)
-
     return () => {
       clearInterval(serviceInterval)
-      clearInterval(testimonialInterval)
     }
   }, [testimonials.length])
 
@@ -387,7 +360,15 @@ const [selectedImage, setSelectedImage] = useState<ProductImage | null>(null);
     return displayed;
   };
 
-    useEffect(() => {
+  // Predefined Google-like colors for avatar backgrounds
+  const googleColors = ['#4285F4', '#EA4335', '#FBBC05', '#34A853'];
+
+  // Function to get fixed color based on testimonial index
+  const getFixedColor = (index: number) => googleColors[index % googleColors.length];
+  // Function to get initial from name
+  const getInitial = (name) => name ? name.charAt(0).toUpperCase() : 'U';
+
+  useEffect(() => {
     const interval = setInterval(() => {
       setCurrentProductImage((prev) => (prev + 1) % productImages.length);
     }, 4000);
@@ -503,7 +484,7 @@ const [selectedImage, setSelectedImage] = useState<ProductImage | null>(null);
 
   const handleTouchMove = (e: React.TouchEvent) => {
     e.preventDefault(); // Prevent scrolling
-    
+
     if (e.touches.length === 1 && isDragging && zoomLevel > 1) {
       // Single touch - drag
       setImagePosition({
@@ -518,7 +499,7 @@ const [selectedImage, setSelectedImage] = useState<ProductImage | null>(null);
         Math.pow(touch1.clientX - touch2.clientX, 2) +
         Math.pow(touch1.clientY - touch2.clientY, 2)
       );
-      
+
       if (touchDistance > 0) {
         const scale = distance / touchDistance;
         const newZoom = Math.max(0.5, Math.min(5, initialZoom * scale));
@@ -538,7 +519,7 @@ const [selectedImage, setSelectedImage] = useState<ProductImage | null>(null);
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (!selectedImage) return;
-      
+
       switch (e.key) {
         case 'Escape':
           closeImageModal();
@@ -992,268 +973,263 @@ const [selectedImage, setSelectedImage] = useState<ProductImage | null>(null);
 
 
       <section className="py-1 relative bg-gradient-to-b from-white to-teal-50">
-  {/* Subtle Wave SVG */}
-  <div className="absolute top-0 left-0 w-full overflow-hidden leading-none">
-    <svg
-      className="relative block w-full h-16 text-teal-100"
-      viewBox="0 0 1440 120"
-      preserveAspectRatio="none"
-    >
-      <path
-        d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-36.93,206.8-37.5C438.64,36.13,512,60.83,583.68,74.67c67.93,13,134.83,8.88,200.33-5.17,54.41-11.66,110.21-36.46,158-28C1280,48.67,1440,0,1440,0H0Z"
-        fill="currentColor"
-        opacity="0.3"
-      />
-    </svg>
-  </div>
-
-  <section
-    className="relative bg-gradient-to-br from-white to-teal-50 border border-teal-100 rounded-2xl mx-4 my-10 shadow-md hover:shadow-xl transition-all duration-300"
-    style={{
-      backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M30 10c-5.5 0-10 4.5-10 10s4.5 10 10 10c2.5 0 4.8-0.9 6.6-2.4L40 34c0 2.2-1.8 4-4 4H24c-2.2 0-4-1.8-4-4v-8c0-2.2 1.8-4 4-4h12c2.2 0 4 1.8 4 4l-3.4 6.4C38.8 31.9 41 28.2 41 24c0-7.7-6.3-14-14-14z' fill='%2395f3d9' fill-opacity='0.1'/%3E%3C/svg%3E")`,
-      backgroundRepeat: "repeat",
-      backgroundSize: "60px 60px",
-    }}
-  >
-    <div className="relative z-10 px-8 py-10">
-      <div className="grid lg:grid-cols-2 gap-10 items-center">
-        {/* Left Content */}
-        <div className="space-y-8 mx-auto md:mx-36 lg:mx-48 md:w-3/4 lg:w-4/5 text-center md:text-left">
-          <div className="flex items-center justify-center md:justify-start gap-2">
-            <span className="inline-flex items-center bg-teal-600 text-white px-3 py-1 text-sm font-semibold rounded-full shadow-sm">
-              <ShoppingCart className="w-4 h-4 mr-1" />
-              Dental Products
-            </span>
-          </div>
-
-          <div className="space-y-6">
-            <h1 className="text-4xl lg:text-5xl font-bold leading-tight text-gray-900">
-              Exclusive Dental Products
-              <span className="block text-5xl lg:text-6xl text-teal-600">
-                Available
-              </span>
-            </h1>
-
-            <p className="text-lg text-gray-600">
-              Explore high-quality dental care essentials like floss,
-              toothbrush, toothpaste, and more.
-            </p>
-
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 text-teal-700">
-              <span className="text-sm">Order instantly via</span>
-              <span className="border border-teal-500 text-teal-700 font-bold text-sm px-2 py-1 rounded-md">
-                WhatsApp
-              </span>
-            </div>
-          </div>
-
-          <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
-            <a
-              href={`https://wa.me/9851359775?text=${encodeURIComponent(
-                "Hi! I'm interested in your dental care products."
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button className="bg-teal-600 hover:bg-teal-700 text-white px-7 py-3 text-base font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
-                <ShoppingCart className="w-5 h-5 mr-2" />
-                Order Now
-              </Button>
-            </a>
-            <Button
-              variant="outline"
-              className="border-teal-600 text-teal-600 hover:bg-teal-50 px-7 py-3 text-base font-semibold rounded-full shadow-md hover:shadow-lg transition-all duration-300 bg-transparent"
-            >
-              View More Products
-            </Button>
-          </div>
+        {/* Subtle Wave SVG */}
+        <div className="absolute top-0 left-0 w-full overflow-hidden leading-none">
+          <svg
+            className="relative block w-full h-16 text-teal-100"
+            viewBox="0 0 1440 120"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-36.93,206.8-37.5C438.64,36.13,512,60.83,583.68,74.67c67.93,13,134.83,8.88,200.33-5.17,54.41-11.66,110.21-36.46,158-28C1280,48.67,1440,0,1440,0H0Z"
+              fill="currentColor"
+              opacity="0.3"
+            />
+          </svg>
         </div>
 
-        {/* Right Content - Image Carousel */}
-        <div className="flex justify-center lg:justify-end">
-          <div className="relative max-w-lg w-full">
-            {/* Main carousel container */}
-            <div className="relative h-96 overflow-hidden rounded-2xl">
-              {/* Image stack */}
-              <div className="relative w-full h-full flex items-center justify-center">
-                {getVisibleProductImages().map((image, index) => {
-                  const { position } = image;
-                  const isCenter = position === 0;
-                  const isLeft = position === -1;
-                  const isRight = position === 1;
+        <section
+          className="relative bg-gradient-to-br from-white to-teal-50 border border-teal-100 rounded-2xl mx-4 my-10 shadow-md hover:shadow-xl transition-all duration-300"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M30 10c-5.5 0-10 4.5-10 10s4.5 10 10 10c2.5 0 4.8-0.9 6.6-2.4L40 34c0 2.2-1.8 4-4 4H24c-2.2 0-4-1.8-4-4v-8c0-2.2 1.8-4 4-4h12c2.2 0 4 1.8 4 4l-3.4 6.4C38.8 31.9 41 28.2 41 24c0-7.7-6.3-14-14-14z' fill='%2395f3d9' fill-opacity='0.1'/%3E%3C/svg%3E")`,
+            backgroundRepeat: "repeat",
+            backgroundSize: "60px 60px",
+          }}
+        >
+          <div className="relative z-10 px-8 py-10">
+            <div className="grid lg:grid-cols-2 gap-10 items-center">
+              {/* Left Content */}
+              <div className="space-y-8 mx-auto md:mx-36 lg:mx-48 md:w-3/4 lg:w-4/5 text-center md:text-left">
+                <div className="flex items-center justify-center md:justify-start gap-2">
+                  <span className="inline-flex items-center bg-teal-600 text-white px-3 py-1 text-sm font-semibold rounded-full shadow-sm">
+                    <ShoppingCart className="w-4 h-4 mr-1" />
+                    Dental Products
+                  </span>
+                </div>
 
-                  return (
-                    <div
-                      key={`${currentProductImage}-${index}`}
-                      className={`absolute transition-all duration-500 ease-in-out cursor-pointer ${
-                        isCenter
-                          ? "z-30 scale-100 opacity-100 translate-x-0"
-                          : isLeft
-                          ? "z-20 scale-75 opacity-60 -translate-x-32"
-                          : "z-20 scale-75 opacity-60 translate-x-32"
-                      }`}
-                      style={{
-                        width: isCenter ? "280px" : "200px",
-                        height: isCenter ? "320px" : "240px",
-                      }}
-                      onClick={() => openImageModal(image, image.index)}
-                    >
-                      <div className="p-4 hover:shadow-xl transition-all duration-300 h-full">
-                        <img
-                          src={image.src || "/placeholder.svg"}
-                          alt={image.alt}
-                          className="w-full h-full object-contain rounded-lg"
-                        />
+                <div className="space-y-6">
+                  <h1 className="text-4xl lg:text-5xl font-bold leading-tight text-gray-900">
+                    Exclusive Dental Products
+                    <span className="block text-5xl lg:text-6xl text-teal-600">
+                      Available
+                    </span>
+                  </h1>
 
-                       
-                      </div>
+                  <p className="text-lg text-gray-600">
+                    Explore high-quality dental care essentials like floss,
+                    toothbrush, toothpaste, and more.
+                  </p>
+
+                  <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 text-teal-700">
+                    <span className="text-sm">Order instantly via</span>
+                    <span className="border border-teal-500 text-teal-700 font-bold text-sm px-2 py-1 rounded-md">
+                      WhatsApp
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
+                  <a
+                    href={`https://wa.me/9851359775?text=${encodeURIComponent(
+                      "Hi! I'm interested in your dental care products."
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button className="bg-teal-600 hover:bg-teal-700 text-white px-7 py-3 text-base font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+                      <ShoppingCart className="w-5 h-5 mr-2" />
+                      Order Now
+                    </Button>
+                  </a>
+                  <Button
+                    variant="outline"
+                    className="border-teal-600 text-teal-600 hover:bg-teal-50 px-7 py-3 text-base font-semibold rounded-full shadow-md hover:shadow-lg transition-all duration-300 bg-transparent"
+                  >
+                    View More Products
+                  </Button>
+                </div>
+              </div>
+
+              {/* Right Content - Image Carousel */}
+              <div className="flex justify-center lg:justify-end">
+                <div className="relative max-w-lg w-full">
+                  {/* Main carousel container */}
+                  <div className="relative h-96 overflow-hidden rounded-2xl">
+                    {/* Image stack */}
+                    <div className="relative w-full h-full flex items-center justify-center">
+                      {getVisibleProductImages().map((image, index) => {
+                        const { position } = image;
+                        const isCenter = position === 0;
+                        const isLeft = position === -1;
+                        const isRight = position === 1;
+
+                        return (
+                          <div
+                            key={`${currentProductImage}-${index}`}
+                            className={`absolute transition-all duration-500 ease-in-out cursor-pointer ${isCenter
+                              ? "z-30 scale-100 opacity-100 translate-x-0"
+                              : isLeft
+                                ? "z-20 scale-75 opacity-60 -translate-x-32"
+                                : "z-20 scale-75 opacity-60 translate-x-32"
+                              }`}
+                            style={{
+                              width: isCenter ? "280px" : "200px",
+                              height: isCenter ? "320px" : "240px",
+                            }}
+                            onClick={() => openImageModal(image, image.index)}
+                          >
+                            <div className="p-4 hover:shadow-xl transition-all duration-300 h-full">
+                              <img
+                                src={image.src || "/placeholder.svg"}
+                                alt={image.alt}
+                                className="w-full h-full object-contain rounded-lg"
+                              />
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
-                  );
-                })}
-              </div>
-            </div>
+                  </div>
 
-            {/* Navigation dots */}
-            <div className="flex justify-center space-x-2 mt-6">
-              {[0, 1, 2].map((dotIndex) => (
-                <button
-                  key={dotIndex}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 hover:scale-110 ${
-                    dotIndex === currentProductImage % 3
-                      ? "bg-teal-600 w-6"
-                      : "bg-gray-300"
-                  }`}
-                  onClick={() => setCurrentProductImage(dotIndex)}
-                />
-              ))}
-            </div>
+                  {/* Navigation dots */}
+                  <div className="flex justify-center space-x-2 mt-6">
+                    {[0, 1, 2].map((dotIndex) => (
+                      <button
+                        key={dotIndex}
+                        className={`w-2 h-2 rounded-full transition-all duration-300 hover:scale-110 ${dotIndex === currentProductImage % 3
+                          ? "bg-teal-600 w-6"
+                          : "bg-gray-300"
+                          }`}
+                        onClick={() => setCurrentProductImage(dotIndex)}
+                      />
+                    ))}
+                  </div>
 
-            {/* Floating product cards */}
-            <div className="bg-white rounded-xl p-3 shadow-md hover:shadow-lg transform rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-300 absolute -top-6 -left-6">
-              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center mb-2 shadow-sm">
-                <Star className="w-4 h-4 text-teal-600" />
-              </div>
-              <div className="text-xs font-bold text-gray-900">5★ Rated</div>
-            </div>
+                  {/* Floating product cards */}
+                  <div className="bg-white rounded-xl p-3 shadow-md hover:shadow-lg transform rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-300 absolute -top-6 -left-6">
+                    <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center mb-2 shadow-sm">
+                      <Star className="w-4 h-4 text-teal-600" />
+                    </div>
+                    <div className="text-xs font-bold text-gray-900">5★ Rated</div>
+                  </div>
 
-            <div className="bg-white rounded-xl p-3 shadow-md hover:shadow-lg transform -rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-300 absolute -bottom-6 -right-6">
-              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center mb-2 shadow-sm">
-                <Zap className="w-4 h-4 text-teal-600" />
-              </div>
-              <div className="text-xs font-bold text-gray-900">
-                Fast Delivery
+                  <div className="bg-white rounded-xl p-3 shadow-md hover:shadow-lg transform -rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-300 absolute -bottom-6 -right-6">
+                    <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center mb-2 shadow-sm">
+                      <Zap className="w-4 h-4 text-teal-600" />
+                    </div>
+                    <div className="text-xs font-bold text-gray-900">
+                      Fast Delivery
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+        </section>
+      </section>
+
+      {/* Full-screen Image Modal */}
+      {selectedImage && (
+        <div className="fixed inset-0 bg-black bg-opacity-95 z-[9990] flex items-center justify-center p-4">
+          {/* Close button */}
+          <button
+            onClick={closeImageModal}
+            className="absolute top-4 right-4 z-[9999] bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 rounded-full transition-all duration-200"
+          >
+            <X className="w-6 h-6" />
+          </button>
+
+          {/* Navigation buttons */}
+          <button
+            onClick={navigateToPreviousImage}
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 z-[9999] bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-3 rounded-full transition-all duration-200"
+          >
+            <ChevronLeft className="w-6 h-6" />
+          </button>
+
+          <button
+            onClick={navigateToNextImage}
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 z-[9999] bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-3 rounded-full transition-all duration-200"
+          >
+            <ChevronRight className="w-6 h-6" />
+          </button>
+
+          {/* Control panel */}
+          <div className="absolute top-4 left-4 z-[9999] flex flex-wrap gap-2">
+            <button
+              onClick={handleZoomOut}
+              className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 rounded-full transition-all duration-200"
+              disabled={zoomLevel <= 0.5}
+            >
+              <ZoomOut className="w-5 h-5" />
+            </button>
+            <button
+              onClick={handleZoomIn}
+              className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 rounded-full transition-all duration-200"
+              disabled={zoomLevel >= 5}
+            >
+              <ZoomIn className="w-5 h-5" />
+            </button>
+            <button
+              onClick={handleRotate}
+              className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 rounded-full transition-all duration-200"
+            >
+              <RotateCw className="w-5 h-5" />
+            </button>
+            <div className="bg-white bg-opacity-20 text-white px-3 py-2 rounded-full text-xs sm:text-sm">
+              {Math.round(zoomLevel * 100)}%
+            </div>
+          </div>
+
+          {/* Image container */}
+          <div
+            className="w-full h-full flex items-center justify-center overflow-hidden cursor-move touch-none"
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            <img
+              src={selectedImage.src}
+              alt={selectedImage.alt}
+              className="max-w-full max-h-full object-contain transition-transform duration-200 select-none z-10 pointer-events-none"
+              style={{
+                transform: `scale(${zoomLevel}) rotate(${rotation}deg) translate(${imagePosition.x / zoomLevel
+                  }px, ${imagePosition.y / zoomLevel}px)`,
+                cursor:
+                  zoomLevel > 1 ? (isDragging ? "grabbing" : "grab") : "default",
+              }}
+              draggable={false}
+            />
+          </div>
+
+          {/* Image info */}
+          <div className="absolute bottom-4 left-4 z-[9999] bg-white bg-opacity-20 text-white px-4 py-2 rounded-full text-xs sm:text-sm">
+            <div>{selectedImage.alt}</div>
+            <div className="text-xs opacity-75">
+              {selectedImageIndex + 1} / {productImages.length}
+            </div>
+          </div>
+
+          {/* Instructions */}
+          <div className="absolute bottom-4 right-4 z-[9999] bg-white bg-opacity-20 text-white px-4 py-2 rounded-full text-xs sm:text-sm">
+            <div className="hidden sm:block">
+              {zoomLevel > 1 ? "Drag to pan • " : ""}Use arrows or swipe • ESC to
+              close
+            </div>
+            <div className="sm:hidden">
+              {zoomLevel > 1 ? "Drag to pan • " : ""}
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </section>
-</section>
-
-{/* Full-screen Image Modal */}
-{selectedImage && (
-  <div className="fixed inset-0 bg-black bg-opacity-95 z-[9990] flex items-center justify-center p-4">
-    {/* Close button */}
-    <button
-      onClick={closeImageModal}
-      className="absolute top-4 right-4 z-[9999] bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 rounded-full transition-all duration-200"
-    >
-      <X className="w-6 h-6" />
-    </button>
-
-    {/* Navigation buttons */}
-    <button
-      onClick={navigateToPreviousImage}
-      className="absolute left-4 top-1/2 transform -translate-y-1/2 z-[9999] bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-3 rounded-full transition-all duration-200"
-    >
-      <ChevronLeft className="w-6 h-6" />
-    </button>
-
-    <button
-      onClick={navigateToNextImage}
-      className="absolute right-4 top-1/2 transform -translate-y-1/2 z-[9999] bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-3 rounded-full transition-all duration-200"
-    >
-      <ChevronRight className="w-6 h-6" />
-    </button>
-
-    {/* Control panel */}
-    <div className="absolute top-4 left-4 z-[9999] flex flex-wrap gap-2">
-      <button
-        onClick={handleZoomOut}
-        className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 rounded-full transition-all duration-200"
-        disabled={zoomLevel <= 0.5}
-      >
-        <ZoomOut className="w-5 h-5" />
-      </button>
-      <button
-        onClick={handleZoomIn}
-        className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 rounded-full transition-all duration-200"
-        disabled={zoomLevel >= 5}
-      >
-        <ZoomIn className="w-5 h-5" />
-      </button>
-      <button
-        onClick={handleRotate}
-        className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-2 rounded-full transition-all duration-200"
-      >
-        <RotateCw className="w-5 h-5" />
-      </button>
-      <div className="bg-white bg-opacity-20 text-white px-3 py-2 rounded-full text-xs sm:text-sm">
-        {Math.round(zoomLevel * 100)}%
-      </div>
-    </div>
-
-    {/* Image container */}
-    <div
-      className="w-full h-full flex items-center justify-center overflow-hidden cursor-move touch-none"
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-    >
-      <img
-        src={selectedImage.src}
-        alt={selectedImage.alt}
-        className="max-w-full max-h-full object-contain transition-transform duration-200 select-none z-10 pointer-events-none"
-        style={{
-          transform: `scale(${zoomLevel}) rotate(${rotation}deg) translate(${
-            imagePosition.x / zoomLevel
-          }px, ${imagePosition.y / zoomLevel}px)`,
-          cursor:
-            zoomLevel > 1 ? (isDragging ? "grabbing" : "grab") : "default",
-        }}
-        draggable={false}
-      />
-    </div>
-
-    {/* Image info */}
-    <div className="absolute bottom-4 left-4 z-[9999] bg-white bg-opacity-20 text-white px-4 py-2 rounded-full text-xs sm:text-sm">
-      <div>{selectedImage.alt}</div>
-      <div className="text-xs opacity-75">
-        {selectedImageIndex + 1} / {productImages.length}
-      </div>
-    </div>
-
-    {/* Instructions */}
-    <div className="absolute bottom-4 right-4 z-[9999] bg-white bg-opacity-20 text-white px-4 py-2 rounded-full text-xs sm:text-sm">
-      <div className="hidden sm:block">
-        {zoomLevel > 1 ? "Drag to pan • " : ""}Use arrows or swipe • ESC to
-        close
-      </div>
-      <div className="sm:hidden">
-        {zoomLevel > 1 ? "Drag to pan • " : ""}
-      </div>
-    </div>
-  </div>
-)}
+      )}
 
 
 
-<section className="py-12 relative bg-teal-800 text-white">
+      <section className="py-12 relative bg-teal-800 text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">Get Your FREE Dental Consultation Today</h2>
           <p className="text-lg mb-6">Achieve a healthy, confident smile with our expert team. Schedule your free consultation today to discuss your dental needs.</p>
@@ -1279,84 +1255,105 @@ const [selectedImage, setSelectedImage] = useState<ProductImage | null>(null);
       </section>
 
       <section className="py-24 relative bg-white mt-0">
-  <div className="absolute inset-0 bg-gradient-to-br from-gray-50/90 to-teal-50/90 backdrop-blur-sm"></div>
-  <div className="relative z-10">
-    <div className="container mx-auto px-4 relative z-10">
-      <div className="text-center mb-16">
-        <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 bg-clip-text text-transparent mb-6">
-          What Our Patients Say
-        </h2>
-        <div className="w-24 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto"></div>
-      </div>
-
-      {loading ? (
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600 mx-auto"></div>
-          <p className="text-gray-500 mt-2">Loading testimonials...</p>
-        </div>
-      ) : testimonials.length > 0 ? (
-        <div className="relative max-w-3xl mx-auto">
-          {getDisplayedTestimonials().map((testimonial, index) => (
-            <div
-              key={index}
-              className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300 mb-6"
-            >
-              {/* Top section with rating + Google branding */}
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center space-x-1">
-                  {renderStars(testimonial.rating)}
-                </div>
-                <span className="flex items-center text-gray-500 text-sm">
-                  <img
-                    src="https://www.google.com/favicon.ico"
-                    alt="Google"
-                    className="h-4 w-4 mr-1"
-                  />
-                  Google Review
-                </span>
-              </div>
-
-              {/* Review content */}
-              <p className="text-gray-700 text-base leading-relaxed mb-4">
-                {testimonial.quote}
-              </p>
-
-              {/* Bottom with name + date */}
-              <div className="border-t border-gray-200 pt-4">
-                <p className="font-bold text-gray-900">{testimonial.name}</p>
-                
-              </div>
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-50/90 to-teal-50/90 backdrop-blur-sm"></div>
+        <div className="relative z-10">
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-teal-600 bg-clip-text text-transparent mb-6">
+                What Our Patients Say
+              </h2>
+              <div className="w-24 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto"></div>
             </div>
-          ))}
+
+            {loading ? (
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600 mx-auto"></div>
+                <p className="text-gray-500 mt-2">Loading testimonials...</p>
+              </div>
+            ) : testimonials.length > 0 ? (
+              <div className="relative max-w-6xl mx-auto flex items-center">
+                <button
+                  onClick={prevTestimonial}
+                  className="w-10 h-10 bg-teal-600 rounded-full flex items-center justify-center hover:bg-teal-700 transition-all duration-300 hover:scale-105 shadow-md mr-4"
+                  aria-label="Previous testimonials"
+                >
+                  <ChevronLeft className="h-5 w-5 text-white" />
+                </button>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 flex-grow">
+                  {getDisplayedTestimonials().map((testimonial, index) => (
+                    <div
+                      key={index}
+                      className="bg-white p-6 rounded-lg shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-300 flex flex-col h-full"
+                      style={{ borderRadius: '12px' }}
+                    >
+                      <div className="flex items-center mb-4">
+                        <div
+                          className="w-10 h-10 rounded-full flex items-center justify-center text-white text-lg font-medium mr-3"
+                          style={{ backgroundColor: getFixedColor((currentTestimonial + index) % testimonials.length) }}
+                        >
+                          {getInitial(testimonial.name)}
+                        </div>
+                        <div className="flex-grow">
+                          <p className="font-semibold text-gray-900">{testimonial.name}</p>
+                          <div className="flex items-center space-x-1">
+                            {renderStars(testimonial.rating)}
+                          </div>
+                        </div>
+                        <a
+                          href="https://www.google.com/search?sca_esv=4978fba7b0bac1f0&rlz=1C1CHBD_enNP958NP958&biw=1536&bih=730&sxsrf=AE3TifPVUO1oRlbNP78cpFRRaK4onb_07w:1755073144495&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-EwZWVuYW0g8KF2vPu6clfA4Tc01fZMFebuAK3ewteCeJdi93Q--PKbfuKh7rd07C4XQp7o8Av51vqilN609w1zKXmLHbGIi09AdzJYdAYX-UNB49pKWx_i_pSu36LwV_o1fQkb0%3D&q=Smile+by+Dr+Kareen+-+Dental+Clinic+Reviews&sa=X&ved=2ahUKEwi0nNT6rIePAxXv4DgGHTQyEg0Q0bkNegQIHxAE"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center"
+                        >
+                        <img
+                          src="https://www.google.com/favicon.ico"
+                          alt="Google Logo"
+                          className="h-5 w-5"
+                        />
+                        </a>
+                      </div>
+                      <div className="flex-grow">
+                        <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-4">
+                          {testimonial.quote}
+                        </p>
+                      </div>
+                      <div className="border-t border-gray-200 pt-3 mt-auto">
+                        <p className="text-gray-500 text-xs text-justify">{testimonial.service}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <button
+                  onClick={nextTestimonial}
+                  className="w-10 h-10 bg-teal-600 rounded-full flex items-center justify-center hover:bg-teal-700 transition-all duration-300 hover:scale-105 shadow-md ml-4"
+                  aria-label="Next testimonials"
+                >
+                  <ChevronRight className="h-5 w-5 text-white" />
+                </button>
+              </div>
+            ) : (
+              <div className="text-center text-gray-500">
+                <p>No testimonials available at the moment.</p>
+              </div>
+            )}
+            <div className="text-center mt-8">
+              <a
+                href="https://www.google.com/search?sca_esv=4978fba7b0bac1f0&rlz=1C1CHBD_enNP958NP958&biw=1536&bih=730&sxsrf=AE3TifPVUO1oRlbNP78cpFRRaK4onb_07w:1755073144495&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-EwZWVuYW0g8KF2vPu6clfA4Tc01fZMFebuAK3ewteCeJdi93Q--PKbfuKh7rd07C4XQp7o8Av51vqilN609w1zKXmLHbGIi09AdzJYdAYX-UNB49pKWx_i_pSu36LwV_o1fQkb0%3D&q=Smile+by+Dr+Kareen+-+Dental+Clinic+Reviews&sa=X&ved=2ahUKEwi0nNT6rIePAxXv4DgGHTQyEg0Q0bkNegQIHxAE"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center px-6 py-2.5 bg-teal-600 text-white font-medium text-sm rounded-lg hover:bg-teal-700 transition-colors shadow-md"
+              >
+                <img
+                  src="https://www.google.com/favicon.ico"
+                  alt="Google Logo"
+                  className="h-4 mr-2"
+                />
+                See More on Google Reviews
+              </a>
+            </div>
+          </div>
         </div>
-      ) : (
-        <div className="text-center text-gray-500">
-          <p>No testimonials available at the moment.</p>
-        </div>
-      )}
-
-      {/* Google Reviews button */}
-      <div className="text-center mt-8">
-        <a
-          href="https://www.google.com/search?q=Smile+by+Dr+Kareen+-+Dental+Clinic+Reviews"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center px-6 py-3 bg-teal-700 text-white font-medium rounded-lg hover:bg-teal-800 transition-colors shadow-md"
-        >
-          <img
-            src="https://www.google.com/favicon.ico"
-            alt="Google Logo"
-            className="h-5 mr-2"
-          />
-          More on Google Reviews
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-      
+      </section>
 
 
       {/* Location Section */}
