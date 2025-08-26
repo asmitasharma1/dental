@@ -1098,18 +1098,14 @@ const [selectedImage, setSelectedImage] = useState<ProductImage | null>(null);
                       }}
                       onClick={() => openImageModal(image, image.index)}
                     >
-                      <div className="relative bg-white rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 h-full">
+                      <div className="p-4 hover:shadow-xl transition-all duration-300 h-full">
                         <img
                           src={image.src || "/placeholder.svg"}
                           alt={image.alt}
                           className="w-full h-full object-contain rounded-lg"
                         />
 
-                        {isCenter && (
-                          <div className="absolute bottom-3 left-3 bg-gray-50 px-4 py-1 rounded-full text-xs font-semibold text-teal-800 shadow-sm">
-                            Premium Quality
-                          </div>
-                        )}
+                       
                       </div>
                     </div>
                   );
@@ -1257,7 +1253,30 @@ const [selectedImage, setSelectedImage] = useState<ProductImage | null>(null);
 
 
 
-
+<section className="py-12 relative bg-teal-800 text-white">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold mb-4">Get Your FREE Dental Consultation Today</h2>
+          <p className="text-lg mb-6">Achieve a healthy, confident smile with our expert team. Schedule your free consultation today to discuss your dental needs.</p>
+          <div className="flex justify-center items-center space-x-4">
+            <a
+              href="tel:+977-9851359775"
+              className="flex items-center gap-2 px-6 py-3 bg-teal-700 rounded-full text-base font-semibold hover:bg-teal-750 transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1"
+            >
+              <Phone className="h-4 w-4" />
+              Call: +977-9851359775
+            </a>
+            <a
+              href="https://wa.me/9851359775"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-3 bg-white text-teal-900 rounded-full text-base font-semibold hover:bg-teal-100 transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1"
+            >
+              <MessageCircle className="h-4 w-4" />
+              Message on WhatsApp
+            </a>
+          </div>
+        </div>
+      </section>
 
       <section className="py-24 relative bg-white mt-0">
         <div className="absolute inset-0 bg-gradient-to-br from-gray-50/90 to-teal-50/90 backdrop-blur-sm"></div>
@@ -1340,30 +1359,7 @@ const [selectedImage, setSelectedImage] = useState<ProductImage | null>(null);
         </div>
       </section>
 
-      <section className="py-12 relative bg-teal-800 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">Get Your FREE Dental Consultation Today</h2>
-          <p className="text-lg mb-6">Achieve a healthy, confident smile with our expert team. Schedule your free consultation today to discuss your dental needs.</p>
-          <div className="flex justify-center items-center space-x-4">
-            <a
-              href="tel:+977-9851359775"
-              className="flex items-center gap-2 px-6 py-3 bg-teal-700 rounded-full text-base font-semibold hover:bg-teal-750 transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1"
-            >
-              <Phone className="h-4 w-4" />
-              Call: +977-9851359775
-            </a>
-            <a
-              href="https://wa.me/9851359775"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-3 bg-white text-teal-900 rounded-full text-base font-semibold hover:bg-teal-100 transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1"
-            >
-              <MessageCircle className="h-4 w-4" />
-              Message on WhatsApp
-            </a>
-          </div>
-        </div>
-      </section>
+      
 
 
       {/* Location Section */}

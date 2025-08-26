@@ -6,6 +6,7 @@ import Image from "next/image"
 import { useState, useEffect, useCallback } from "react"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
+import { motion } from "framer-motion";
 
 interface Doctor {
   id: number
@@ -129,82 +130,115 @@ export default function AboutPage() {
       <Navbar />
 
       {/* About Clinic Section */}
-      <section
-  id="clinic"
-  className="py-24 bg-gradient-to-br from-teal-50 via-white to-cyan-50 relative overflow-hidden"
->
-  <div className="container mx-auto px-4">
-    <div className="grid lg:grid-cols-2 gap-16 items-center">
-      {/* Left Content */}
-      <div className="space-y-8 text-center lg:text-left">
-        <div className="space-y-6">
-          <h1 className="text-5xl lg:text-6xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 bg-clip-text text-transparent">
-            About Our Clinic
-          </h1>
-          <p className="text-xl text-gray-600 leading-relaxed text-justify">
-            Dr. Kareen's Dental Clinic in Lalitpur is a state-of-the-art facility dedicated to providing
-            comprehensive dental care with the latest technology and a patient-centered approach.
-          </p>
-        </div>
+        <section
+      id="clinic"
+      className="py-24 bg-gradient-to-br from-teal-50 via-white to-cyan-50 relative overflow-hidden"
+    >
+      <div className="container mx-auto px-4">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Left Content */}
+          <motion.div
+            className="space-y-8 text-center lg:text-left"
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            viewport={{ once: true }}
+          >
+            <div className="space-y-6">
+              <motion.h1
+                className="text-5xl lg:text-6xl font-bold bg-gradient-to-r from-gray-900 to-teal-700 bg-clip-text text-transparent"
+                initial={{ opacity: 0, y: -30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+                viewport={{ once: true }}
+              >
+                About Our Clinic
+              </motion.h1>
+              <motion.p
+                className="text-xl text-gray-600 leading-relaxed text-justify"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 1, delay: 0.4 }}
+                viewport={{ once: true }}
+              >
+                Dr. Kareen's Dental Clinic in Lalitpur is a state-of-the-art
+                facility dedicated to providing comprehensive dental care with
+                the latest technology and a patient-centered approach.
+              </motion.p>
+            </div>
 
-        <div className="space-y-6">
-          <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left space-x-0 sm:space-x-4">
-            <div className="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center flex-shrink-0 mb-3 sm:mb-0">
-              <Award className="h-6 w-6 text-teal-600" />
+            {/* Feature Cards */}
+            <div className="space-y-6">
+              {[
+                {
+                  icon: <Award className="h-6 w-6 text-teal-600" />,
+                  bg: "bg-teal-100",
+                  title: "Excellence in Care",
+                  text: "Our clinic has been serving the Lalitpur community for over 10 years, building a reputation for exceptional dental care and patient satisfaction.",
+                },
+                {
+                  icon: <Shield className="h-6 w-6 text-cyan-600" />,
+                  bg: "bg-cyan-100",
+                  title: "Advanced Technology",
+                  text: "We use cutting-edge dental equipment and the latest techniques to ensure precise, comfortable, and effective treatments for all our patients.",
+                },
+                {
+                  icon: <Heart className="h-6 w-6 text-pink-600" />,
+                  bg: "bg-teal-100",
+                  title: "Patient-Centered Approach",
+                  text: "Every treatment plan is customized to meet individual needs, ensuring optimal results and patient comfort throughout the entire process.",
+                },
+              ].map((item, i) => (
+                <motion.div
+                  key={i}
+                  className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left space-x-0 sm:space-x-4 cursor-default p-6 rounded-2xl bg-gradient-to-br from-white/80 to-teal-50/60 backdrop-blur-lg shadow-md hover:shadow-xl transition-shadow"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  whileHover={{ scale: 1.05, y: -4 }}
+                  transition={{ duration: 0.5, delay: 0.2 * (i + 1) }}
+                  viewport={{ once: true }}
+                >
+                  <div
+                    className={`w-12 h-12 ${item.bg} rounded-full flex items-center justify-center flex-shrink-0 mb-3 sm:mb-0`}
+                  >
+                    {item.icon}
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">
+                      {item.title}
+                    </h3>
+                    <p className="text-gray-600">{item.text}</p>
+                  </div>
+                </motion.div>
+              ))}
             </div>
-            <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Excellence in Care</h3>
-              <p className="text-gray-600">
-                Our clinic has been serving the Lalitpur community for over 10 years, building a reputation for
-                exceptional dental care and patient satisfaction.
-              </p>
-            </div>
-          </div>
+          </motion.div>
 
-          <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left space-x-0 sm:space-x-4">
-            <div className="w-12 h-12 bg-cyan-100 rounded-full flex items-center justify-center flex-shrink-0 mb-3 sm:mb-0">
-              <Shield className="h-6 w-6 text-cyan-600" />
-            </div>
-            <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Advanced Technology</h3>
-              <p className="text-gray-600">
-                We use cutting-edge dental equipment and the latest techniques to ensure precise, comfortable, and
-                effective treatments for all our patients.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left space-x-0 sm:space-x-4">
-            <div className="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center flex-shrink-0 mb-3 sm:mb-0">
-              <Heart className="h-6 w-6 text-pink-600" />
-            </div>
-            <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Patient-Centered Approach</h3>
-              <p className="text-gray-600">
-                Every treatment plan is customized to meet individual needs, ensuring optimal results and patient
-                comfort throughout the entire process.
-              </p>
-            </div>
-          </div>
+          {/* Right Image */}
+          <motion.div
+            className="relative flex justify-center lg:justify-end"
+            initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
+            whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            viewport={{ once: true }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-teal-200/30 to-cyan-200/30 rounded-3xl blur-2xl transform -rotate-6"></div>
+            <motion.div whileHover={{ scale: 1.08, rotate: 1 }}>
+              <Image
+                src="/images/MPS__3.webp"
+                alt="Dr. Kareen's Clinic Interior"
+                width={500}
+                height={600}
+                placeholder="blur"
+                blurDataURL="/images/MPS__3-small.webp"
+                className="rounded-1xl shadow-2xl relative z-10"
+              />
+            </motion.div>
+          </motion.div>
         </div>
       </div>
-
-      {/* Right Image */}
-      <div className="relative flex justify-center lg:justify-end">
-        <div className="absolute inset-0 bg-gradient-to-br from-teal-200/30 to-cyan-200/30 rounded-3xl blur-2xl transform -rotate-6"></div>
-        <Image
-          src="/images/MPS__3.webp"
-          alt="Dr. Kareen's Clinic Interior"
-          width={500}
-          height={600}
-          placeholder="blur"
-          blurDataURL="/images/MPS__3-small.webp" 
-          className="rounded-1xl shadow-2xl relative z-10 hover:scale-105 transition-transform duration-500"
-        />
-      </div>
-    </div>
-  </div>
-      </section>
+    </section>
 
 
       {/* Our Doctors Section */}
