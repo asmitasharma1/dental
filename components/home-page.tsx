@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import { motion } from "framer-motion";
 import {
   Mail,
   Quote,
@@ -1053,78 +1054,99 @@ export default function HomePage() {
               </div>
 
               {/* Right Content - Image Carousel */}
-              <div className="flex justify-center lg:justify-end">
-                <div className="relative max-w-lg w-full">
-                  {/* Main carousel container */}
-                  <div className="relative h-96 overflow-hidden rounded-2xl">
-                    {/* Image stack */}
-                    <div className="relative w-full h-full flex items-center justify-center">
-                      {getVisibleProductImages().map((image, index) => {
-                        const { position } = image;
-                        const isCenter = position === 0;
-                        const isLeft = position === -1;
-                        const isRight = position === 1;
+               <div className="flex justify-center lg:justify-end">
+      <div className="relative max-w-xl w-full">
+        {/* Main carousel container */}
+        <div className="relative h-[420px] overflow-hidden rounded-3xl bg-gradient-to-br from-gray-50 via-white to-teal-50 shadow-xl">
+          {/* Image stack */}
+          <div className="relative w-full h-full flex items-center justify-center">
+            {getVisibleProductImages().map((image, index) => {
+              const { position } = image;
+              const isCenter = position === 0;
+              const isLeft = position === -1;
+              const isRight = position === 1;
 
-                        return (
-                          <div
-                            key={`${currentProductImage}-${index}`}
-                            className={`absolute transition-all duration-500 ease-in-out cursor-pointer ${isCenter
-                              ? "z-30 scale-100 opacity-100 translate-x-0"
-                              : isLeft
-                                ? "z-20 scale-75 opacity-60 -translate-x-32"
-                                : "z-20 scale-75 opacity-60 translate-x-32"
-                              }`}
-                            style={{
-                              width: isCenter ? "280px" : "200px",
-                              height: isCenter ? "320px" : "240px",
-                            }}
-                            onClick={() => openImageModal(image, image.index)}
-                          >
-                            <div className="p-4 hover:shadow-xl transition-all duration-300 h-full">
-                              <img
-                                src={image.src || "/placeholder.svg"}
-                                alt={image.alt}
-                                className="w-full h-full object-contain rounded-lg"
-                              />
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
+              return (
+                <motion.div
+                  key={`${currentProductImage}-${index}`}
+                  initial={{ opacity: 0, scale: 0.8, y: 40 }}
+                  animate={{
+                    opacity: 1,
+                    scale: isCenter ? 1 : 0.8,
+                    x: isLeft ? -140 : isRight ? 140 : 0,
+                    y: isCenter ? 0 : 40,
+                    zIndex: isCenter ? 30 : 10,
+                  }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  whileHover={{
+                    scale: isCenter ? 1.05 : 0.85,
+                    rotate: isCenter ? 0 : isLeft ? -3 : 3,
+                    boxShadow: "0px 15px 40px rgba(0,0,0,0.15)",
+                  }}
+                  className={`absolute cursor-pointer`}
+                  style={{
+                    width: isCenter ? "280px" : "220px",
+                    height: isCenter ? "340px" : "260px",
+                  }}
+                  onClick={() => openImageModal(image, image.index)}
+                >
+                  <div className="p-4 h-full bg-white/80 backdrop-blur-md border border-gray-100 rounded-2xl shadow-lg hover:shadow-xl transition-all">
+                    <img
+                      src={image.src || "/placeholder.svg"}
+                      alt={image.alt}
+                      className="w-full h-full object-contain rounded-xl"
+                    />
                   </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
 
-                  {/* Navigation dots */}
-                  <div className="flex justify-center space-x-2 mt-6">
-                    {[0, 1, 2].map((dotIndex) => (
-                      <button
-                        key={dotIndex}
-                        className={`w-2 h-2 rounded-full transition-all duration-300 hover:scale-110 ${dotIndex === currentProductImage % 3
-                          ? "bg-teal-600 w-6"
-                          : "bg-gray-300"
-                          }`}
-                        onClick={() => setCurrentProductImage(dotIndex)}
-                      />
-                    ))}
-                  </div>
+        {/* Navigation dots */}
+        <div className="flex justify-center space-x-3 mt-6">
+          {[0, 1, 2].map((dotIndex) => (
+            <motion.button
+              key={dotIndex}
+              whileHover={{ scale: 1.3 }}
+              className={`h-2.5 rounded-full transition-all duration-300 ${
+                dotIndex === currentProductImage % 3
+                  ? "bg-teal-600 w-6"
+                  : "bg-gray-300 w-2"
+              }`}
+              onClick={() => setCurrentProductImage(dotIndex)}
+            />
+          ))}
+        </div>
 
-                  {/* Floating product cards */}
-                  <div className="bg-white rounded-xl p-3 shadow-md hover:shadow-lg transform rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-300 absolute -top-6 -left-6">
-                    <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center mb-2 shadow-sm">
-                      <Star className="w-4 h-4 text-teal-600" />
-                    </div>
-                    <div className="text-xs font-bold text-gray-900">5★ Rated</div>
-                  </div>
+        {/* Floating product cards */}
+        <motion.div
+          initial={{ opacity: 0, y: -20, rotate: -4 }}
+          animate={{ opacity: 1, y: 0, rotate: 6 }}
+          whileHover={{ rotate: 0, scale: 1.05 }}
+          transition={{ duration: 0.5 }}
+          className="bg-white rounded-xl p-3 shadow-md absolute -top-8 -left-8"
+        >
+          <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center mb-2 shadow-sm">
+            <Star className="w-4 h-4 text-teal-600" />
+          </div>
+          <div className="text-xs font-bold text-gray-900">5★ Rated</div>
+        </motion.div>
 
-                  <div className="bg-white rounded-xl p-3 shadow-md hover:shadow-lg transform -rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-300 absolute -bottom-6 -right-6">
-                    <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center mb-2 shadow-sm">
-                      <Zap className="w-4 h-4 text-teal-600" />
-                    </div>
-                    <div className="text-xs font-bold text-gray-900">
-                      Fast Delivery
-                    </div>
-                  </div>
-                </div>
-              </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20, rotate: 4 }}
+          animate={{ opacity: 1, y: 0, rotate: -6 }}
+          whileHover={{ rotate: 0, scale: 1.05 }}
+          transition={{ duration: 0.5 }}
+          className="bg-white rounded-xl p-3 shadow-md absolute -bottom-8 -right-8"
+        >
+          <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center mb-2 shadow-sm">
+            <Zap className="w-4 h-4 text-teal-600" />
+          </div>
+          <div className="text-xs font-bold text-gray-900">Fast Delivery</div>
+        </motion.div>
+      </div>
+    </div>
             </div>
           </div>
         </section>
