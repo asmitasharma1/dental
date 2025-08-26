@@ -217,41 +217,41 @@ export default function Gallery({ selectedCategory, setSelectedCategory }: Galle
                   }`}
                   onClick={() => openLightbox(index)}
                 >
-               <CardContent className="p-0">
-  <div
-    className={`relative overflow-hidden bg-gray-100 ${
-      image.category === "Products" ? "w-[300px] h-[300px]" : "aspect-[5/4]"
-    } mx-auto`}
-  >
-    {!imageLoadStates[image.id] && (
-      <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
-        <div className="text-gray-400 text-sm">Loading...</div>
-      </div>
-    )}
+                  <CardContent className="p-0">
+                    {/* ✅ Products show full image (object-contain) */}
+                    <div
+                      className={`relative overflow-hidden bg-gray-100 ${
+                        image.category === "Products" ? "aspect-[3/4]" : "aspect-[5/4]"
+                      }`}
+                    >
+                      {!imageLoadStates[image.id] && (
+                        <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
+                          <div className="text-gray-400 text-sm">Loading...</div>
+                        </div>
+                      )}
 
-    <Image
-      src={image.src || "/placeholder.svg?height=400&width=500&query=gallery image"}
-      alt={image.alt}
-      fill
-      className={`transition-transform duration-300 ${
-        image.category === "Products"
-          ? "object-cover"
-          : "object-cover group-hover:scale-105"
-      } ${imageLoadStates[image.id] ? "opacity-100" : "opacity-0"}`}
-      sizes="100vw"
-      quality={75}
-      loading="lazy"
-      onLoad={() => handleImageLoad(image.id)}
-    />
+                      <Image
+                        src={image.src || "/placeholder.svg?height=400&width=500&query=gallery image"}
+                        alt={image.alt}
+                        fill
+                        className={`transition-transform duration-300 ${
+                          image.category === "Products"
+                            ? "object-contain bg-white p-2"
+                            : "object-cover group-hover:scale-105"
+                        } ${imageLoadStates[image.id] ? "opacity-100" : "opacity-0"}`}
+                        sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                        quality={75}
+                        loading="lazy"
+                        onLoad={() => handleImageLoad(image.id)}
+                        placeholder="blur"
+                        blurDataURL="data:image/jpeg;base64,/9j/..."
+                      />
 
-    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-      <p className="text-white text-sm font-medium">{image.alt}</p>
-    </div>
-  </div>
-</CardContent>
-
-
-
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <p className="text-white text-sm font-medium">{image.alt}</p>
+                      </div>
+                    </div>
+                  </CardContent>
                 </Card>
               ))}
             </div>
