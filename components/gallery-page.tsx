@@ -58,9 +58,19 @@ export default function Gallery({ selectedCategory, setSelectedCategory }: Galle
     }
   };
 
-  const filteredImages = images.filter(
-    (image) => selectedCategory === "All" || image.category === selectedCategory
-  );
+  // ✅ Updated filtering logic
+  const filteredImages = images.filter((image) => {
+    if (selectedCategory === "All") {
+      // Show everything except Products
+      return image.category !== "Products";
+    } else if (selectedCategory === "Products") {
+      // Show only Products
+      return image.category === "Products";
+    } else {
+      // Show only selected category
+      return image.category === selectedCategory;
+    }
+  });
 
   const openLightbox = (index: number) => {
     setCurrentImageIndex(index);
