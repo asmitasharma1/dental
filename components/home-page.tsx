@@ -1276,27 +1276,30 @@ export default function HomePage() {
               <div className="relative max-w-6xl mx-auto flex items-center">
                 <button
                   onClick={prevTestimonial}
-                  className="w-10 h-10 bg-teal-600 rounded-full flex items-center justify-center hover:bg-teal-700 transition-all duration-300 hover:scale-105 shadow-md mr-4"
+                  className="w-10 h-10 bg-teal-600 rounded-full flex items-center justify-center hover:bg-teal-700 transition-all duration-300 hover:scale-105 shadow-md mr-2 md:mr-4 flex-shrink-0"
                   aria-label="Previous testimonials"
                 >
                   <ChevronLeft className="h-5 w-5 text-white" />
                 </button>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 flex-grow">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 flex-grow overflow-hidden">
                   {getDisplayedTestimonials().map((testimonial, index) => (
                     <div
                       key={index}
-                      className="bg-white p-6 rounded-lg shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-300 flex flex-col h-full"
+                      className={`bg-white p-4 md:p-6 rounded-lg shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-300 flex flex-col h-full ${
+                        // Hide additional testimonials on mobile (only show first one)
+                        index > 0 ? 'hidden md:flex' : ''
+                      }`}
                       style={{ borderRadius: '12px' }}
                     >
                       <div className="flex items-center mb-4">
                         <div
-                          className="w-10 h-10 rounded-full flex items-center justify-center text-white text-lg font-medium mr-3"
+                          className="w-10 h-10 rounded-full flex items-center justify-center text-white text-lg font-medium mr-3 flex-shrink-0"
                           style={{ backgroundColor: getFixedColor((currentTestimonial + index) % testimonials.length) }}
                         >
                           {getInitial(testimonial.name)}
                         </div>
-                        <div className="flex-grow">
-                          <p className="font-semibold text-gray-900">{testimonial.name}</p>
+                        <div className="flex-grow min-w-0">
+                          <p className="font-semibold text-gray-900 text-sm md:text-base truncate">{testimonial.name}</p>
                           <div className="flex items-center space-x-1">
                             {renderStars(testimonial.rating)}
                           </div>
@@ -1305,7 +1308,7 @@ export default function HomePage() {
                           href="https://www.google.com/search?sca_esv=4978fba7b0bac1f0&rlz=1C1CHBD_enNP958NP958&biw=1536&bih=730&sxsrf=AE3TifPVUO1oRlbNP78cpFRRaK4onb_07w:1755073144495&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-EwZWVuYW0g8KF2vPu6clfA4Tc01fZMFebuAK3ewteCeJdi93Q--PKbfuKh7rd07C4XQp7o8Av51vqilN609w1zKXmLHbGIi09AdzJYdAYX-UNB49pKWx_i_pSu36LwV_o1fQkb0%3D&q=Smile+by+Dr+Kareen+-+Dental+Clinic+Reviews&sa=X&ved=2ahUKEwi0nNT6rIePAxXv4DgGHTQyEg0Q0bkNegQIHxAE"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center"
+                          className="inline-flex items-center flex-shrink-0"
                         >
                           <img
                             src="https://www.google.com/favicon.ico"
@@ -1327,7 +1330,7 @@ export default function HomePage() {
                 </div>
                 <button
                   onClick={nextTestimonial}
-                  className="w-10 h-10 bg-teal-600 rounded-full flex items-center justify-center hover:bg-teal-700 transition-all duration-300 hover:scale-105 shadow-md ml-4"
+                  className="w-10 h-10 bg-teal-600 rounded-full flex items-center justify-center hover:bg-teal-700 transition-all duration-300 hover:scale-105 shadow-md ml-2 md:ml-4 flex-shrink-0"
                   aria-label="Next testimonials"
                 >
                   <ChevronRight className="h-5 w-5 text-white" />
