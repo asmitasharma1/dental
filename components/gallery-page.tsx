@@ -58,13 +58,16 @@ export default function Gallery({ selectedCategory, setSelectedCategory }: Galle
     }
   };
 
-  // ✅ Filtering logic
+  // ✅ Updated filtering logic
   const filteredImages = images.filter((image) => {
     if (selectedCategory === "All") {
+      // Show everything except Products
       return image.category !== "Products";
     } else if (selectedCategory === "Products") {
+      // Show only Products
       return image.category === "Products";
     } else {
+      // Show only selected category
       return image.category === selectedCategory;
     }
   });
@@ -181,7 +184,6 @@ export default function Gallery({ selectedCategory, setSelectedCategory }: Galle
             <div className="w-32 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto mt-8"></div>
           </div>
 
-          {/* Category Buttons */}
           <div className="flex flex-wrap justify-center gap-4 mb-12">
             {categories.map((category) => (
               <Button
@@ -199,7 +201,6 @@ export default function Gallery({ selectedCategory, setSelectedCategory }: Galle
             ))}
           </div>
 
-          {/* Gallery Grid */}
           {loading ? (
             <div className="flex justify-center items-center h-64">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div>
@@ -212,53 +213,43 @@ export default function Gallery({ selectedCategory, setSelectedCategory }: Galle
               {filteredImages.map((image, index) => (
                 <Card
                   key={image.id}
-                  className={`overflow-hidden border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group ${
-                    image.category === "Products" ? "sm:col-span-2" : ""
-                  }`}
+                  className="overflow-hidden border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group"
                   onClick={() => openLightbox(index)}
                 >
                   <CardContent className="p-0">
-                    {/* ✅ Products show full image (object-contain) */}
-                    <div
-                      className={`relative overflow-hidden bg-gray-100 ${
-                        image.category === "Products" ? "aspect-[3/4]" : "aspect-[5/4]"
-                      }`}
-                    >
-                      {!imageLoadStates[image.id] && (
-                        <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
-                          <div className="text-gray-400 text-sm">Loading...</div>
-                        </div>
-                      )}
+  <div
+    className={`relative ${
+      image.category === "Products" ? "w-full h-64" : "aspect-[5/4] bg-gray-100"
+    }`}
+  >
+    {!imageLoadStates[image.id] && (
+      <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
+        <div className="text-gray-400 text-sm">Loading...</div>
+      </div>
+    )}
 
-                      <Image
-                        src={image.src || "/placeholder.svg?height=400&width=500&query=gallery image"}
-                        alt={image.alt}
-                        fill
-                        className={`transition-transform duration-300 ${
-                          image.category === "Products"
-                            ? "object-contain bg-white p-2"
-                            : "object-cover group-hover:scale-105"
-                        } ${imageLoadStates[image.id] ? "opacity-100" : "opacity-0"}`}
-                        sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                        quality={75}
-                        loading="lazy"
-                        onLoad={() => handleImageLoad(image.id)}
-                        placeholder="blur"
-                        blurDataURL="data:image/jpeg;base64,/9j/..."
-                      />
+    <Image
+      src={image.src || "/placeholder.svg?height=400&width=400&query=gallery image"}
+      alt={image.alt}
+      fill
+      className={`object-contain transition-transform duration-300 ${
+        imageLoadStates[image.id] ? "opacity-100" : "opacity-0"
+      }`}
+      quality={85}
+      loading="lazy"
+      onLoad={() => handleImageLoad(image.id)}
+    />
+  </div>
+</CardContent>
 
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                        <p className="text-white text-sm font-medium">{image.alt}</p>
-                      </div>
-                    </div>
-                  </CardContent>
+
+
                 </Card>
               ))}
             </div>
           )}
         </main>
 
-        {/* Lightbox */}
         <Dialog open={lightboxOpen} onOpenChange={setLightboxOpen}>
           <DialogContent className="max-w-5xl h-[90vh] p-0 bg-transparent border-none shadow-none flex items-center justify-center">
             {filteredImages.length > 0 && (
@@ -319,7 +310,6 @@ export default function Gallery({ selectedCategory, setSelectedCategory }: Galle
 
       <Footer />
 
-      {/* Scroll To Top */}
       {isVisible && (
         <button
           onClick={scrollToTop}
