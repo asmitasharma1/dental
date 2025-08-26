@@ -219,7 +219,9 @@ export default function Gallery({ selectedCategory, setSelectedCategory }: Galle
                   <CardContent className="p-0">
   <div
     className={`relative ${
-      image.category === "Products" ? "w-full h-64" : "aspect-[5/4] bg-gray-100"
+      image.category === "Products"
+        ? "w-full h-64" // ✅ Fixed same size for products
+        : "aspect-[5/4] bg-gray-100" // ✅ Keep original for others
     }`}
   >
     {!imageLoadStates[image.id] && (
@@ -232,13 +234,25 @@ export default function Gallery({ selectedCategory, setSelectedCategory }: Galle
       src={image.src || "/placeholder.svg?height=400&width=400&query=gallery image"}
       alt={image.alt}
       fill
-      className={`object-contain transition-transform duration-300 ${
+      className={`${
+        image.category === "Products"
+          ? "object-contain" // ✅ Products → no crop, no white gap
+          : "object-cover group-hover:scale-105" // ✅ Others → keep original style
+      } transition-transform duration-300 ${
         imageLoadStates[image.id] ? "opacity-100" : "opacity-0"
       }`}
-      quality={85}
+      sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+      quality={80}
       loading="lazy"
       onLoad={() => handleImageLoad(image.id)}
     />
+
+    {/* ✅ Keep hover gradient only for non-products */}
+    {image.category !== "Products" && (
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+        <p className="text-white text-sm font-medium">{image.alt}</p>
+      </div>
+    )}
   </div>
 </CardContent>
 
