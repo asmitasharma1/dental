@@ -1041,12 +1041,14 @@ export default function HomePage() {
                       Order Now
                     </Button>
                   </a>
-                  <Button
-                    variant="outline"
-                    className="border-teal-600 text-teal-600 hover:bg-teal-50 px-7 py-3 text-base font-semibold rounded-full shadow-md hover:shadow-lg transition-all duration-300 bg-transparent"
-                  >
-                    View More Products
-                  </Button>
+                  <Link href="/gallery?category=Products">
+                    <Button
+                      variant="outline"
+                      className="border-teal-600 text-teal-600 hover:bg-teal-50 px-7 py-3 text-base font-semibold rounded-full shadow-md hover:shadow-lg transition-all duration-300"
+                    >
+                      View More Products
+                    </Button>
+                  </Link>
                 </div>
               </div>
 
@@ -1305,11 +1307,11 @@ export default function HomePage() {
                           rel="noopener noreferrer"
                           className="inline-flex items-center"
                         >
-                        <img
-                          src="https://www.google.com/favicon.ico"
-                          alt="Google Logo"
-                          className="h-5 w-5"
-                        />
+                          <img
+                            src="https://www.google.com/favicon.ico"
+                            alt="Google Logo"
+                            className="h-5 w-5"
+                          />
                         </a>
                       </div>
                       <div className="flex-grow">
