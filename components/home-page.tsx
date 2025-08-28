@@ -868,7 +868,11 @@ export default function HomePage() {
                 <div className="relative bg-gradient-to-br from-teal-100 to-cyan-100 p-6 rounded-3xl shadow-2xl">
                   <div className="relative overflow-hidden rounded-2xl bg-white p-2 shadow-xl">
                     <div className="relative h-96 md:h-[500px] overflow-hidden rounded-xl">
-                      <img src="/images/kareen.webp" alt="Dr. Kareen" className="w-full h-full object-cover" />
+<img 
+  src="/images/karrek.webp" 
+  alt="Dr. Kareen" 
+  className="w-full h-full object-cover object-top rounded-lg"
+/>
                       <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent"></div>
                     </div>
                   </div>

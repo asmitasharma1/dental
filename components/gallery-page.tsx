@@ -216,14 +216,8 @@ export default function Gallery({ selectedCategory, setSelectedCategory }: Galle
                   className="overflow-hidden border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group"
                   onClick={() => openLightbox(index)}
                 >
-                  <CardContent className="p-0">
-  <div
-    className={`relative ${
-      image.category === "Products"
-        ? "w-full h-64" // ✅ Fixed same size for products
-        : "aspect-[5/4] bg-gray-100" // ✅ Keep original for others
-    }`}
-  >
+                <CardContent className="p-0">
+  <div className="relative aspect-[5/4] bg-gray-100">
     {!imageLoadStates[image.id] && (
       <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
         <div className="text-gray-400 text-sm">Loading...</div>
@@ -231,14 +225,13 @@ export default function Gallery({ selectedCategory, setSelectedCategory }: Galle
     )}
 
     <Image
-      src={image.src || "/placeholder.svg?height=400&width=400&query=gallery image"}
+      src={
+        image.src ||
+        "/placeholder.svg?height=400&width=400&query=gallery image"
+      }
       alt={image.alt}
       fill
-      className={`${
-        image.category === "Products"
-          ? "object-contain" // ✅ Products → no crop, no white gap
-          : "object-cover group-hover:scale-105" // ✅ Others → keep original style
-      } transition-transform duration-300 ${
+      className={`object-cover group-hover:scale-105 transition-transform duration-300 ${
         imageLoadStates[image.id] ? "opacity-100" : "opacity-0"
       }`}
       sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
@@ -247,14 +240,13 @@ export default function Gallery({ selectedCategory, setSelectedCategory }: Galle
       onLoad={() => handleImageLoad(image.id)}
     />
 
-    {/* ✅ Keep hover gradient only for non-products */}
-    {image.category !== "Products" && (
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-        <p className="text-white text-sm font-medium">{image.alt}</p>
-      </div>
-    )}
+    {/* ✅ Apply hover overlay for all categories (including Products) */}
+    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+      <p className="text-white text-sm font-medium">{image.alt}</p>
+    </div>
   </div>
 </CardContent>
+
 
 
 
