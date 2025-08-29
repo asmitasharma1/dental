@@ -1,9 +1,10 @@
 "use client"
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback,useRef } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { motion } from "framer-motion";
+import PromoVideo from "./PromoVideo"
 import {
   Mail,
   Quote,
@@ -40,6 +41,8 @@ import Image from "next/image"
 import Link from "next/link"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
+import { FaTiktok } from "react-icons/fa";
+
 
 interface Testimonial {
   id: number
@@ -60,6 +63,7 @@ interface VisibleImage extends ProductImage {
   position: number;
   index: number;
 }
+
 
 const whyUsReasons = [
   {
@@ -590,9 +594,7 @@ export default function HomePage() {
             rel="noopener noreferrer"
             className="w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur-sm shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-all duration-300 hover:scale-105 md:hover:scale-110"
           >
-            <div className="w-5 h-5 md:w-6 md:h-6 bg-gray-800 rounded-sm flex items-center justify-center">
-              <span className="text-white text-xs font-bold">T</span>
-            </div>
+           <FaTiktok className="h-5 w-5 md:h-6 md:w-6 text-teal-600" />
           </a>
           <a
             href="https://wa.me/9851359775"
@@ -959,17 +961,8 @@ export default function HomePage() {
                 </div>
               </div>
               <div className="flex justify-center items-center">
-                <video
-                  className="w-full max-w-[400px] h-[500px] md:h-[500px] rounded-2xl shadow-lg object-cover"
-                  controls
-                  preload="metadata"
-                  playsInline
-                  muted
-                  autoPlay
-                >
-                  <source src="/images/video.mp4" type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
+               <PromoVideo />
+
               </div>
             </div>
           </div>
@@ -1283,108 +1276,115 @@ export default function HomePage() {
       </section>
 
       <section className="py-24 relative bg-white mt-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-50/90 to-teal-50/90 backdrop-blur-sm"></div>
-        <div className="relative z-10">
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-teal-600 bg-clip-text text-transparent mb-6">
-                What Our Patients Say
-              </h2>
-              <div className="w-24 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto"></div>
-            </div>
+  <div className="absolute inset-0 bg-gradient-to-br from-gray-50/90 to-teal-50/90 backdrop-blur-sm"></div>
+  <div className="relative z-10">
+    <div className="container mx-auto px-4 relative z-10">
+      <div className="text-center mb-16">
+        <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-teal-600 bg-clip-text text-transparent mb-6">
+          What Our Patients Say
+        </h2>
+        <div className="w-24 h-1 bg-gradient-to-r from-teal-400 to-teal-600 rounded-full mx-auto"></div>
+      </div>
 
-            {loading ? (
-              <div className="text-center">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600 mx-auto"></div>
-                <p className="text-gray-500 mt-2">Loading testimonials...</p>
-              </div>
-            ) : testimonials.length > 0 ? (
-              <div className="relative max-w-6xl mx-auto flex items-center">
-                <button
-                  onClick={prevTestimonial}
-                  className="w-10 h-10 bg-teal-600 rounded-full flex items-center justify-center hover:bg-teal-700 transition-all duration-300 hover:scale-105 shadow-md mr-2 md:mr-4 flex-shrink-0"
-                  aria-label="Previous testimonials"
-                >
-                  <ChevronLeft className="h-5 w-5 text-white" />
-                </button>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 flex-grow overflow-hidden">
-                  {getDisplayedTestimonials().map((testimonial, index) => (
-                    <div
-                      key={index}
-                      className={`bg-white p-4 md:p-6 rounded-lg shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-300 flex flex-col h-full ${
-                        // Hide additional testimonials on mobile (only show first one)
-                        index > 0 ? 'hidden md:flex' : ''
-                      }`}
-                      style={{ borderRadius: '12px' }}
-                    >
-                      <div className="flex items-center mb-4">
-                        <div
-                          className="w-10 h-10 rounded-full flex items-center justify-center text-white text-lg font-medium mr-3 flex-shrink-0"
-                          style={{ backgroundColor: getFixedColor((currentTestimonial + index) % testimonials.length) }}
-                        >
-                          {getInitial(testimonial.name)}
-                        </div>
-                        <div className="flex-grow min-w-0">
-                          <p className="font-semibold text-gray-900 text-sm md:text-base truncate">{testimonial.name}</p>
-                          <div className="flex items-center space-x-1">
-                            {renderStars(testimonial.rating)}
-                          </div>
-                        </div>
-                        <a
-                          href="https://www.google.com/search?sca_esv=4978fba7b0bac1f0&rlz=1C1CHBD_enNP958NP958&biw=1536&bih=730&sxsrf=AE3TifPVUO1oRlbNP78cpFRRaK4onb_07w:1755073144495&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-EwZWVuYW0g8KF2vPu6clfA4Tc01fZMFebuAK3ewteCeJdi93Q--PKbfuKh7rd07C4XQp7o8Av51vqilN609w1zKXmLHbGIi09AdzJYdAYX-UNB49pKWx_i_pSu36LwV_o1fQkb0%3D&q=Smile+by+Dr+Kareen+-+Dental+Clinic+Reviews&sa=X&ved=2ahUKEwi0nNT6rIePAxXv4DgGHTQyEg0Q0bkNegQIHxAE"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center flex-shrink-0"
-                        >
-                          <img
-                            src="https://www.google.com/favicon.ico"
-                            alt="Google Logo"
-                            className="h-5 w-5"
-                          />
-                        </a>
-                      </div>
-                      <div className="flex-grow">
-                        <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-4">
-                          {testimonial.quote}
-                        </p>
-                      </div>
-                      <div className="border-t border-gray-200 pt-3 mt-auto">
-                        <p className="text-gray-500 text-xs text-justify">{testimonial.service}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <button
-                  onClick={nextTestimonial}
-                  className="w-10 h-10 bg-teal-600 rounded-full flex items-center justify-center hover:bg-teal-700 transition-all duration-300 hover:scale-105 shadow-md ml-2 md:ml-4 flex-shrink-0"
-                  aria-label="Next testimonials"
-                >
-                  <ChevronRight className="h-5 w-5 text-white" />
-                </button>
-              </div>
-            ) : (
-              <div className="text-center text-gray-500">
-                <p>No testimonials available at the moment.</p>
-              </div>
-            )}
-            <div className="text-center mt-8">
-              <a
-                href="https://www.google.com/search?sca_esv=4978fba7b0bac1f0&rlz=1C1CHBD_enNP958NP958&biw=1536&bih=730&sxsrf=AE3TifPVUO1oRlbNP78cpFRRaK4onb_07w:1755073144495&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-EwZWVuYW0g8KF2vPu6clfA4Tc01fZMFebuAK3ewteCeJdi93Q--PKbfuKh7rd07C4XQp7o8Av51vqilN609w1zKXmLHbGIi09AdzJYdAYX-UNB49pKWx_i_pSu36LwV_o1fQkb0%3D&q=Smile+by+Dr+Kareen+-+Dental+Clinic+Reviews&sa=X&ved=2ahUKEwi0nNT6rIePAxXv4DgGHTQyEg0Q0bkNegQIHxAE"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center px-6 py-2.5 bg-teal-600 text-white font-medium text-sm rounded-lg hover:bg-teal-700 transition-colors shadow-md"
-              >
-                <img
-                  src="https://www.google.com/favicon.ico"
-                  alt="Google Logo"
-                  className="h-4 mr-2"
-                />
-                See More on Google Reviews
-              </a>
-            </div>
-          </div>
+      {loading ? (
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600 mx-auto"></div>
+          <p className="text-gray-500 mt-2">Loading testimonials...</p>
         </div>
-      </section>
+      ) : testimonials.length > 0 ? (
+        <div className="relative max-w-6xl mx-auto flex items-center">
+          <button
+            onClick={prevTestimonial}
+            className="w-10 h-10 bg-teal-600 rounded-full flex items-center justify-center hover:bg-teal-700 transition-all duration-300 hover:scale-105 shadow-md mr-2 md:mr-4 flex-shrink-0"
+            aria-label="Previous testimonials"
+          >
+            <ChevronLeft className="h-5 w-5 text-white" />
+          </button>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 flex-grow overflow-hidden">
+            {getDisplayedTestimonials().map((testimonial, index) => (
+              <div
+                key={index}
+                className={`bg-white p-4 md:p-6 rounded-lg shadow-md border border-gray-100 
+                            transition-all duration-300 transform hover:scale-105 hover:shadow-xl 
+                            hover:border-teal-200 cursor-pointer flex flex-col h-full ${
+                              index > 0 ? 'hidden md:flex' : ''
+                            }`}
+                style={{ borderRadius: '12px' }}
+              >
+                <div className="flex items-center mb-4">
+                  <div
+                    className="w-10 h-10 rounded-full flex items-center justify-center text-white text-lg font-medium mr-3 flex-shrink-0"
+                    style={{ backgroundColor: getFixedColor((currentTestimonial + index) % testimonials.length) }}
+                  >
+                    {getInitial(testimonial.name)}
+                  </div>
+                  <div className="flex-grow min-w-0">
+                    <p className="font-semibold text-gray-900 text-sm md:text-base truncate">
+                      {testimonial.name}
+                    </p>
+                    <div className="flex items-center space-x-1">
+                      {renderStars(testimonial.rating)}
+                    </div>
+                  </div>
+                  <a
+                    href="https://www.google.com/search?sca_esv=4978fba7b0bac1f0&rlz=1C1CHBD_enNP958NP958&biw=1536&bih=730&sxsrf=AE3TifPVUO1oRlbNP78cpFRRaK4onb_07w:1755073144495&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-EwZWVuYW0g8KF2vPu6clfA4Tc01fZMFebuAK3ewteCeJdi93Q--PKbfuKh7rd07C4XQp7o8Av51vqilN609w1zKXmLHbGIi09AdzJYdAYX-UNB49pKWx_i_pSu36LwV_o1fQkb0%3D&q=Smile+by+Dr+Kareen+-+Dental+Clinic+Reviews&sa=X&ved=2ahUKEwi0nNT6rIePAxXv4DgGHTQyEg0Q0bkNegQIHxAE"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center flex-shrink-0"
+                  >
+                    <img
+                      src="https://www.google.com/favicon.ico"
+                      alt="Google Logo"
+                      className="h-5 w-5"
+                    />
+                  </a>
+                </div>
+                <div className="flex-grow">
+                  <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-4">
+                    {testimonial.quote}
+                  </p>
+                </div>
+                <div className="border-t border-gray-200 pt-3 mt-auto">
+                  <p className="text-gray-500 text-xs text-justify">{testimonial.service}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <button
+            onClick={nextTestimonial}
+            className="w-10 h-10 bg-teal-600 rounded-full flex items-center justify-center hover:bg-teal-700 transition-all duration-300 hover:scale-105 shadow-md ml-2 md:ml-4 flex-shrink-0"
+            aria-label="Next testimonials"
+          >
+            <ChevronRight className="h-5 w-5 text-white" />
+          </button>
+        </div>
+      ) : (
+        <div className="text-center text-gray-500">
+          <p>No testimonials available at the moment.</p>
+        </div>
+      )}
+
+      <div className="text-center mt-8">
+        <a
+          href="https://www.google.com/search?sca_esv=4978fba7b0bac1f0&rlz=1C1CHBD_enNP958NP958&biw=1536&bih=730&sxsrf=AE3TifPVUO1oRlbNP78cpFRRaK4onb_07w:1755073144495&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-EwZWVuYW0g8KF2vPu6clfA4Tc01fZMFebuAK3ewteCeJdi93Q--PKbfuKh7rd07C4XQp7o8Av51vqilN609w1zKXmLHbGIi09AdzJYdAYX-UNB49pKWx_i_pSu36LwV_o1fQkb0%3D&q=Smile+by+Dr+Kareen+-+Dental+Clinic+Reviews&sa=X&ved=2ahUKEwi0nNT6rIePAxXv4DgGHTQyEg0Q0bkNegQIHxAE"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center px-6 py-2.5 bg-teal-600 text-white font-medium text-sm rounded-lg hover:bg-teal-700 transition-colors shadow-md"
+        >
+          <img
+            src="https://www.google.com/favicon.ico"
+            alt="Google Logo"
+            className="h-4 mr-2"
+          />
+          See More on Google Reviews
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 
       {/* Location Section */}
