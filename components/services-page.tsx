@@ -8,17 +8,7 @@ import Image from "next/image"
 import Link from "next/link"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
-
-interface Service {
-  id: number
-  title: string
-  description: string
-  category: string
-  price: number
-  duration: string
-  image_url: string
-  is_active: boolean
-}
+import { servicesData, type Service } from "@/lib/services-data"
 
 interface BeforeAfterCase {
   id: number
@@ -32,43 +22,42 @@ interface BeforeAfterCase {
 // Before/After cases data
 const beforeAfterCases: BeforeAfterCase[] = [
   {
-    "id": 1,
-    "title": "Professional Teeth Whitening",
-    "category": "Cosmetic Dentistry",
-    "beforeImage": "/images/before.jpg",
-    "afterImage": "/images/after.jpg",
-    "description": "Complete smile transformation with professional whitening treatment"
+    id: 1,
+    title: "Professional Teeth Whitening",
+    category: "Cosmetic Dentistry",
+    beforeImage: "/images/before.jpg",
+    afterImage: "/images/after.jpg",
+    description: "Complete smile transformation with professional whitening treatment",
   },
   {
-    "id": 2,
-    "title": "Dental Implant Restoration",
-    "category": "Restorative Dentistry",
-    "beforeImage": "/images/before1.webp",
-    "afterImage": "/images/after1.webp",
-    "description": "Full tooth replacement with natural-looking dental implants"
+    id: 2,
+    title: "Dental Implant Restoration",
+    category: "Restorative Dentistry",
+    beforeImage: "/images/before1.webp",
+    afterImage: "/images/after1.webp",
+    description: "Full tooth replacement with natural-looking dental implants",
   },
   {
-    "id": 3,
-    "title": "Orthodontic Evaluation",
-    "category": "Orthodontics",
-    "beforeImage": "/images/before2.webp",
-    "afterImage": "/images/after2.webp",
-    "description": "Orthodontic evaluation showing natural teeth alignment and gum health assessment"
+    id: 3,
+    title: "Orthodontic Evaluation",
+    category: "Orthodontics",
+    beforeImage: "/images/before2.webp",
+    afterImage: "/images/after2.webp",
+    description: "Orthodontic evaluation showing natural teeth alignment and gum health assessment",
   },
   {
-    "id": 4,
-    "title": "Bite Correction Treatment",
-    "category": "Orthodontics",
-    "beforeImage": "/images/before3.webp",
-    "afterImage": "/images/after3.webp",
-    "description": "Orthodontic assessment showing misaligned bite and gum condition for treatment planning"
-  }
+    id: 4,
+    title: "Bite Correction Treatment",
+    category: "Orthodontics",
+    beforeImage: "/images/before3.webp",
+    afterImage: "/images/after3.webp",
+    description: "Orthodontic assessment showing misaligned bite and gum condition for treatment planning",
+  },
 ]
 
-
 export default function ServicesPage() {
-  const [services, setServices] = useState<Service[]>([])
-  const [loading, setLoading] = useState(true)
+  const [services] = useState<Service[]>(servicesData)
+  const [loading] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const [currentCaseIndex, setCurrentCaseIndex] = useState(0)
   const [showAfter, setShowAfter] = useState(false)
@@ -82,34 +71,14 @@ export default function ServicesPage() {
 
   const currentCase = beforeAfterCases[currentCaseIndex]
 
-  useEffect(() => {
-    fetchServices()
-  }, [])
-
   // Auto-switch between before/after every 3 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      setShowAfter(prev => !prev)
+      setShowAfter((prev) => !prev)
     }, 3000)
 
     return () => clearInterval(interval)
   }, [])
-
-  const fetchServices = async () => {
-    try {
-      const response = await fetch("/api/services")
-      if (response.ok) {
-        const data = await response.json()
-        setServices(data)
-      } else {
-        console.error("Failed to fetch services")
-      }
-    } catch (error) {
-      console.error("Error fetching services:", error)
-    } finally {
-      setLoading(false)
-    }
-  }
 
   const handleScroll = useCallback(() => {
     const windowScrollY = window.scrollY || window.pageYOffset
@@ -174,17 +143,17 @@ export default function ServicesPage() {
   }
 
   const goToPrevCase = () => {
-    setCurrentCaseIndex(prev => prev === 0 ? beforeAfterCases.length - 1 : prev - 1)
+    setCurrentCaseIndex((prev) => (prev === 0 ? beforeAfterCases.length - 1 : prev - 1))
     setShowAfter(false)
   }
 
   const goToNextCase = () => {
-    setCurrentCaseIndex(prev => prev === beforeAfterCases.length - 1 ? 0 : prev + 1)
+    setCurrentCaseIndex((prev) => (prev === beforeAfterCases.length - 1 ? 0 : prev + 1))
     setShowAfter(false)
   }
 
   const toggleBeforeAfter = () => {
-    setShowAfter(prev => !prev)
+    setShowAfter((prev) => !prev)
   }
 
   return (
@@ -206,9 +175,7 @@ export default function ServicesPage() {
 
           {/* Enhanced Before/After Comparison with Navigation */}
           <div className="max-w-4xl mx-auto">
-            <h3 className="text-3xl font-bold text-center mb-8 text-gray-900">
-              {currentCase.title} Results
-            </h3>
+            <h3 className="text-3xl font-bold text-center mb-8 text-gray-900">{currentCase.title} Results</h3>
             <div className="relative bg-white rounded-3xl shadow-2xl overflow-hidden">
               {/* Navigation Arrows */}
               <button
@@ -218,7 +185,7 @@ export default function ServicesPage() {
               >
                 <ChevronLeft className="h-6 w-6" />
               </button>
-              
+
               <button
                 onClick={goToNextCase}
                 className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
@@ -233,9 +200,11 @@ export default function ServicesPage() {
                     src={currentCase.beforeImage || "/placeholder.svg"}
                     alt={`Before ${currentCase.title} Treatment`}
                     fill
-                    className={`object-cover transition-opacity duration-500 ${showAfter ? 'opacity-50' : 'opacity-100'}`}
+                    className={`object-cover transition-opacity duration-500 ${showAfter ? "opacity-50" : "opacity-100"}`}
                   />
-                  <div className={`absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium transition-all duration-300 ${showAfter ? 'opacity-50' : 'opacity-100'}`}>
+                  <div
+                    className={`absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium transition-all duration-300 ${showAfter ? "opacity-50" : "opacity-100"}`}
+                  >
                     Before
                   </div>
                 </div>
@@ -244,9 +213,11 @@ export default function ServicesPage() {
                     src={currentCase.afterImage || "/placeholder.svg"}
                     alt={`After ${currentCase.title} Treatment`}
                     fill
-                    className={`object-cover transition-opacity duration-500 ${showAfter ? 'opacity-100' : 'opacity-50'}`}
+                    className={`object-cover transition-opacity duration-500 ${showAfter ? "opacity-100" : "opacity-50"}`}
                   />
-                  <div className={`absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium transition-all duration-300 ${showAfter ? 'opacity-100' : 'opacity-50'}`}>
+                  <div
+                    className={`absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium transition-all duration-300 ${showAfter ? "opacity-100" : "opacity-50"}`}
+                  >
                     After
                   </div>
                 </div>
@@ -268,21 +239,17 @@ export default function ServicesPage() {
                       setShowAfter(false)
                     }}
                     className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                      index === currentCaseIndex 
-                        ? 'bg-teal-600 scale-125' 
-                        : 'bg-white/60 hover:bg-white/80'
+                      index === currentCaseIndex ? "bg-teal-600 scale-125" : "bg-white/60 hover:bg-white/80"
                     }`}
                     aria-label={`Case ${index + 1}`}
                   />
                 ))}
-              </div>             
+              </div>
             </div>
 
             {/* Case Description */}
             <div className="text-center mt-6">
-              <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-                {currentCase.description}
-              </p>
+              <p className="text-gray-600 text-lg max-w-2xl mx-auto">{currentCase.description}</p>
             </div>
           </div>
         </div>
@@ -328,7 +295,9 @@ export default function ServicesPage() {
                           <p className="text-gray-600 text-sm line-clamp-3">{service.description}</p>
                         </div>
                         <div className="mt-auto flex flex-col items-center">
-                          <div className="text-2xl font-bold text-teal-600 mb-4">NPR {service.price.toLocaleString()}</div>
+                          <div className="text-2xl font-bold text-teal-600 mb-4">
+                            NPR {service.price.toLocaleString()}
+                          </div>
                           <Link href={`/services/${service.id}`}>
                             <Button className="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white rounded-full px-6 py-2 group-hover:scale-105 transition-all duration-300 w-full">
                               Learn More
@@ -360,8 +329,9 @@ export default function ServicesPage() {
                         key={page}
                         variant={currentPage === page ? "default" : "outline"}
                         onClick={() => setCurrentPage(page)}
-                        className={`w-10 h-10 rounded-full ${currentPage === page ? "bg-teal-600 hover:bg-teal-700 text-white" : "hover:bg-teal-50"
-                          }`}
+                        className={`w-10 h-10 rounded-full ${
+                          currentPage === page ? "bg-teal-600 hover:bg-teal-700 text-white" : "hover:bg-teal-50"
+                        }`}
                       >
                         {page}
                       </Button>

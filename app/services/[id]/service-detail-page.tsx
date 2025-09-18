@@ -1,115 +1,104 @@
-"use client";
+"use client"
 
-import { useState, useEffect, useCallback } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, Calendar, DollarSign, Timer, HelpCircle, AlertTriangle, Clock, Heart, ArrowUp } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import Navbar from "@/components/navbar";
-import Footer from "@/components/footer";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import HTMLParser from "html-react-parser";
-
-interface Service {
-  id: number;
-  title: string;
-  description: string;
-  category: string;
-  price: number;
-  duration: string;
-  image_url: string;
-  why_use_service: string;
-  what_if_not_used: string;
-  before_appointment: string;
-  after_service: string;
-  is_active: boolean;
-}
+import { useState, useEffect, useCallback } from "react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { ArrowLeft, Calendar, DollarSign, Timer, HelpCircle, ArrowUp } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+import Navbar from "@/components/navbar"
+import Footer from "@/components/footer"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import HTMLParser from "html-react-parser"
+import { getServiceById, getRelatedServices, type Service } from "@/lib/services-data"
 
 interface ServiceDetailPageProps {
-  serviceId: string;
+  serviceId: string
 }
 
 // Function to convert plain text to HTML
 const convertPlainTextToHtml = (text: string): string => {
-  if (!text) return "<p>No content available.</p>";
+  if (!text) return "<p>No content available.</p>"
 
   // Split by single line breaks
-  const lines = text.split("\n").map(line => line.trim()).filter(line => line.length > 0);
+  const lines = text
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0)
 
-  let htmlContent = "";
-  let inList = false;
+  let htmlContent = ""
+  let inList = false
 
   lines.forEach((line, index) => {
     // Check if the line is a bullet point (starts with "- " or "* ")
     if (line.match(/^\s*[-*]\s/)) {
       if (!inList) {
         // Start a new unordered list
-        htmlContent += "<ul>";
-        inList = true;
+        htmlContent += "<ul>"
+        inList = true
       }
       // Add list item
-      htmlContent += `<li>${line.replace(/^\s*[-*]\s/, "").trim()}</li>`;
+      htmlContent += `<li>${line.replace(/^\s*[-*]\s/, "").trim()}</li>`
     } else {
       // Close the list if we were in one
       if (inList) {
-        htmlContent += "</ul>";
-        inList = false;
+        htmlContent += "</ul>"
+        inList = false
       }
       // Add paragraph
-      htmlContent += `<p>${line}</p>`;
+      htmlContent += `<p>${line}</p>`
     }
 
     // Close the list at the end if still open
     if (inList && index === lines.length - 1) {
-      htmlContent += "</ul>";
+      htmlContent += "</ul>"
     }
-  });
+  })
 
-  return htmlContent;
-};
+  return htmlContent
+}
 
 export default function ServiceDetailPage({ serviceId }: ServiceDetailPageProps) {
-  const [service, setService] = useState<Service | null>(null);
-  const [relatedServices, setRelatedServices] = useState<Service[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [isVisible, setIsVisible] = useState(false);
+  const [service, setService] = useState<Service | null>(null)
+  const [relatedServices, setRelatedServices] = useState<Service[]>([])
+  const [loading, setLoading] = useState(true)
+  const [isVisible, setIsVisible] = useState(false)
 
   // Add scroll detection logic
   const handleScroll = useCallback(() => {
-    const windowScrollY = window.scrollY || window.pageYOffset;
-    const documentScrollTop = document.documentElement.scrollTop;
-    const bodyScrollTop = document.body.scrollTop;
-    const scrollTop = Math.max(windowScrollY, documentScrollTop, bodyScrollTop);
+    const windowScrollY = window.scrollY || window.pageYOffset
+    const documentScrollTop = document.documentElement.scrollTop
+    const bodyScrollTop = document.body.scrollTop
+    const scrollTop = Math.max(windowScrollY, documentScrollTop, bodyScrollTop)
 
     if (scrollTop > 100) {
-      setIsVisible(true);
+      setIsVisible(true)
     } else {
-      setIsVisible(false);
+      setIsVisible(false)
     }
-  }, []);
+  }, [])
 
   // Add useEffect to set up scroll listeners
   useEffect(() => {
     const addScrollListeners = () => {
-      window.addEventListener("scroll", handleScroll, { passive: true });
-      document.addEventListener("scroll", handleScroll, { passive: true });
-      document.body.addEventListener("scroll", handleScroll, { passive: true });
-    };
+      window.addEventListener("scroll", handleScroll, { passive: true })
+      document.addEventListener("scroll", handleScroll, { passive: true })
+      document.body.addEventListener("scroll", handleScroll, { passive: true })
+    }
 
     const removeScrollListeners = () => {
-      window.removeEventListener("scroll", handleScroll);
-      document.removeEventListener("scroll", handleScroll);
-      document.body.removeEventListener("scroll", handleScroll);
-    };
+      window.removeEventListener("scroll", handleScroll)
+      document.removeEventListener("scroll", handleScroll)
+      document.body.removeEventListener("scroll", handleScroll)
+    }
 
-    addScrollListeners();
-    handleScroll();
+    addScrollListeners()
+    handleScroll()
 
     return () => {
-      removeScrollListeners();
-    };
-  }, [handleScroll]);
+      removeScrollListeners()
+    }
+  }, [handleScroll])
 
   const scrollToTop = () => {
     try {
@@ -117,57 +106,30 @@ export default function ServiceDetailPage({ serviceId }: ServiceDetailPageProps)
         top: 0,
         left: 0,
         behavior: "smooth",
-      });
+      })
 
       setTimeout(() => {
-        document.documentElement.scrollTop = 0;
-        document.body.scrollTop = 0;
-        window.pageYOffset = 0;
-      }, 100);
+        document.documentElement.scrollTop = 0
+        document.body.scrollTop = 0
+        window.pageYOffset = 0
+      }, 100)
     } catch (error) {
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0
+      document.body.scrollTop = 0
+      window.scrollTo(0, 0)
     }
-  };
+  }
 
   useEffect(() => {
     if (serviceId) {
-      fetchService();
-      fetchRelatedServices();
-    }
-  }, [serviceId]);
+      const serviceData = getServiceById(serviceId)
+      const relatedServicesData = getRelatedServices(serviceId, 3)
 
-  const fetchService = async () => {
-    try {
-      const response = await fetch(`/api/services/${serviceId}`);
-      if (response.ok) {
-        const data = await response.json();
-        setService(data);
-      } else {
-        console.error("Failed to fetch service");
-      }
-    } catch (error) {
-      console.error("Error fetching service:", error);
-    } finally {
-      setLoading(false);
+      setService(serviceData || null)
+      setRelatedServices(relatedServicesData)
+      setLoading(false)
     }
-  };
-
-  const fetchRelatedServices = async () => {
-    try {
-      const response = await fetch("/api/services");
-      if (response.ok) {
-        const data = await response.json();
-        // Get 3 random services excluding current one
-        const filtered = data.filter((s: Service) => s.id !== Number.parseInt(serviceId));
-        const shuffled = filtered.sort(() => 0.5 - Math.random());
-        setRelatedServices(shuffled.slice(0, 3));
-      }
-    } catch (error) {
-      console.error("Error fetching related services:", error);
-    }
-  };
+  }, [serviceId])
 
   if (loading) {
     return (
@@ -175,7 +137,7 @@ export default function ServiceDetailPage({ serviceId }: ServiceDetailPageProps)
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600"></div>
         <p className="ml-4 text-gray-600">Loading service details...</p>
       </div>
-    );
+    )
   }
 
   if (!service) {
@@ -188,43 +150,10 @@ export default function ServiceDetailPage({ serviceId }: ServiceDetailPageProps)
           </Link>
         </div>
       </div>
-    );
+    )
   }
 
-  const qaItems = [
-    {
-      id: "why-use",
-      question: "Why use this service?",
-      answer: service.why_use_service,
-      icon: HelpCircle,
-      color: "text-blue-600",
-      bgColor: "bg-blue-100",
-    },
-    {
-      id: "what-if-not",
-      question: "What would happen if you don't use this service?",
-      answer: service.what_if_not_used,
-      icon: AlertTriangle,
-      color: "text-red-600",
-      bgColor: "bg-red-100",
-    },
-    {
-      id: "before-appointment",
-      question: "What to do before going to the appointment?",
-      answer: service.before_appointment,
-      icon: Clock,
-      color: "text-orange-600",
-      bgColor: "bg-orange-100",
-    },
-    {
-      id: "after-service",
-      question: "What to do after the service?",
-      answer: service.after_service,
-      icon: Heart,
-      color: "text-green-600",
-      bgColor: "bg-green-100",
-    },
-  ];
+  const qaItems = service.faqs || []
 
   return (
     <div className="min-h-screen bg-white">
@@ -318,38 +247,29 @@ export default function ServiceDetailPage({ serviceId }: ServiceDetailPageProps)
               <p className="text-gray-600">Everything you need to know about {service.title}</p>
             </div>
             <Accordion type="single" collapsible className="space-y-4">
-              {qaItems.map((item) => {
-                const IconComponent = item.icon;
-                return (
-                  <AccordionItem
-                    key={item.id}
-                    value={item.id}
-                    className="border border-gray-200 rounded-2xl px-6 py-2 shadow-sm hover:shadow-md transition-shadow"
-                  >
-                    <AccordionTrigger className="hover:no-underline">
-                      <div className="flex items-center space-x-4">
-                        <div className={`w-10 h-10 ${item.bgColor} rounded-full flex items-center justify-center`}>
-                          <IconComponent className={`h-5 w-5 ${item.color}`} />
-                        </div>
-                        <span className="text-left font-semibold text-gray-900">{item.question}</span>
+              {qaItems.map((item, index) => (
+                <AccordionItem
+                  key={index}
+                  value={`faq-${index}`}
+                  className="border border-gray-200 rounded-2xl px-6 py-2 shadow-sm hover:shadow-md transition-shadow"
+                >
+                  <AccordionTrigger className="hover:no-underline">
+                    <div className="flex items-center space-x-4">
+                      <div className="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center">
+                        <HelpCircle className="h-5 w-5 text-teal-600" />
                       </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="pt-4 pb-2">
-                      <div className="ml-14">
-                        {item.answer ? (
-                          <div className="text-gray-600 leading-relaxed html-content">
-                            {HTMLParser(convertPlainTextToHtml(item.answer))}
-                          </div>
-                        ) : (
-                          <p className="text-gray-600 leading-relaxed">
-                            Information not available. Please contact us for more details.
-                          </p>
-                        )}
+                      <span className="text-left font-semibold text-gray-900">{item.question}</span>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="pt-4 pb-2">
+                    <div className="ml-14">
+                      <div className="text-gray-600 leading-relaxed html-content">
+                        {HTMLParser(convertPlainTextToHtml(item.answer))}
                       </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                );
-              })}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
             </Accordion>
           </div>
         </div>
@@ -410,5 +330,5 @@ export default function ServiceDetailPage({ serviceId }: ServiceDetailPageProps)
         </button>
       )}
     </div>
-  );
+  )
 }
