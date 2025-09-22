@@ -15,7 +15,8 @@ import Image from "next/image"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { usePathname } from "next/navigation"
-import type { NavbarProps, Service } from "@/types"
+import { services } from "@/lib/services-data"
+import type { NavbarProps } from "@/types"
 import {
   getNavbarClasses,
   getTextClasses,
@@ -37,8 +38,6 @@ const navTriggerStyles = `
 
 export default function Navbar({ isHomePage = false }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [services, setServices] = useState<Service[]>([])
-  const [servicesLoading, setServicesLoading] = useState(true)
   const [blogs, setBlogs] = useState<any[]>([])
   const [blogsLoading, setBlogsLoading] = useState(true)
   const [isTablet, setIsTablet] = useState(false)
@@ -46,18 +45,14 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
   const pathname = usePathname()
 
   useEffect(() => {
-    // Fetch services and blogs
-    fetchServices()
     fetchBlogs()
 
-    // Check device size
     const checkDevice = () => {
       const width = window.innerWidth
       setIsTablet(width >= 768 && width < 1024)
       updatePadding()
     }
 
-    // Update padding logic
     const updatePadding = () => {
       const isMobileView = window.innerWidth < 1280
       const shouldPad = !isHomePage || (isHomePage && scrolled && isMobileView)
@@ -68,7 +63,6 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
       }
     }
 
-    // Handle scroll
     const handleScroll = () => {
       if (isHomePage) {
         const newScrolled = window.scrollY > 50
@@ -81,10 +75,8 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
     window.addEventListener("resize", checkDevice)
     window.addEventListener("scroll", handleScroll)
 
-    // Set initial scroll state
     handleScroll()
 
-    // Cleanup on component unmount
     return () => {
       document.body.classList.remove("non-homepage-padding")
       window.removeEventListener("resize", checkDevice)
@@ -92,28 +84,12 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
     }
   }, [isHomePage, pathname, scrolled])
 
-  const fetchServices = async () => {
-    try {
-      const response = await fetch("/api/services")
-      if (response.ok) {
-        const data = await response.json()
-        setServices(data)
-      } else {
-        console.error("Failed to fetch services")
-      }
-    } catch (error) {
-      console.error("Error fetching services:", error)
-    } finally {
-      setServicesLoading(false)
-    }
-  }
-
   const fetchBlogs = async () => {
     try {
       const response = await fetch("/api/blogs")
       if (response.ok) {
         const data = await response.json()
-        setBlogs(data.slice(0, 5)) // Show only first 5 blogs in navbar
+        setBlogs(data.slice(0, 5))
       } else {
         console.error("Failed to fetch blogs")
       }
@@ -143,9 +119,7 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
       <div className="relative z-10">
         <div className="container mx-auto px-3 sm:px-4 lg:px-6 xl:px-8 py-4 sm:py-5">
           <div className="relative flex items-center justify-between">
-            {/* Desktop Navigation - Hidden on tablets and mobile */}
             <nav className="hidden xl:flex items-center justify-between w-full relative">
-              {/* Left Side Menu (3 items) */}
               <div className="flex items-center space-x-8 lg:space-x-10 2xl:space-x-12">
                 <Link
                   href="/"
@@ -204,66 +178,69 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
                         Service
                       </NavigationMenuTrigger>
                       <NavigationMenuContent>
-                        <div className="grid w-[350px] lg:w-[400px] p-4 bg-white shadow-md max-h-[400px] lg:max-h-[500px] overflow-y-auto">
-                          <NavigationMenuLink asChild>
-                            <Link
-                              href="/services"
-                              className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-3 lg:p-4 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none border-b border-gray-100"
-                            >
-                              <div className="text-sm font-medium leading-none group-hover:underline">All Services</div>
-                              <div className="line-clamp-2 text-xs lg:text-sm leading-snug text-muted-foreground">
-                                View our complete range of dental services
-                              </div>
-                            </Link>
-                          </NavigationMenuLink>
-                          {servicesLoading ? (
-                            <div className="p-4 text-center text-sm text-gray-500">Loading services...</div>
-                          ) : (
-                            <>
-                              {services.map((service) => (
-                                <NavigationMenuLink key={service.id} asChild>
-                                  <Link
-                                    href={`/services/${service.id}`}
-                                    className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-2 lg:p-3 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none"
-                                  >
-                                    <div className="flex items-center justify-between w-full">
-                                      <div className="flex-1">
-                                        <div className="text-xs lg:text-sm font-medium leading-none group-hover:underline line-clamp-1">
-                                          {service.title}
-                                        </div>
+                        <div className="w-[350px] lg:w-[400px] bg-white shadow-md flex flex-col max-h-[400px] lg:max-h-[500px]">
+                          {/* All Services link at top */}
+                          <div className="p-4 border-b border-gray-100">
+                            <NavigationMenuLink asChild>
+                              <Link
+                                href="/services"
+                                className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-3 lg:p-4 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none"
+                              >
+                                <div className="text-sm font-medium leading-none group-hover:underline">
+                                  All Services
+                                </div>
+                                <div className="line-clamp-2 text-xs lg:text-sm leading-snug text-muted-foreground">
+                                  View our complete range of dental services
+                                </div>
+                              </Link>
+                            </NavigationMenuLink>
+                          </div>
+
+                          {/* Scrollable services list */}
+                          <div className="flex-1 overflow-y-auto p-2">
+                            {services.map((service) => (
+                              <NavigationMenuLink key={service.id} asChild>
+                                <Link
+                                  href={`/services/${service.id}`}
+                                  className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-2 lg:p-3 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none"
+                                >
+                                  <div className="flex items-center justify-between w-full">
+                                    <div className="flex-1">
+                                      <div className="text-xs lg:text-sm font-medium leading-none group-hover:underline line-clamp-1">
+                                        {service.title}
                                       </div>
                                     </div>
-                                  </Link>
-                                </NavigationMenuLink>
-                              ))}
-                              {services.length === 0 && (
-                                <div className="p-4 text-center text-sm text-gray-500">No services available</div>
-                              )}
-                            </>
-                          )}
-                          <NavigationMenuLink asChild>
-                            <Link
-                              href="/pricing"
-                              className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-3 lg:p-4 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none border-t border-gray-100"
-                            >
-                              <div className="text-sm font-medium leading-none group-hover:underline">Pricing</div>
-                              <div className="line-clamp-2 text-xs lg:text-sm leading-snug text-muted-foreground">
-                                Transparent pricing for all services
-                              </div>
-                            </Link>
-                          </NavigationMenuLink>
-                          <NavigationMenuLink asChild>
-                            <Link
-                              href="/services/restorative-dentistry/faq"
-                              className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-3 lg:p-4 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none border-t border-gray-100 mt-2"
-                            >
-                              <div className="text-sm font-medium leading-none group-hover:underline">FAQs</div>
-                              <div className="line-clamp-2 text-xs lg:text-sm leading-snug text-muted-foreground">
-                                Frequently Asked Questions
-                              </div>
-                            </Link>
-                          </NavigationMenuLink>
-                          
+                                  </div>
+                                </Link>
+                              </NavigationMenuLink>
+                            ))}
+                          </div>
+
+                          {/* Fixed bottom section with Pricing and FAQs */}
+                          <div className="border-t border-gray-100 p-4 bg-gray-50">
+                            <NavigationMenuLink asChild>
+                              <Link
+                                href="/pricing"
+                                className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-3 lg:p-4 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none mb-2"
+                              >
+                                <div className="text-sm font-medium leading-none group-hover:underline">Pricing</div>
+                                <div className="line-clamp-2 text-xs lg:text-sm leading-snug text-muted-foreground">
+                                  Transparent pricing for all services
+                                </div>
+                              </Link>
+                            </NavigationMenuLink>
+                            <NavigationMenuLink asChild>
+                              <Link
+                                href="/services/restorative-dentistry/faq"
+                                className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-background p-3 lg:p-4 text-sm font-medium transition-colors hover:bg-teal-50 hover:text-teal-600 focus:bg-teal-50 focus:text-teal-600 focus:outline-none"
+                              >
+                                <div className="text-sm font-medium leading-none group-hover:underline">FAQs</div>
+                                <div className="line-clamp-2 text-xs lg:text-sm leading-snug text-muted-foreground">
+                                  Frequently Asked Questions
+                                </div>
+                              </Link>
+                            </NavigationMenuLink>
+                          </div>
                         </div>
                       </NavigationMenuContent>
                     </NavigationMenuItem>
@@ -271,7 +248,6 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
                 </NavigationMenu>
               </div>
 
-              {/* Centered Logo - Absolutely positioned to center of screen */}
               <Link href="/" className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center">
                 <Image
                   src="/images/logo.png"
@@ -283,7 +259,6 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
                 />
               </Link>
 
-              {/* Right Side Menu (3 items) */}
               <div className="flex items-center space-x-10 lg:space-x-12 2xl:space-x-14">
                 <Link
                   href="/blogs"
@@ -314,7 +289,6 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
               </div>
             </nav>
 
-            {/* Tablet/Mobile Navigation - Visible on xl and below */}
             <div className="xl:hidden flex items-center justify-between w-full">
               <Link href="/" className="flex items-center">
                 <Image
@@ -331,27 +305,19 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className={`${
-                  !isHomePage || scrolled
-                    ? "text-teal-700 hover:text-teal-600 hover:bg-teal-50"
-                    : "text-gray-800 hover:text-teal-700 hover:bg-gray-100/50"
-                } rounded-full p-2`}
+                className={`${!isHomePage || scrolled ? "text-teal-700 hover:text-teal-600 hover:bg-teal-50" : "text-gray-800 hover:text-teal-700 hover:bg-gray-100/50"} rounded-full p-2`}
               >
                 {isMenuOpen ? <X className="h-5 w-5 sm:h-6 sm:w-6" /> : <Menu className="h-5 w-5 sm:h-6 sm:w-6" />}
               </Button>
             </div>
           </div>
 
-          {/* Mobile/Tablet Menu */}
           <div
-            className={`xl:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-              isMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
-            } ${isMenuOpen ? "bg-white shadow-lg border-b border-teal-100" : ""}`}
+            className={`xl:hidden overflow-hidden transition-all duration-300 ease-in-out ${isMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"} ${isMenuOpen ? "bg-white shadow-lg border-b border-teal-100" : ""}`}
           >
             <nav
               className={`flex flex-col pt-6 pb-8 border-t ${isMenuOpen ? "border-teal-100" : getMobileBorderClasses(isHomePage, scrolled)}`}
             >
-              {/* Home */}
               <Link
                 href="/"
                 onClick={handleMobileLinkClick}
@@ -360,7 +326,6 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
                 Home
               </Link>
 
-              {/* About Us Section */}
               <div
                 className={`border-b ${isMenuOpen ? "border-teal-100" : getMobileBorderClasses(isHomePage, scrolled)}`}
               >
@@ -396,7 +361,6 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
                 </div>
               </div>
 
-              {/* Services Section */}
               <div
                 className={`border-b ${isMenuOpen ? "border-teal-100" : getMobileBorderClasses(isHomePage, scrolled)}`}
               >
@@ -432,7 +396,6 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
                 </div>
               </div>
 
-              {/* Blogs */}
               <Link
                 href="/blogs"
                 onClick={handleMobileLinkClick}
@@ -441,7 +404,6 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
                 Blogs
               </Link>
 
-              {/* Gallery */}
               <Link
                 href="/gallery"
                 onClick={handleMobileLinkClick}
@@ -450,7 +412,6 @@ export default function Navbar({ isHomePage = false }: NavbarProps) {
                 Gallery
               </Link>
 
-              {/* Book Now Button */}
               <div className="px-6 pt-6">
                 <Link href="/book-now" onClick={handleMobileLinkClick}>
                   <Button className="w-full bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white rounded-full py-4 font-semibold text-lg">

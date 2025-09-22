@@ -875,6 +875,9 @@ export const servicesData: Service[] = [
     },
 ]
 
+
+export const services = servicesData
+
 export function getServiceById(id: string): Service | undefined {
     return servicesData.find((service) => service.id === Number.parseInt(id))
 }
